@@ -28,8 +28,11 @@ public:
 	void printRowWithNames();
 	void printRowTable();
 
+	//bool compare(HarmonyMemoryRow &first, HarmonyMemoryRow &second);
+
 private:
 	double calculateObjectiveFunction();
 
 };
 
+bool compareRows(HarmonyMemoryRow &first, HarmonyMemoryRow &second);

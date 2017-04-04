@@ -23,9 +23,14 @@ public:
 	HarmonySearch(unsigned int N, unsigned int HMS, double HMCR, double PAR, double b, unsigned int NI);
 	~HarmonySearch();
 
+	void Search();
+
 	void printHM();
 
 private:
 	void InitializeHM();
+
+	double getRandomDouble(double min, double max);
+	int getRandomInt(int min, int max);
 };
 

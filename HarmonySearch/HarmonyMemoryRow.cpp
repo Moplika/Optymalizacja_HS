@@ -1,5 +1,6 @@
 #include "HarmonyMemoryRow.h"
 #include <iostream>
+#include <math.h>
 
 
 //HarmonyMemoryRow::HarmonyMemoryRow(unsigned int _N)
@@ -63,7 +64,9 @@ void HarmonyMemoryRow::printRowTable()
 double HarmonyMemoryRow::calculateObjectiveFunction()
 {
 	// TEMP: Tu wpisywaæ wzór funkcji; x1 = row[0] itp
-	return 2.0;
+	//return ((double)rand() / RAND_MAX) * (10 + 10) - 10;
+	double fx = abs(row[0] + row[1] + row[2]);
+	return fx;
 }
 
 double HarmonyMemoryRow::getX(unsigned int index)
@@ -88,9 +91,12 @@ bool HarmonyMemoryRow::setX(unsigned int index, double value)
 	return true;
 }
 
-
-
 void HarmonyMemoryRow::setObjectiveFunction(double value)
 {
 	row[N] = value;
+}
+
+bool compareRows(HarmonyMemoryRow &first, HarmonyMemoryRow &second)
+{
+	return (first.getObjectiveFunction() < second.getObjectiveFunction());
 }
