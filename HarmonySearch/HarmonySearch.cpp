@@ -16,16 +16,13 @@ HarmonySearch::HarmonySearch(unsigned int N, unsigned int _HMS, double _HMCR, do
 	b = _b;
 	NumberOfImprovisations = _NI;
 	variableCount = N;
-
-	// Utworzenie pamiêci harmony (HM)
-	//this->InitializeHM();
 }
 
 HarmonySearch::~HarmonySearch()
 {
 }
 
-void HarmonySearch::InitializeHM(std::vector<VariableConstraints> constraints)
+void HarmonySearch::InitializeHM(std::vector<VariableConstraints> &constraints)
 {
 	for (unsigned int i = 0; i < HMSize; i++)
 	{
@@ -34,8 +31,6 @@ void HarmonySearch::InitializeHM(std::vector<VariableConstraints> constraints)
 
 		for (unsigned int j = 0; j < variableCount; j++, constrainIt++)
 		{
-			// TODO: Aktualnie wybiera w zakresie 0-1, zrobiæ ¿eby bra³o pod uwagê ograniczenia (z tablicy)
-
 			x.push_back(this->getRandomDouble(constrainIt->getMin(), constrainIt->getMax()));
 		}
 
@@ -56,75 +51,84 @@ void HarmonySearch::printHM()
 	}
 }
 
-void HarmonySearch::Search(std::vector<VariableConstraints> constraints)
+HarmonyMemoryRow HarmonySearch::Search(std::vector<VariableConstraints> &constraints)
 {
 	this->InitializeHM(constraints);
 
 	for (unsigned int i = 0; i < NumberOfImprovisations; i++)
 	{
-		std::vector<double> x;
-		std::vector<VariableConstraints>::iterator constrainIt = constraints.begin();
+		HarmonyMemoryRow newSolution(this->createNewSolution(constraints));
 
-		for (unsigned int j = 0; j < variableCount; j++, constrainIt++)
+		if (isSolutionBetter(newSolution, HarmonyMemory.back()))
 		{
-			double p = this->getRandomDouble(0, 1); // Prawdopodobieñstwo wziêcia wartoœci z pamiêci
-			double value;
-
-			if (p <= HMConsiderationRate) // Wybierz wartoœæ z pamiêci
-			{
-				int index = this->getRandomInt(0, HMSize - 1); //TODO: Przetestowaæ?
-
-				std::list<HarmonyMemoryRow>::iterator it = HarmonyMemory.begin();
-				for (int k = 0; k < index; k++)
-					it++;
-
-				value = it->getX(j+1);
-
-				// Modyfikacja wartoœci
-				double p1 = this->getRandomDouble(0,1); // Prawdopodobieñstwo zmiany wartoœci
-
-				if (p1 <= PitchAdjustmentRate)
-				{
-					double alpha = b * this->getRandomDouble(-1, 1);
-					//value += alpha;
-					value = std::min(std::max(constrainIt->getMin(), value + alpha), constrainIt->getMax());
-				}
-			}
-			else // Wygeneruj losow¹ wartoœæ
-			{
-				// TEMP - x ca³kowicie losowe + dodaæ ograniczenia
-				value = this->getRandomDouble(constrainIt->getMin(), constrainIt->getMax());
-			}
-
-			x.push_back(value);
-		}
-
-		HarmonyMemoryRow newRow(x);
-
-		// Sprawdzenie, czy rozwi¹zanie jest dobre
-		if (newRow.getObjectiveFunction() < HarmonyMemory.back().getObjectiveFunction())
-		{
-			// Odrzuæ ostatni element
 			HarmonyMemory.pop_back();
-
-			// Wstaw now¹ harmoniê w odpowiednie miejsce
-			bool wasInserted = false;
-			for (std::list<HarmonyMemoryRow>::iterator it = HarmonyMemory.begin(); it != HarmonyMemory.end(); it++)
-			{
-				if (it->getObjectiveFunction() > newRow.getObjectiveFunction())
-				{
-					HarmonyMemory.insert(it, newRow);
-					wasInserted = true;
-					break;
-				}
-			}
-			if (!wasInserted)
-			{
-				HarmonyMemory.push_back(newRow);
-			}
-			
+			this->insertNewSolution(newSolution);
 		}
 	}
+	return HarmonyMemory.front();
+}
+
+bool HarmonySearch::isSolutionBetter(HarmonyMemoryRow &solution1, HarmonyMemoryRow &solution2)
+{
+	return solution1.getObjectiveFunction() < solution2.getObjectiveFunction();
+}
+
+void HarmonySearch::insertNewSolution(HarmonyMemoryRow &newSolution)
+{
+	for (std::list<HarmonyMemoryRow>::iterator it = HarmonyMemory.begin(); it != HarmonyMemory.end(); it++)
+	{
+		if (isSolutionBetter(newSolution, *it))
+		{
+			HarmonyMemory.insert(it, newSolution);
+			return;
+		}
+	}
+	HarmonyMemory.push_back(newSolution);
+}
+
+double HarmonySearch::getXFromMemory(unsigned int variableIndex)
+{
+	int index = this->getRandomInt(0, HMSize - 1); //TODO: Przetestowaæ?
+
+	std::list<HarmonyMemoryRow>::iterator it = HarmonyMemory.begin();
+	for (int k = 0; k < index; k++)
+		it++;
+
+	return it->getX(variableIndex + 1);
+}
+
+std::vector<double> HarmonySearch::createNewSolution(std::vector<VariableConstraints> &constraints)
+{
+	std::vector<double> x;
+	std::vector<VariableConstraints>::iterator constrainIt = constraints.begin();
+
+	for (unsigned int j = 0; j < variableCount; j++, constrainIt++)
+	{
+		double p = this->getRandomDouble(0, 1); // Prawdopodobieñstwo wziêcia wartoœci z pamiêci
+		double value;
+
+		if (p <= HMConsiderationRate) // Wybierz wartoœæ z pamiêci
+		{
+			value = this->getXFromMemory(j);
+
+			// Modyfikacja wartoœci
+			double p1 = this->getRandomDouble(0, 1); // Prawdopodobieñstwo zmiany wartoœci
+
+			if (p1 <= PitchAdjustmentRate)
+			{
+				double alpha = b * this->getRandomDouble(-1, 1);
+				//value += alpha;
+				value = std::min(std::max(constrainIt->getMin(), value + alpha), constrainIt->getMax());
+			}
+		}
+		else // Wygeneruj losow¹ wartoœæ
+		{
+			value = this->getRandomDouble(constrainIt->getMin(), constrainIt->getMax());
+		}
+
+		x.push_back(value);
+	}
+	return x;
 }
 
 double HarmonySearch::getRandomDouble(double min, double max)

@@ -15,8 +15,6 @@ private:
 
 	// TEMP? Zmienne i ograniczenia do równania
 	unsigned int variableCount;		// Liczba zmiennych w równaniu
-	
-
 
 	std::list<HarmonyMemoryRow> HarmonyMemory;
 
@@ -25,14 +23,19 @@ public:
 	HarmonySearch(unsigned int N, unsigned int HMS, double HMCR, double PAR, double b, unsigned int NI);
 	~HarmonySearch();
 
-	void Search(std::vector<VariableConstraints> constraints);
+	HarmonyMemoryRow Search(std::vector<VariableConstraints> &constraints);
 
 	void printHM();
 
 private:
-	void InitializeHM(std::vector<VariableConstraints> constraints);
+	void InitializeHM(std::vector<VariableConstraints> &constraints);
 
 	double getRandomDouble(double min, double max);
 	int getRandomInt(int min, int max);
+	double getXFromMemory(unsigned int variableIndex);
+	std::vector<double> createNewSolution(std::vector<VariableConstraints> &constraints);
+	bool isSolutionBetter(HarmonyMemoryRow &solution1, HarmonyMemoryRow &solution2);
+	void insertNewSolution(HarmonyMemoryRow &solution);
+
 };
 

@@ -5,27 +5,29 @@
 #include "HarmonySearch.h"
 #include "VariableConstraints.h"
 
-
 using namespace std;
 
 int main()
 {
 	cout << "Hello world?" << endl;
 
-	double testX[] = { 16, 2, 77, 29 };
+	/*double testX[] = { 16, 2, 77, 29 };
 	vector<double> vTestX(testX, testX + 4);
 
 	HarmonyMemoryRow testRow(vTestX);
-	testRow.printRowWithNames();
+	testRow.printRowWithNames();*/
 
-	HarmonySearch testSearch(3, 10, 0.45, 0.10, 0.5, 20000);
+	HarmonySearch testSearch(2, 100, 0.45, 0.10, 0.5, 20000);
 	
 	vector<VariableConstraints> testConstr;
-	testConstr.push_back(VariableConstraints(-1, 1));
-	testConstr.push_back(VariableConstraints(-1, 1));
-	testConstr.push_back(VariableConstraints(5, 9));
+	testConstr.push_back(VariableConstraints(0,1));
+	testConstr.push_back(VariableConstraints(-1, 0));
+	//testConstr.push_back(VariableConstraints(5, 9));
 
-	testSearch.Search(testConstr);
+	HarmonyMemoryRow solution = testSearch.Search(testConstr);
+	cout << "Solution: ";
+	solution.printRowWithNames();
+	cout << "HM: " << endl;
 	testSearch.printHM();
 
 	system("PAUSE");
