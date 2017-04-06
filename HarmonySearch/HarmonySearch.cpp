@@ -53,6 +53,8 @@ void HarmonySearch::printHM()
 
 HarmonyMemoryRow HarmonySearch::Search(std::vector<VariableConstraints> &constraints)
 {
+	HarmonyMemory.clear();
+
 	this->InitializeHM(constraints);
 
 	for (unsigned int i = 0; i < NumberOfImprovisations; i++)

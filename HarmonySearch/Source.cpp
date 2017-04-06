@@ -20,15 +20,37 @@ int main()
 	HarmonySearch testSearch(2, 100, 0.45, 0.10, 0.5, 20000);
 	
 	vector<VariableConstraints> testConstr;
-	testConstr.push_back(VariableConstraints(0,1));
-	testConstr.push_back(VariableConstraints(-1, 0));
-	//testConstr.push_back(VariableConstraints(5, 9));
+	HarmonyMemoryRow solution;
 
-	HarmonyMemoryRow solution = testSearch.Search(testConstr);
-	cout << "Solution: ";
+	testConstr.push_back(VariableConstraints(0, 1));
+	testConstr.push_back(VariableConstraints(0, 1));
+	solution = testSearch.Search(testConstr);
+	cout << "Solution 1: ";
 	solution.printRowWithNames();
-	cout << "HM: " << endl;
-	testSearch.printHM();
+	
+	testConstr.clear();
+
+	testConstr.push_back(VariableConstraints(0, 1));
+	testConstr.push_back(VariableConstraints(-1, 0));
+	solution = testSearch.Search(testConstr);
+	cout << "Solution 2: ";
+	solution.printRowWithNames();
+
+	testConstr.clear();
+
+	testConstr.push_back(VariableConstraints(-1, 0));
+	testConstr.push_back(VariableConstraints(0, 1));
+	solution = testSearch.Search(testConstr);
+	cout << "Solution 3: ";
+	solution.printRowWithNames();
+
+	testConstr.clear();
+
+	testConstr.push_back(VariableConstraints(-1, 0));
+	testConstr.push_back(VariableConstraints(-1, 0));
+	solution = testSearch.Search(testConstr);
+	cout << "Solution 4: ";
+	solution.printRowWithNames();
 
 	system("PAUSE");
 	return 0;

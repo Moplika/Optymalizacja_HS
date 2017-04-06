@@ -36,6 +36,5 @@ private:
 	std::vector<double> createNewSolution(std::vector<VariableConstraints> &constraints);
 	bool isSolutionBetter(HarmonyMemoryRow &solution1, HarmonyMemoryRow &solution2);
 	void insertNewSolution(HarmonyMemoryRow &solution);
-
 };
 
