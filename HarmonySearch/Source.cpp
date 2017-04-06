@@ -3,6 +3,7 @@
 #include <algorithm>
 #include "HarmonyMemoryRow.h"
 #include "HarmonySearch.h"
+#include "VariableConstraints.h"
 
 
 using namespace std;
@@ -18,7 +19,13 @@ int main()
 	testRow.printRowWithNames();
 
 	HarmonySearch testSearch(3, 10, 0.45, 0.10, 0.5, 20000);
-	testSearch.Search();
+	
+	vector<VariableConstraints> testConstr;
+	testConstr.push_back(VariableConstraints(-1, 1));
+	testConstr.push_back(VariableConstraints(-1, 1));
+	testConstr.push_back(VariableConstraints(5, 9));
+
+	testSearch.Search(testConstr);
 	testSearch.printHM();
 
 	system("PAUSE");

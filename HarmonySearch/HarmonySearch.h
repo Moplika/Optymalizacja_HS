@@ -2,6 +2,7 @@
 
 #include <list>
 #include "HarmonyMemoryRow.h"
+#include "VariableConstraints.h"
 
 class HarmonySearch
 {
@@ -14,6 +15,7 @@ private:
 
 	// TEMP? Zmienne i ograniczenia do równania
 	unsigned int variableCount;		// Liczba zmiennych w równaniu
+	
 
 
 	std::list<HarmonyMemoryRow> HarmonyMemory;
@@ -23,12 +25,12 @@ public:
 	HarmonySearch(unsigned int N, unsigned int HMS, double HMCR, double PAR, double b, unsigned int NI);
 	~HarmonySearch();
 
-	void Search();
+	void Search(std::vector<VariableConstraints> constraints);
 
 	void printHM();
 
 private:
-	void InitializeHM();
+	void InitializeHM(std::vector<VariableConstraints> constraints);
 
 	double getRandomDouble(double min, double max);
 	int getRandomInt(int min, int max);

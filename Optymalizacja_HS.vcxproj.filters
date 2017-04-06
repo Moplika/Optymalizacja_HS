@@ -24,12 +24,18 @@
     <ClCompile Include="harmonysearch\Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="VariableConstraints.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="harmonysearch\HarmonyMemoryRow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="harmonysearch\HarmonySearch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="VariableConstraints.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

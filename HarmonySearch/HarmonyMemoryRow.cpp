@@ -65,7 +65,8 @@ double HarmonyMemoryRow::calculateObjectiveFunction()
 {
 	// TEMP: Tu wpisywaæ wzór funkcji; x1 = row[0] itp
 	//return ((double)rand() / RAND_MAX) * (10 + 10) - 10;
-	double fx = abs(row[0] + row[1] + row[2]);
+	double fx = -abs(row[0] + row[1] + row[2]);
+	//double fx = pow(row[0], 4) - 0.62 * pow(row[0], 2) - 0.62 * pow(row[1], 2);
 	return fx;
 }
 

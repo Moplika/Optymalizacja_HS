@@ -1,6 +1,7 @@
 #include "HarmonySearch.h"
 #include <cstdlib>
 #include <iostream>
+#include <algorithm>
 
 // TODO: Zmieniæ na wektor czy zostawiæ jako listê? (Mo¿e zrobiæ jakiœ test jak siê dzia³anie porównuje)
 
@@ -24,16 +25,18 @@ HarmonySearch::~HarmonySearch()
 {
 }
 
-void HarmonySearch::InitializeHM()
+void HarmonySearch::InitializeHM(std::vector<VariableConstraints> constraints)
 {
 	for (unsigned int i = 0; i < HMSize; i++)
 	{
 		std::vector<double> x;
-		
-		for (unsigned int j = 0; j < variableCount; j++)
+		std::vector<VariableConstraints>::iterator constrainIt = constraints.begin();
+
+		for (unsigned int j = 0; j < variableCount; j++, constrainIt++)
 		{
 			// TODO: Aktualnie wybiera w zakresie 0-1, zrobiæ ¿eby bra³o pod uwagê ograniczenia (z tablicy)
-			x.push_back(this->getRandomDouble(0,1));
+
+			x.push_back(this->getRandomDouble(constrainIt->getMin(), constrainIt->getMax()));
 		}
 
 		HarmonyMemory.push_back(HarmonyMemoryRow(x));
@@ -53,19 +56,19 @@ void HarmonySearch::printHM()
 	}
 }
 
-void HarmonySearch::Search()
+void HarmonySearch::Search(std::vector<VariableConstraints> constraints)
 {
-	this->InitializeHM();
+	this->InitializeHM(constraints);
 
 	for (unsigned int i = 0; i < NumberOfImprovisations; i++)
 	{
 		std::vector<double> x;
+		std::vector<VariableConstraints>::iterator constrainIt = constraints.begin();
 
-		for (unsigned int j = 0; j < variableCount; j++)
+		for (unsigned int j = 0; j < variableCount; j++, constrainIt++)
 		{
 			double p = this->getRandomDouble(0, 1); // Prawdopodobieñstwo wziêcia wartoœci z pamiêci
 			double value;
-
 
 			if (p <= HMConsiderationRate) // Wybierz wartoœæ z pamiêci
 			{
@@ -78,18 +81,19 @@ void HarmonySearch::Search()
 				value = it->getX(j+1);
 
 				// Modyfikacja wartoœci
-				double p1 = this->getRandomDouble(0, 1); // Prawdopodobieñstwo zmiany wartoœci
+				double p1 = this->getRandomDouble(0,1); // Prawdopodobieñstwo zmiany wartoœci
 
 				if (p1 <= PitchAdjustmentRate)
 				{
 					double alpha = b * this->getRandomDouble(-1, 1);
-					value += alpha;
+					//value += alpha;
+					value = std::min(std::max(constrainIt->getMin(), value + alpha), constrainIt->getMax());
 				}
 			}
 			else // Wygeneruj losow¹ wartoœæ
 			{
 				// TEMP - x ca³kowicie losowe + dodaæ ograniczenia
-				value = this->getRandomDouble(0, 1);
+				value = this->getRandomDouble(constrainIt->getMin(), constrainIt->getMax());
 			}
 
 			x.push_back(value);

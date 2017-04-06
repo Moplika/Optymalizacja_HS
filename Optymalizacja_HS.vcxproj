@@ -74,10 +74,12 @@
     <ClCompile Include="harmonysearch\HarmonyMemoryRow.cpp" />
     <ClCompile Include="harmonysearch\HarmonySearch.cpp" />
     <ClCompile Include="harmonysearch\Source.cpp" />
+    <ClCompile Include="VariableConstraints.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="harmonysearch\HarmonyMemoryRow.h" />
     <ClInclude Include="harmonysearch\HarmonySearch.h" />
+    <ClInclude Include="VariableConstraints.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
