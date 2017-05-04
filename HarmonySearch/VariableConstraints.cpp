@@ -15,12 +15,12 @@ VariableConstraints::~VariableConstraints()
 {
 }
 
-double VariableConstraints::getMax()
+double VariableConstraints::getMax() const
 {
 	return max;
 }
 
-double VariableConstraints::getMin()
+double VariableConstraints::getMin() const
 {
 	return min;
 }

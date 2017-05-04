@@ -71,7 +71,7 @@ double HarmonyMemoryRow::calculateObjectiveFunction()
 	return fx;
 }
 
-double HarmonyMemoryRow::getX(unsigned int index)
+double HarmonyMemoryRow::getX(unsigned int index) const
 {
 	if (index <= N)
 		return row[index - 1];
@@ -79,7 +79,7 @@ double HarmonyMemoryRow::getX(unsigned int index)
 	return INT_MIN;
 }
 
-double HarmonyMemoryRow::getObjectiveFunction()
+double HarmonyMemoryRow::getObjectiveFunction() const
 {
 	return row[N];
 }
