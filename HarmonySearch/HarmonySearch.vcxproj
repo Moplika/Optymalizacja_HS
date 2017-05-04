@@ -64,14 +64,25 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Equation.cpp" />
+    <ClCompile Include="EquationPart.cpp" />
+    <ClCompile Include="Expression.cpp" />
     <ClCompile Include="HarmonyMemoryRow.cpp" />
     <ClCompile Include="HarmonySearch.cpp" />
+    <ClCompile Include="SimpleExpression.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="SpecialExpression.cpp" />
     <ClCompile Include="VariableConstraints.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Equation.h" />
+    <ClInclude Include="EquationPart.h" />
+    <ClInclude Include="Expression.h" />
     <ClInclude Include="HarmonyMemoryRow.h" />
     <ClInclude Include="HarmonySearch.h" />
+    <ClInclude Include="SimpleExpression.h" />
+    <ClInclude Include="SpecialExpression.h" />
+    <ClInclude Include="SpecialExpressionType.h" />
     <ClInclude Include="VariableConstraints.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

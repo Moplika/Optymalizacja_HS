@@ -25,10 +25,6 @@ double VariableConstraints::getMin() const
 	return min;
 }
 
-void VariableConstraints::setMin(double value)
-{
-	min = value;
-}
 
 void VariableConstraints::setMax(double value)
 {
