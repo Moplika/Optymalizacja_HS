@@ -19,3 +19,9 @@ double SimpleExpression::calculate(std::vector<double> x)
 {
 	return 2.0;
 }
+
+bool SimpleExpression::setFormula(std::string formula)
+{
+	temp = formula;
+	return true;
+}

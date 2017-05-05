@@ -1,6 +1,7 @@
 #pragma warning( disable : 4996 )
 
 #include "SpecialExpression.h"
+#include <iostream>
 
 
 SpecialExpression::SpecialExpression()
@@ -17,45 +18,96 @@ SpecialExpression::~SpecialExpression()
 {
 }
 
-void SpecialExpression::setFormula(std::string formula)
+bool SpecialExpression::setFormula(std::string formula)
 {
 	temp = formula;
 
 	std::string functionName;
 	std::string functionArgument;
-
-	std::size_t splitPos = formula.find("(");
-	if (splitPos != std::string::npos)
+	
+	// Argument jest w nawiasach
+	std::size_t argumentStartPos = formula.find("(");
+	if (argumentStartPos != std::string::npos)
 	{
-		// ZnajdŸ nazwê funkcji (cos, sin, exp itp)
-		char buffer[20];
-		formula.copy(buffer, splitPos, 0);
-		functionName.assign(buffer, splitPos);
-
-		type = defineExpressionType(functionName);
-
-		// ZnajdŸ argument funkcji
-		std::size_t endPos = formula.find_last_of(")");
-		if (endPos == std::string::npos)
+		// ZnajdŸ argument funkcji (w nawiasach)
+		std::size_t argumentEndPos = formula.find_last_of(")");
+		if (argumentEndPos == std::string::npos)
 		{
-			// TODO: Wyrzuciæ jakiœ error
-			return;
+			std::cerr << "Podano b³êdne równanie - brak zamykaj¹cego nawiasu" << std::endl;
+			return false;
 		}
-		//functionArgument.append()
 
+		functionArgument.append(formula, argumentStartPos + 1, argumentEndPos - argumentStartPos - 1);
+
+		// ZnajdŸ typ funkcji
+		if (argumentStartPos != 0) // Funkcja jest na pocz¹tku - sin, cos, tan, ln, exp itp
+		{
+			functionName.append(formula, 0, argumentStartPos);
+		}
+		else if (argumentEndPos != formula.length()) // Funkcja jest na koñcu - x^a
+		{
+			functionName.append(formula, argumentEndPos + 1, formula.length() - argumentEndPos);
+		}
+		type = this->defineExpressionType(functionName, constantArgument);
+
+		// Logarytm ma podstawê jako pierwszy argument w nawiasie - trzeba j¹ wyci¹gn¹æ
+		if (type == SpecialExpressionType::logaritmic)
+		{
+			std::size_t commaPos = functionArgument.find(",");
+			if (commaPos == std::string::npos) // Nie ma podstawy - przyjmij 10
+			{
+				constantArgument = 10.0;
+			}
+			else
+			{
+				constantArgument = std::stod(functionArgument.substr(0, commaPos + 1));
+				functionArgument = functionArgument.substr(commaPos + 1);
+			}
+		}
 	}
-
 	else
 	{
-		return; // TODO: Dodaæ obs³ugê sytuacji, gdy nie ma nawiasów
+		// ZnajdŸ pierwszy x:
+		std::size_t firstXPos = formula.find('x');
+
+		if (firstXPos == std::string::npos) // Nie ma x?
+		{
+			std::cerr << "B³¹d: w równaniu nie ma x?" << std::endl;
+			return false;
+		}
+
+		if (firstXPos != 0) // Funkcja na pocz¹tku
+		{
+			functionName.append(formula, 0, firstXPos);
+			functionArgument.append(formula, firstXPos, formula.length());
+		}
+		else // Funkcja na koñcu: mo¿liwe tylko dla x^a
+		{
+			std::size_t powerPosition = formula.find("^");
+			if (powerPosition == std::string::npos)
+			{
+				std::cerr << "B³¹d: nie istniej¹ca funkcja?" << std::endl;
+				return false;
+			}
+
+			functionName.append(formula, powerPosition, formula.length());
+			functionArgument.append(formula, 0, powerPosition );
+		}
+
+		type = this->defineExpressionType(functionName, constantArgument);
 	}
-
-
+	simpleArgument.setFormula(functionArgument);
+	
+	return true;
 }
 
-SpecialExpressionType SpecialExpression::defineExpressionType(std::string expression)
+SpecialExpressionType SpecialExpression::defineExpressionType(std::string expression, double &argument)
 {
-	if (expression == "exp")
+	argument = 0;
+
+	if (expression == "")
+		return SpecialExpressionType::none;
+	if (expression == "exp" || expression == "e^")
 		return SpecialExpressionType::exponential;
 	if (expression == "ln")
 		return SpecialExpressionType::naturalLog;
@@ -69,7 +121,17 @@ SpecialExpressionType SpecialExpression::defineExpressionType(std::string expres
 		return SpecialExpressionType::tangens;
 	if (expression == "ctan" || expression == "ctg")
 		return SpecialExpressionType::cotangens;
-
+	if (expression.front() == '^') // Funkcja x^a
+	{
+		argument = std::stod(expression.substr(1));
+		return SpecialExpressionType::polynomial;
+	}
+	if (expression.back() == '^') // Funkcja a^x
+	{
+		argument = std::stod(expression.substr(0, expression.length() - 1));
+		return SpecialExpressionType::power;
+	}
+	
 	return SpecialExpressionType::none;
 }
 
@@ -106,3 +168,4 @@ double SpecialExpression::calculate(std::vector<double> x)
 
 	return 1.0;
 }
+

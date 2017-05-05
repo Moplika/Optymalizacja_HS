@@ -10,5 +10,6 @@ public:
 	~Expression();
 
 	virtual double calculate(std::vector<double> x);
+	virtual bool setFormula(std::string formula);
 };
 

@@ -11,8 +11,7 @@ public:
 	~SpecialExpression();
 
 	double calculate(std::vector<double> x);
-	void setFormula(std::string formula);
-
+	bool setFormula(std::string formula);
 private:
 	SpecialExpressionType type;
 	
@@ -24,11 +23,10 @@ private:
 	
 	double constantArgument;
 
-	SpecialExpressionType defineExpressionType(std::string expression);
+	SpecialExpressionType defineExpressionType(std::string expression, double &argument);
+	
+	
 
 
 	std::string temp;
 };
-
-
-

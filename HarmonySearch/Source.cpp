@@ -12,6 +12,7 @@ using namespace std;
 
 void TestRandomDouble();
 void TestMultipleSolutions();
+void TestSpecialExpressionParsing();
 
 int main()
 {
@@ -25,16 +26,9 @@ int main()
 
 	//TestMultipleSolutions();
 
-	SpecialExpression testExpression;
-	testExpression.setFormula("exp(x1+x2)");
-	testExpression.setFormula("ln(x1+x2)");
-	testExpression.setFormula("log(x1+x2)");
-	testExpression.setFormula("sin(x1+x2)");
-	testExpression.setFormula("cos(x1+x2)");
-	testExpression.setFormula("tan(x1+x2)");
-	testExpression.setFormula("tg(x1+x2)");
-	testExpression.setFormula("ctan(x1+x2)");
-	testExpression.setFormula("ctg(x1+x2)");
+	TestSpecialExpressionParsing();
+	
+	
 
 	system("PAUSE");
 	return 0;
@@ -97,5 +91,27 @@ void TestMultipleSolutions()
 	solution = testSearch.Search(testConstr);
 	cout << "Solution 4: ";
 	solution.printRowWithNames();
+}
+
+void TestSpecialExpressionParsing()
+{
+	SpecialExpression testExpression;
+	testExpression.setFormula("(x1+x2)");
+	testExpression.setFormula("(x1(x2+x3))^3");
+	testExpression.setFormula("e^(x1+x2)");
+	testExpression.setFormula("exp(x1+x2)");
+	testExpression.setFormula("log(2,x1+x2)");
+	testExpression.setFormula("ln(x1+x2)");
+	testExpression.setFormula("4^(x1+x2)");
+	testExpression.setFormula("sin(x1+x2)");
+	testExpression.setFormula("cos(x1+x2)");
+	testExpression.setFormula("tan(x1+x2)");
+	testExpression.setFormula("ctan(x1+x2)");
+	testExpression.setFormula("tg(x1+x2)");
+	testExpression.setFormula("ctg(x1+x2)");
+	testExpression.setFormula("sinx1");
+	testExpression.setFormula("e^x2");
+	testExpression.setFormula("3^x4");
+	testExpression.setFormula("x2^3");
 }
 

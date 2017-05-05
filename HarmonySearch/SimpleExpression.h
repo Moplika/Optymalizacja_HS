@@ -8,7 +8,7 @@ public:
 	SimpleExpression(std::string formula);
 	~SimpleExpression();
 
-	void setFormula(std::string formula);
+	bool setFormula(std::string formula);
 	double calculate(std::vector<double> x);
 
 private:
