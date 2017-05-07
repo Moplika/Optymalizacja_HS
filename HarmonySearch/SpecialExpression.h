@@ -28,5 +28,5 @@ private:
 	
 
 
-	std::string temp;
+	std::string expressionFormula;
 };

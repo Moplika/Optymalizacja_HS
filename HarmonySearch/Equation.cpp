@@ -64,7 +64,7 @@ bool Equation::splitEquation()
 	else
 		sign = MainSign::add; // Jeœli na pocz¹tku nie ma znaku, to przyjmujemy +
 
-	for (std::string::iterator it = fragmentStart; it < equationFormula.end(); it++)
+	for (std::string::iterator it = fragmentStart; it != equationFormula.end(); it++)
 	{
 		if (*it == '(')
 			unpairedBracketsNo++;
@@ -78,10 +78,9 @@ bool Equation::splitEquation()
 
 		if (unpairedBracketsNo == 0 && ((*it == '+' || *it == '-')))
 		{
-
 			// Ustawienie iteratora do koñca fragmentu na 1 znak przed + lub -
 			fragmentEnd = it;
-			--fragmentEnd;
+			//--fragmentEnd;
 
 			// Utworzenie fragmentu
 			if (!this->createNewFragment(fragmentStart, fragmentEnd, sign))

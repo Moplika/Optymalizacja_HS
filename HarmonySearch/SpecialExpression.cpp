@@ -6,12 +6,12 @@
 
 SpecialExpression::SpecialExpression()
 {
-
+	expressionFormula = "";
 }
 
 SpecialExpression::SpecialExpression(std::string string)
 {
-	temp = string;
+	expressionFormula = string;
 }
 
 SpecialExpression::~SpecialExpression()
@@ -20,7 +20,11 @@ SpecialExpression::~SpecialExpression()
 
 bool SpecialExpression::setFormula(std::string formula)
 {
-	temp = formula;
+	expressionFormula = formula;
+
+	//TODO: Rewrite -.-
+
+	//return true;
 
 	std::string functionName;
 	std::string functionArgument;
@@ -81,17 +85,20 @@ bool SpecialExpression::setFormula(std::string formula)
 			functionName.append(formula, 0, firstXPos);
 			functionArgument.append(formula, firstXPos, formula.length());
 		}
-		else // Funkcja na koñcu: mo¿liwe tylko dla x^a
+		else // Funkcja na koñcu: mo¿liwe tylko dla x^a lub x
 		{
 			std::size_t powerPosition = formula.find("^");
-			if (powerPosition == std::string::npos)
+			if (powerPosition == std::string::npos) // Funkcja typu x
 			{
-				std::cerr << "B³¹d: nie istniej¹ca funkcja?" << std::endl;
-				return false;
+				functionName = "";
+				functionArgument.append(formula);
 			}
-
-			functionName.append(formula, powerPosition, formula.length());
-			functionArgument.append(formula, 0, powerPosition );
+			else
+			{
+				functionName.append(formula, powerPosition, formula.length());
+				functionArgument.append(formula, 0, powerPosition);
+			}
+			
 		}
 
 		type = this->defineExpressionType(functionName, constantArgument);
@@ -137,6 +144,8 @@ SpecialExpressionType SpecialExpression::defineExpressionType(std::string expres
 
 double SpecialExpression::calculate(std::vector<double> x)
 {
+	//return 2.0;
+
 	// TODO: Dodaæ ograniczenia dla logarytmu i tangensa/cotangensa
 	double variable = simpleArgument.calculate(x);
 
