@@ -1,24 +1,18 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-
 #include "HarmonyMemoryRow.h"
 #include "HarmonySearch.h"
 #include "VariableConstraints.h"
 #include "Expression.h"
 #include "SimpleExpression.h"
 #include "SpecialExpression.h"
-#include "EquationPart.h"
-#include "Equation.h"
-
 
 using namespace std;
 
 void TestRandomDouble();
 void TestMultipleSolutions();
 void TestSpecialExpressionParsing();
-void TestEquationPartsParsing();
-void TestEquationParsing();
 
 int main()
 {
@@ -32,11 +26,8 @@ int main()
 
 	//TestMultipleSolutions();
 
-	//TestSpecialExpressionParsing();
+	TestSpecialExpressionParsing();
 	
-	//TestEquationPartsParsing();
-
-	TestEquationParsing();
 	
 
 	system("PAUSE");
@@ -124,36 +115,3 @@ void TestSpecialExpressionParsing()
 	testExpression.setFormula("x2^3");
 }
 
-void TestEquationPartsParsing()
-{
-	EquationPart testPart;
-	bool testBool;
-	//testBool = testPart.setFormula("5", add);
-	//testBool = testPart.setFormula("s", add);
-	//testBool = testPart.setFormula("8x1", add);
-	//testBool = testPart.setFormula("7sinx1", add);
-	//testBool = testPart.setFormula("6*x1", add);
-	//testBool = testPart.setFormula("3*sinx1", add);
-	//testBool = testPart.setFormula("x1^3", add);
-	//testBool = testPart.setFormula("4x1^3", add);
-	testBool = testPart.setFormula("4x1*sinx2", add);
-	testBool = testPart.setFormula("7*x1*sinx2", add);
-	//testPart.setFormula("x2*sinx3");
-}
-
-void TestEquationParsing()
-{
-	Equation testEquation;
-	std::vector<double> x;
-
-	testEquation.setEquation("+8(X1+X9) - 3SinX1");
-	testEquation.setEquation("+ 8 (X1+X9) - 3 SinX1 ");
-	std::cout << testEquation.calculate(x) << std::endl;
-
-	testEquation.setEquation("5(x2+x3) + 4sinx1");
-	std::cout << testEquation.calculate(x) << std::endl;
-	testEquation.setEquation("-4(x5+x4) - 5sinx1");
-	std::cout << testEquation.calculate(x) << std::endl;
-	testEquation.setEquation("+8(x1+x9) - 3sinx1");
-	std::cout << testEquation.calculate(x) << std::endl;
-}
