@@ -20,12 +20,12 @@ public:
 private:
 	std::string partFormula;
 
-	double constantMultiplier;	// sta³a, np. z funkcji 4x1 albo 1/5
+	double constantMultiplier;	// staÅ‚a, np. z funkcji 4x1 albo 1/5
 	MultiplicationSign constantSign;
-	bool isExpression;	// true - mamy cokolwiek ze zmienn¹ x, false - tylko sta³a
-	MainSign mainSign;	// znak przed ca³oœci¹ (+ albo -)
-	std::vector<SpecialExpression> parts; // czêœci równania, przedzielone znakiem * albo /
-	std::vector<MultiplicationSign> signs;	// znaki * i /, w kolejnoœci
+	bool isExpression;	// true - mamy cokolwiek ze zmiennÄ… x, false - tylko staÅ‚a
+	MainSign mainSign;	// znak przed caÅ‚oÅ›ciÄ… (+ albo -)
+	std::vector<SpecialExpression> parts; // czÄ™Å›ci rÃ³wnania, przedzielone znakiem * albo /
+	std::vector<MultiplicationSign> signs;	// znaki * i /, w kolejnoÅ›ci
 	
 	void setVariablesToZero();
 	MultiplicationSign setSign(char sign);

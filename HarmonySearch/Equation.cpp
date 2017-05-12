@@ -9,7 +9,7 @@ Equation::Equation()
 	equationFormula = "";
 }
 
-// UWAGA: Nie zwraca potwierdzenia, czy wprowadzone równanie jest poprawne
+// UWAGA: Nie zwraca potwierdzenia, czy wprowadzone rï¿½wnanie jest poprawne
 Equation::Equation(std::string formula)
 {
 	setEquation(formula);
@@ -24,11 +24,11 @@ bool Equation::setEquation(std::string equation)
 	this->clearVariables();
 
 	equationFormula = equation;
-	// Zmiana na same ma³e litery
+    // Zmiana na same maÅ‚e litery
 	std::transform(equationFormula.begin(), equationFormula.end(), equationFormula.begin(), ::tolower);
 	
-	// Usuniêcie spacji
-	std::string::iterator endAfterRemoval = std::remove_if(equationFormula.begin(), equationFormula.end(), std::isspace);
+    // UsuniÄ™cie spacji
+    std::string::iterator endAfterRemoval = std::remove_if(equationFormula.begin(), equationFormula.end(), ::isspace);
 	equationFormula.erase(endAfterRemoval, equationFormula.end());
 
 	return this->splitEquation();
@@ -57,12 +57,12 @@ bool Equation::splitEquation()
 	std::string::iterator fragmentStart = equationFormula.begin();
 	std::string::iterator fragmentEnd = equationFormula.end();
 
-	// Obs³uga znaku na pocz¹tku równania
+    // ObsÅ‚uga znaku na poczÄ…tku rÃ³wnania
 	sign = this->setSign(*fragmentStart);
 	if (sign != MainSign::nothingMain)
 		fragmentStart++;
 	else
-		sign = MainSign::add; // Jeœli na pocz¹tku nie ma znaku, to przyjmujemy +
+        sign = MainSign::add; // JeÅ¼li na poczÄ…tku nie ma znaku, to przyjmujemy +
 
 	for (std::string::iterator it = fragmentStart; it != equationFormula.end(); it++)
 	{
@@ -72,13 +72,13 @@ bool Equation::splitEquation()
 			unpairedBracketsNo--;
 		if (unpairedBracketsNo < 0)
 		{
-			std::cerr << "B³¹d: niesparowane nawiasy!" << std::endl;
+			std::cerr << "Bï¿½ï¿½d: niesparowane nawiasy!" << std::endl;
 			return false;
 		}
 
 		if (unpairedBracketsNo == 0 && ((*it == '+' || *it == '-')))
 		{
-			// Ustawienie iteratora do koñca fragmentu na 1 znak przed + lub -
+            // Ustawienie iteratora do koÅ„ca fragmentu na 1 znak przed + lub -
 			fragmentEnd = it;
 			//--fragmentEnd;
 
@@ -86,10 +86,10 @@ bool Equation::splitEquation()
 			if (!this->createNewFragment(fragmentStart, fragmentEnd, sign))
 				return false;
 	
-			// Rozpoczêcie nowego fragmentu
+            // RozpoczÄ™cie nowego fragmentu
 			sign = this->setSign(*it);
 
-			// Ustawienie iteratora do pocz¹tku nowego fragmentu na 1 znak po + lub -
+            // Ustawienie iteratora do poczÄ…tku nowego fragmentu na 1 znak po + lub -
 			fragmentStart = it;
 			++fragmentStart;
 		}
@@ -98,7 +98,7 @@ bool Equation::splitEquation()
 	// Wstawienie ostatniego fragmentu
 	if (unpairedBracketsNo != 0)
 	{
-		std::cerr << "B³¹d: niesparowane nawiasy!" << std::endl;
+        std::cerr << "BÅ‚Ä…d: niesparowane nawiasy!" << std::endl;
 		return false;
 	}
 	
@@ -116,7 +116,7 @@ bool Equation::createNewFragment(std::string::iterator fragmentStart, std::strin
 	EquationPart newPart;
 	if (!newPart.setFormula(fragmentForumula, sign))
 	{
-		std::cerr << "B³¹d przy wczytywaniu fragmentu" << std::endl;
+        std::cerr << "BÅ‚Ä…d przy wczytywaniu fragmentu" << std::endl;
 		return false;
 	}
 

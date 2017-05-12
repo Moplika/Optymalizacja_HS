@@ -3,7 +3,7 @@
 
 VariableConstraints::VariableConstraints(double _min, double _max)
 {
-	if (_min >= _max) // TODO: Wyrzuciæ jakiœ error
+	if (_min >= _max) // TODO: WyrzuciÄ‡ jakiÅ› error
 		return;
 
 	min = _min;

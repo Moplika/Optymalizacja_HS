@@ -1,7 +1,7 @@
-#pragma warning( disable : 4996 )
-
 #include "SpecialExpression.h"
+
 #include <iostream>
+#include <cmath>
 
 
 SpecialExpression::SpecialExpression()
@@ -33,28 +33,28 @@ bool SpecialExpression::setFormula(std::string formula)
 	std::size_t argumentStartPos = formula.find("(");
 	if (argumentStartPos != std::string::npos)
 	{
-		// ZnajdŸ argument funkcji (w nawiasach)
+		// ZnajdÅº argument funkcji (w nawiasach)
 		std::size_t argumentEndPos = formula.find_last_of(")");
 		if (argumentEndPos == std::string::npos)
 		{
-			std::cerr << "Podano b³êdne równanie - brak zamykaj¹cego nawiasu" << std::endl;
+			std::cerr << "Podano bÅ‚Ä™dne rÃ³wnanie - brak zamykajÄ…cego nawiasu" << std::endl;
 			return false;
 		}
 
 		functionArgument.append(formula, argumentStartPos + 1, argumentEndPos - argumentStartPos - 1);
 
-		// ZnajdŸ typ funkcji
-		if (argumentStartPos != 0) // Funkcja jest na pocz¹tku - sin, cos, tan, ln, exp itp
+		// ZnajdÅº typ funkcji
+		if (argumentStartPos != 0) // Funkcja jest na poczÄ…tku - sin, cos, tan, ln, exp itp
 		{
 			functionName.append(formula, 0, argumentStartPos);
 		}
-		else if (argumentEndPos != formula.length()) // Funkcja jest na koñcu - x^a
+		else if (argumentEndPos != formula.length()) // Funkcja jest na koÅ„cu - x^a
 		{
 			functionName.append(formula, argumentEndPos + 1, formula.length() - argumentEndPos);
 		}
 		type = this->defineExpressionType(functionName, constantArgument);
 
-		// Logarytm ma podstawê jako pierwszy argument w nawiasie - trzeba j¹ wyci¹gn¹æ
+		// Logarytm ma podstawÄ™ jako pierwszy argument w nawiasie - trzeba jÄ… wyciÄ…gnÄ…Ä‡
 		if (type == SpecialExpressionType::logaritmic)
 		{
 			std::size_t commaPos = functionArgument.find(",");
@@ -71,21 +71,21 @@ bool SpecialExpression::setFormula(std::string formula)
 	}
 	else
 	{
-		// ZnajdŸ pierwszy x:
+		// ZnajdÅº pierwszy x:
 		std::size_t firstXPos = formula.find('x');
 
 		if (firstXPos == std::string::npos) // Nie ma x?
 		{
-			std::cerr << "B³¹d: w równaniu nie ma x?" << std::endl;
+			std::cerr << "BÅ‚Ä…d: w rÃ³wnaniu nie ma x?" << std::endl;
 			return false;
 		}
 
-		if (firstXPos != 0) // Funkcja na pocz¹tku
+		if (firstXPos != 0) // Funkcja na poczÄ…tku
 		{
 			functionName.append(formula, 0, firstXPos);
 			functionArgument.append(formula, firstXPos, formula.length());
 		}
-		else // Funkcja na koñcu: mo¿liwe tylko dla x^a lub x
+		else // Funkcja na koÅ„cu: moÅ¼liwe tylko dla x^a lub x
 		{
 			std::size_t powerPosition = formula.find("^");
 			if (powerPosition == std::string::npos) // Funkcja typu x
@@ -146,7 +146,7 @@ double SpecialExpression::calculate(std::vector<double> x)
 {
 	//return 2.0;
 
-	// TODO: Dodaæ ograniczenia dla logarytmu i tangensa/cotangensa
+	// TODO: DodaÄ‡ ograniczenia dla logarytmu i tangensa/cotangensa
 	double variable = simpleArgument.calculate(x);
 
 	switch (type)

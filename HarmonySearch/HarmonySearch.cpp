@@ -3,13 +3,13 @@
 #include <iostream>
 #include <algorithm>
 
-// TODO: Zmieniæ na wektor czy zostawiæ jako listê? (Mo¿e zrobiæ jakiœ test jak siê dzia³anie porównuje)
+// TODO: ZmieniÄ‡ na wektor czy zostawiÄ‡ jako listÄ™? (MoÅ¼e zrobiÄ‡ jakiÅ› test jak siÄ™ dziaÅ‚anie porÃ³wnuje)
 
 HarmonySearch::HarmonySearch(unsigned int N, unsigned int _HMS, double _HMCR, double _PAR, double _b, unsigned int _NI)
 {
-	// TODO: Dorobiæ sprawdzanie, czy wartoœci parametrów s¹ poprawne
+	// TODO: DorobiÄ‡ sprawdzanie, czy wartoÅ›ci parametrÃ³w sÄ… poprawne
 
-	// Przepisanie parametrów
+	// Przepisanie parametrÃ³w
 	HMSize = _HMS;
 	HMConsiderationRate = _HMCR;
 	PitchAdjustmentRate = _PAR;
@@ -37,7 +37,7 @@ void HarmonySearch::InitializeHM(std::vector<VariableConstraints> &constraints)
 		HarmonyMemory.push_back(HarmonyMemoryRow(x));
 	}
 
-	// Posortowanie pamiêci
+	// Posortowanie pamiÄ™ci
 	HarmonyMemory.sort(compareRows);
 }
 
@@ -90,7 +90,7 @@ void HarmonySearch::insertNewSolution(HarmonyMemoryRow &newSolution)
 
 double HarmonySearch::getXFromMemory(unsigned int variableIndex)
 {
-	int index = this->getRandomInt(0, HMSize - 1); //TODO: Przetestowaæ?
+	int index = this->getRandomInt(0, HMSize - 1); //TODO: PrzetestowaÄ‡?
 
 	std::list<HarmonyMemoryRow>::iterator it = HarmonyMemory.begin();
 	for (int k = 0; k < index; k++)
@@ -106,15 +106,15 @@ std::vector<double> HarmonySearch::createNewSolution(std::vector<VariableConstra
 
 	for (unsigned int j = 0; j < variableCount; j++, constrainIt++)
 	{
-		double p = this->getRandomDouble(0, 1); // Prawdopodobieñstwo wziêcia wartoœci z pamiêci
+		double p = this->getRandomDouble(0, 1); // PrawdopodobieÅ„stwo wziÄ™cia wartoÅ›ci z pamiÄ™ci
 		double value;
 
-		if (p <= HMConsiderationRate) // Wybierz wartoœæ z pamiêci
+		if (p <= HMConsiderationRate) // Wybierz wartoÅ›Ä‡ z pamiÄ™ci
 		{
 			value = this->getXFromMemory(j);
 
-			// Modyfikacja wartoœci
-			double p1 = this->getRandomDouble(0, 1); // Prawdopodobieñstwo zmiany wartoœci
+			// Modyfikacja wartoÅ›ci
+			double p1 = this->getRandomDouble(0, 1); // PrawdopodobieÅ„stwo zmiany wartoÅ›ci
 
 			if (p1 <= PitchAdjustmentRate)
 			{
@@ -123,7 +123,7 @@ std::vector<double> HarmonySearch::createNewSolution(std::vector<VariableConstra
 				value = std::min(std::max(constrainIt->getMin(), value + alpha), constrainIt->getMax());
 			}
 		}
-		else // Wygeneruj losow¹ wartoœæ
+		else // Wygeneruj losowÄ… wartoÅ›Ä‡
 		{
 			value = this->getRandomDouble(constrainIt->getMin(), constrainIt->getMax());
 		}

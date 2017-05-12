@@ -9,7 +9,7 @@ EquationPart::EquationPart()
 
 EquationPart::EquationPart(std::string formula, MainSign mSign)
 {
-	// UWAGA: Nie sprawdza, czy równanie jest poprawne
+	// UWAGA: Nie sprawdza, czy rownanie jest poprawne
 	setFormula(formula, mSign);
 }
 
@@ -49,12 +49,12 @@ void EquationPart::separateConstant(std::size_t firstNotNumberPosition, std::siz
 	{
 		constantMultiplier = std::stod(partFormula.substr(0, firstNotNumberPosition));
 
-		if (firstNotNumberPosition == firstSignPosition) // Postaæ a*x1
+		if (firstNotNumberPosition == firstSignPosition) // PostaÄ‡ a*x1
 		{
 			partStartPosition = firstNotNumberPosition + 1;
 			constantSign = this->setSign(partFormula.at(firstSignPosition));
 		}
-		else // Postaæ ax1
+		else // Postac ax1
 		{
 			partStartPosition = firstNotNumberPosition;
 			constantSign = MultiplicationSign::multiply;
@@ -83,23 +83,23 @@ bool EquationPart::splitParts(std::size_t firstNotNumberPosition, std::size_t fi
 			unpairedBracketsNo--;
 		if (unpairedBracketsNo < 0)
 		{
-			std::cerr << "B³¹d: niesparowane nawiasy!" << std::endl;
+            std::cerr << "BÅ‚Ä…d: niesparowane nawiasy!" << std::endl;
 			return false;
 		}
 
 		if (unpairedBracketsNo == 0 && ((*it == '*' || *it == '/')))
 		{
-			// Ustawienie iteratora do koñca fragmentu na 1 znak przed * lub /
+			// Ustawienie iteratora do konca fragmentu na 1 znak przed * lub /
 			fragmentEnd = it;
 			//--fragmentEnd;
 
 			if (!this->createNewExpression(fragmentStart, fragmentEnd, sign))
 				return false;
 
-			// Rozpoczêcie nowego fragmentu
+			// Rozpoczecie nowego fragmentu
 			sign = this->setSign(*it);
 
-			// Ustawienie iteratora do pocz¹tku nowego fragmentu na 1 znak po * lub /
+			// Ustawienie iteratora do poczatku nowego fragmentu na 1 znak po * lub /
 			fragmentStart = it;
 			++fragmentStart;
 		}
@@ -107,7 +107,7 @@ bool EquationPart::splitParts(std::size_t firstNotNumberPosition, std::size_t fi
 
 	if (unpairedBracketsNo != 0)
 	{
-		std::cerr << "B³¹d: niesparowane nawiasy!" << std::endl;
+        std::cerr << "BÅ‚Ä…d: niesparowane nawiasy!" << std::endl;
 		return false;
 	}
 
@@ -124,12 +124,12 @@ bool EquationPart::splitFormula()
 	std::size_t firstNotNumberPosition = partFormula.find_first_not_of("0123456789");
 	std::size_t firstSignPosition = partFormula.find_first_of("*/");
 		
-	// Sprawdzenie, czy w równaniu nie ma x - jest tylko sta³a
+	// Sprawdzenie, czy w rownaniu nie ma x - jest tylko stala
 	if (firstXPosition == std::string::npos)	
 	{
-		if (firstNotNumberPosition != std::string::npos)	// Ale jest jakiœ inny znak, który nie jest liczb¹ - b³¹d
+		if (firstNotNumberPosition != std::string::npos)	// Ale jest jakis inny znak, ktory nie jest liczba - blad
 		{
-			std::cerr << "Blad: niedozwolone znaki w rownaniu" << std::endl;
+            std::cerr << "BÅ‚Ä…d: niedozwolone znaki w rownaniu" << std::endl;
 			return false;
 		}
 
@@ -144,7 +144,7 @@ bool EquationPart::splitFormula()
 
 	this->separateConstant(firstNotNumberPosition, firstSignPosition, partStartPosition);
 
-	// Wy³¹czenie kolejnych kawa³ków
+	// Wylaczenie kolejnych kawalkow
 	//int unpairedBracketsNo = 0;
 	//MultiplicationSign sign = MultiplicationSign::nothingMulti;
 	//std::string::iterator fragmentStart = partFormula.begin();
@@ -164,23 +164,23 @@ bool EquationPart::splitFormula()
 	//		unpairedBracketsNo--;
 	//	if (unpairedBracketsNo < 0)
 	//	{
-	//		std::cerr << "B³¹d: niesparowane nawiasy!" << std::endl;
+	//		std::cerr << "Blad: niesparowane nawiasy!" << std::endl;
 	//		return false;
 	//	}
 
 	//	if (unpairedBracketsNo == 0 && ((*it == '*' || *it == '/')))
 	//	{
-	//		// Ustawienie iteratora do koñca fragmentu na 1 znak przed * lub /
+	//		// Ustawienie iteratora do konca fragmentu na 1 znak przed * lub /
 	//		fragmentEnd = it;
 	//		//--fragmentEnd;
 
 	//		if (!this->createNewExpression(fragmentStart, fragmentEnd, sign))
 	//			return false;
 
-	//		// Rozpoczêcie nowego fragmentu
+	//		// Rozpoczecie nowego fragmentu
 	//		sign = this->setSign(*it);
 
-	//		// Ustawienie iteratora do pocz¹tku nowego fragmentu na 1 znak po * lub /
+	//		// Ustawienie iteratora do poczatku nowego fragmentu na 1 znak po * lub /
 	//		fragmentStart = it;
 	//		++fragmentStart;
 	//	}
@@ -191,7 +191,7 @@ bool EquationPart::splitFormula()
 	//// Wstawienie ostatniego fragmentu
 	//if (unpairedBracketsNo != 0)
 	//{
-	//	std::cerr << "B³¹d: niesparowane nawiasy!" << std::endl;
+	//	std::cerr << "Blad: niesparowane nawiasy!" << std::endl;
 	//	return false;
 	//}
 
@@ -219,7 +219,7 @@ bool EquationPart::createNewExpression(std::string::iterator fragmentStart, std:
 	SpecialExpression newExpression;
 	if (!newExpression.setFormula(expressionFormula))
 	{
-		std::cerr << "B³¹d przy wczytywaniu funkcji" << std::endl;
+        std::cerr << "BÅ‚Ä…d przy wczytywaniu funkcji" << std::endl;
 		return false;
 	}
 
@@ -245,7 +245,7 @@ double EquationPart::calculate(std::vector<double> x)
 	{
 		result = parts.front().calculate(x);
 	}
-	else // Wiêcej ni¿ jeden element
+	else // WiÄ™cej niÅ¼ jeden element
 	{
 		std::vector<SpecialExpression>::reverse_iterator expressionRit = parts.rbegin();
 		result = expressionRit->calculate(x);
@@ -281,11 +281,11 @@ double EquationPart::calculatePart(double first, double second, MultiplicationSi
 		if (second != 0)
 			return first / second;
 
-		std::cerr << "B³¹d: dzielenie przez zero" << std::endl;
+		std::cerr << "BÅ‚Ä…d: dzielenie przez zero" << std::endl;
 		return INT_MAX;
 	}
 	case MultiplicationSign::nothingMulti:
-		std::cerr << "B³¹d: brak znaku" << std::endl;
+		std::cerr << "BÅ‚Ä…d: brak znaku" << std::endl;
 		return INT_MAX;
 	default:
 		return INT_MAX;

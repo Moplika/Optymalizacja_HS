@@ -7,7 +7,7 @@ enum SpecialExpressionType
 	exponential,	// e^x
 	logaritmic,	    // log_a(x)
 	naturalLog,		// ln(x)
-	power,			// potêgowa - a^x
+	power,			// potÄ™gowa - a^x
 	sinus,			// sin(x)
 	cosinus,		// cos(x)
 	tangens,		// tan(x)

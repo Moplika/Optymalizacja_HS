@@ -5,7 +5,7 @@
 class HarmonyMemoryRow
 {
 private:
-	unsigned int N; // Liczba zmiennych w równaniu
+	unsigned int N; // Liczba zmiennych w rÃ³wnaniu
 
 	std::vector<double> row;
 
@@ -20,7 +20,7 @@ public:
 
 	double getX(unsigned int index) const;
 	double getObjectiveFunction() const;
-	unsigned int getVariableCount() const { return N; };
+    unsigned int getVariableCount() const { return N; }
 
 	bool setX(unsigned int index, double value);
 	void setObjectiveFunction(double value);
