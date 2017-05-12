@@ -11,5 +11,8 @@ public:
 
 	virtual double calculate(std::vector<double> x);
 	virtual bool setFormula(std::string formula);
+
+private:
+    std::string temp;
 };
 

@@ -1,4 +1,6 @@
-QT += qml quick
+QT += qml quick \
+    charts
+
 
 CONFIG += c++11
 
@@ -47,3 +49,7 @@ HEADERS += \
     SpecialExpressionType.h \
     VariableConstraints.h \
     Equation.h
+
+DISTFILES += \
+    Page2Form.ui.qml \
+    Page2.qml

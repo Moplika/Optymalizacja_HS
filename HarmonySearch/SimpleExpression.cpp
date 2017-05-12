@@ -17,7 +17,7 @@ SimpleExpression::~SimpleExpression()
 
 double SimpleExpression::calculate(std::vector<double> x)
 {
-	return 2.0;
+    return 2.0;
 }
 
 bool SimpleExpression::setFormula(std::string formula)

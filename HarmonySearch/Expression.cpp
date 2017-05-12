@@ -5,9 +5,9 @@ Expression::Expression()
 {
 }
 
-Expression::Expression(std::string string)
+Expression::Expression(std::string formula)
 {
-
+    temp = formula;
 }
 
 Expression::~Expression()
@@ -21,5 +21,6 @@ double Expression::calculate(std::vector<double> x)
 
 bool Expression::setFormula(std::string formula)
 {
+    temp = formula;
 	return false;
 }

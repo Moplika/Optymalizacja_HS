@@ -4,8 +4,8 @@ import QtQuick.Layouts 1.0
 
 ApplicationWindow {
     visible: true
-    width: 640
-    height: 480
+    width: 800
+    height: 600
     title: qsTr("Hello World")
 
     SwipeView {
@@ -28,10 +28,10 @@ ApplicationWindow {
         id: tabBar
         currentIndex: swipeView.currentIndex
         TabButton {
-            text: qsTr("First")
+            text: qsTr("Parametry")
         }
         TabButton {
-            text: qsTr("Second")
+            text: qsTr("Wynik obliczeń")
         }
     }
 }
