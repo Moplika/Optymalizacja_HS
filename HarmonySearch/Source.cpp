@@ -34,9 +34,9 @@ int main()
 
 	//TestSpecialExpressionParsing();
 	
-	TestEquationPartsParsing();
+	//TestEquationPartsParsing();
 
-	//TestEquationParsing();
+	TestEquationParsing();
 	
 
 	system("PAUSE");
