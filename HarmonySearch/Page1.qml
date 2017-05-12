@@ -58,4 +58,16 @@ Page1Form {
         checkBox_iterations.checked = false;
         textField_iterations.text = 100;
     }
+
+    // Przekazywanie wartości do C++
+    btn_calculate.onClicked: {
+        uiHandler.setHMS(textField_HMSize.text);
+        uiHandler.setHMCR(slider_HMCR.value.toFixed(2));
+        uiHandler.setPAR(slider_PAR.value.toFixed(2));
+        uiHandler.setNI(textField_NI.text);
+        uiHandler.setShowIterations(checkBox_iterations.checkState);
+        uiHandler.setIterationNb(textField_iterations.text);
+
+        uiHandler.startCalculations();
+    }
 }

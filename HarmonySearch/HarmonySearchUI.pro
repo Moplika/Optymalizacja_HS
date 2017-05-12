@@ -12,7 +12,8 @@ SOURCES += main.cpp \
     SimpleExpression.cpp \
     SpecialExpression.cpp \
     VariableConstraints.cpp \
-    Equation.cpp
+    Equation.cpp \
+    uihandler.cpp
 
 RESOURCES += qml.qrc
 
@@ -48,7 +49,8 @@ HEADERS += \
     SpecialExpression.h \
     SpecialExpressionType.h \
     VariableConstraints.h \
-    Equation.h
+    Equation.h \
+    uihandler.h
 
 DISTFILES += \
     Page2Form.ui.qml \

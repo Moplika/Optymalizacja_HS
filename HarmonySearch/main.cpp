@@ -1,10 +1,12 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
 
 #include <iostream>
 #include <vector>
 #include <algorithm>
 
+#include "uihandler.h"
 #include "HarmonyMemoryRow.h"
 #include "HarmonySearch.h"
 #include "VariableConstraints.h"
@@ -28,6 +30,10 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 
+    UIHandler uiHandler;
+    uiHandler.initialize();
+    engine.rootContext()->setContextProperty(QString("uiHandler"), &uiHandler);
+
     std::cout << "Hello world?" << std::endl;
 
 //    double testX[] = { 16, 2, 77, 29 };
@@ -42,7 +48,7 @@ int main(int argc, char *argv[])
 
 //    TestEquationPartsParsing();
 
-    TestEquationParsing();
+//    TestEquationParsing();
 
     return app.exec();
 }
