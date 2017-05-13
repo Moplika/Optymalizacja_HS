@@ -1,13 +1,24 @@
 #ifndef UIHANDLER_H
 #define UIHANDLER_H
 
+#include "VariableConstraints.h"
+
 #include <QObject>
 
 #include <string>
+#include <vector>
 
 class UIHandler : public QObject
 {
     Q_OBJECT
+
+    struct readConstraints
+    {
+        int xIndex;
+        double min;
+        double max;
+    };
+
 public:
     explicit UIHandler(QObject *parent = 0);
 
@@ -15,6 +26,10 @@ public:
     void printParmeters();
 
 signals:
+    void wrongConstraints();
+    void notEnoughConstraints();
+    void tooManyConstraints();
+    void constraintsOk();
 
 public slots:
     void startCalculations();
@@ -37,8 +52,16 @@ public slots:
     int getIterationNb() const;
     void setIterationNb(int iterationsNb);
 
+    int getN() const;
+    void setN(int N);
+
     std::string getEquation() const;
     void setEquation(std::string equation);
+
+    std::vector<VariableConstraints> getConstraints() const;
+    void setConstraints(std::vector<VariableConstraints> constraints);
+    void readSingleConstraint(int index, double min, double max);
+    void rewriteConstraints();
 
 private:
     int _HMS;
@@ -47,10 +70,16 @@ private:
     int _NI;
     bool _doShowIter;
     int _iterationsNb;
+    unsigned int _N;
 
     std::string _equation;
 
+    std::vector<VariableConstraints> _constraints;
+    std::vector<readConstraints> _readConstraints;
+
+
 
 };
+
 
 #endif // UIHANDLER_H

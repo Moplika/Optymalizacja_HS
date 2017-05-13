@@ -1,12 +1,14 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
+import QtQuick.Dialogs.qml 1.0
 
 Item {
     property alias textField1: textField1
     property alias button1: button1
     width: 800
     height: 600
+    property alias btn_constraints: btn_constraints
     property alias text_coverIterations: text_coverIterations
     property alias label_iterations: label_iterations
     property alias btn_calculate: btn_calculate
@@ -71,11 +73,11 @@ Item {
 
         Text {
             id: label_equationState
-            text: qsTr("Stan równania - powinno się zmieniać z kodu")
+            text: qsTr("Stan równania")
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
-            Layout.preferredWidth: 288
-            Layout.columnSpan: 4
+            Layout.preferredWidth: 144
+            Layout.columnSpan: 2
             font.pixelSize: 12
         }
 
@@ -87,6 +89,19 @@ Item {
             Layout.rowSpan: 1
             Layout.preferredWidth: 144
             Layout.fillWidth: false
+        }
+
+        Button {
+            id: btn_constraints
+            text: qsTr("Ograniczenia na x")
+            checkable: false
+            highlighted: false
+            font.strikeout: false
+            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+            Layout.columnSpan: 2
+            Layout.fillWidth: false
+            Layout.rowSpan: 1
+            Layout.preferredWidth: 144
         }
 
         Button {
@@ -322,6 +337,7 @@ Item {
             Layout.preferredWidth: 288
             Layout.columnSpan: 4
         }
+
     }
 
     RowLayout {

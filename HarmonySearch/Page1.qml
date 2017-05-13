@@ -1,6 +1,10 @@
 import QtQuick 2.7
+import QtQuick.Controls 2.1
+import QtQuick.Layouts 1.3
+
 
 Page1Form {
+    id: page1
 
     // Początkowe wartości checkboxa i pól "show iterations"
     checkBox_iterations.checked: false;
@@ -59,6 +63,51 @@ Page1Form {
         textField_iterations.text = 100;
     }
 
+    // Wyświetlenie zasad wpisywania równania
+    btn_rules.onClicked: {
+        rulesDialog.open();
+    }
+
+    RulesDialog {
+        id: rulesDialog
+    }
+
+    // Pokazanie okienka do wprowadzenia ograniczeń
+    btn_constraints.onClicked: {
+        constraintsDialog.open();
+    }
+    ConstraintsDialog {
+        id: constraintsDialog
+    }
+
+    // Pokazywanie stanu ograniczeń
+    Connections {
+        target: uiHandler;
+        onConstraintsOk: {
+            label_equationState.text = ""
+            label_equationState.color = "black";
+            btn_constraints.highlighted = false;
+            console.log("Signal: onConstraitnsOk")
+        }
+        onTooManyConstraints: {
+            label_equationState.text = "Zbyt dużo ograniczeń!"
+            label_equationState.color = "blue";
+            console.log("Signal: onTooManyConstraints")
+        }
+        onNotEnoughConstraints: {
+            label_equationState.text = "Zbyt mało ograniczeń!"
+            label_equationState.color = "red";
+            btn_constraints.highlighted = true;
+            console.log("Signal: onNotEnoughConstraints")
+        }
+        onWrongConstraints: {
+            label_equationState.text = "Błędne ograniczenia!"
+            label_equationState.color = "red";
+            btn_constraints.highlighted = true;
+            console.log("Signal: onWrongConstraints")
+        }
+    }
+
     // Przekazywanie wartości do C++
     btn_calculate.onClicked: {
         uiHandler.setHMS(textField_HMSize.text);
@@ -70,4 +119,5 @@ Page1Form {
 
         uiHandler.startCalculations();
     }
+
 }

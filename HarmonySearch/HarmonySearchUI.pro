@@ -52,6 +52,4 @@ HEADERS += \
     Equation.h \
     uihandler.h
 
-DISTFILES += \
-    Page2Form.ui.qml \
-    Page2.qml
+DISTFILES +=

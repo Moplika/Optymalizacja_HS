@@ -6,5 +6,8 @@
         <file>qtquickcontrols2.conf</file>
         <file>Page2.qml</file>
         <file>Page2Form.ui.qml</file>
+        <file>ConstraintsRow.qml</file>
+        <file>ConstraintsDialog.qml</file>
+        <file>RulesDialog.qml</file>
     </qresource>
 </RCC>

@@ -2,6 +2,8 @@
 
 #include <QDebug>
 
+#include <math.h>
+
 
 UIHandler::UIHandler(QObject *parent) : QObject(parent)
 {
@@ -18,6 +20,9 @@ void UIHandler::initialize()
     _iterationsNb = 0;
 
     _equation = "";
+
+    // TEMP
+    _N = 4;
 }
 
 int UIHandler::getHMS() const
@@ -80,6 +85,16 @@ void UIHandler::setIterationNb(int iterationsNb)
     _iterationsNb = iterationsNb;
 }
 
+int UIHandler::getN() const
+{
+    return _N;
+}
+
+void UIHandler::setN(int N)
+{
+    _N = N;
+}
+
 std::string UIHandler::getEquation() const
 {
     return _equation;
@@ -88,6 +103,54 @@ std::string UIHandler::getEquation() const
 void UIHandler::setEquation(std::string equation)
 {
     _equation = equation;
+}
+
+std::vector<VariableConstraints> UIHandler::getConstraints() const
+{
+    return _constraints;
+}
+
+void UIHandler::setConstraints(std::vector<VariableConstraints> constraints)
+{
+    _constraints = constraints;
+}
+
+void UIHandler::readSingleConstraint(int index, double min, double max)
+{
+    readConstraints constraintsPair;
+
+    if ( min >= max || std::isnan(min) || std::isnan(max) )
+    {
+        emit wrongConstraints();
+        return;
+    }
+
+    constraintsPair.xIndex = index;
+    constraintsPair.min = min;
+    constraintsPair.max = max;
+
+    qDebug() << "index: " << index << ", min: " << min << ", max: " << max;
+
+    _readConstraints.push_back(constraintsPair);
+}
+
+void UIHandler::rewriteConstraints()
+{
+    if (_readConstraints.size() < _N)
+    {
+        emit notEnoughConstraints();
+        _readConstraints.clear();
+        return;
+    }
+
+    if (_readConstraints.size() > _N)
+    {
+        emit tooManyConstraints();
+    }
+
+
+    emit constraintsOk();
+    _readConstraints.clear();
 }
 
 void UIHandler::printParmeters()
@@ -110,3 +173,5 @@ void UIHandler::startCalculations()
 {
     this->printParmeters();
 }
+
+

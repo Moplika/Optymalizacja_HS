@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 //    HarmonyMemoryRow testRow(vTestX);
 //    testRow.printRowWithNames();
 
-//    TestMultipleSolutions();
+    TestMultipleSolutions();
 
 //    TestSpecialExpressionParsing();
 
