@@ -74,10 +74,14 @@ private:
 
     std::string _equation;
 
+    bool areAllConstraintsRead;
+    bool areConstraintsSet;
     std::vector<VariableConstraints> _constraints;
     std::vector<readConstraints> _readConstraints;
 
+    void clearReadConstraints();
 
+    static bool compareReadConstraints(readConstraints first, readConstraints second);
 
 };
 

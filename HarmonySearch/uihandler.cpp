@@ -3,7 +3,7 @@
 #include <QDebug>
 
 #include <math.h>
-
+#include <algorithm>
 
 UIHandler::UIHandler(QObject *parent) : QObject(parent)
 {
@@ -21,6 +21,7 @@ void UIHandler::initialize()
 
     _equation = "";
 
+    areAllConstraintsRead = true;
     // TEMP
     _N = 4;
 }
@@ -122,6 +123,7 @@ void UIHandler::readSingleConstraint(int index, double min, double max)
     if ( min >= max || std::isnan(min) || std::isnan(max) )
     {
         emit wrongConstraints();
+        areAllConstraintsRead = false;
         return;
     }
 
@@ -134,12 +136,27 @@ void UIHandler::readSingleConstraint(int index, double min, double max)
     _readConstraints.push_back(constraintsPair);
 }
 
+void UIHandler::clearReadConstraints()
+{
+    _readConstraints.clear();
+    areAllConstraintsRead = true;
+}
+
 void UIHandler::rewriteConstraints()
 {
+    _constraints.clear();
+    areConstraintsSet = false;
+
+    if (!areAllConstraintsRead)
+    {
+        this->clearReadConstraints();
+        return;
+    }
+
     if (_readConstraints.size() < _N)
     {
         emit notEnoughConstraints();
-        _readConstraints.clear();
+        this->clearReadConstraints();
         return;
     }
 
@@ -147,10 +164,39 @@ void UIHandler::rewriteConstraints()
     {
         emit tooManyConstraints();
     }
+    else
+    {
+        emit constraintsOk();
+    }
 
+    std::sort(_readConstraints.begin(), _readConstraints.end(), compareReadConstraints);
 
-    emit constraintsOk();
-    _readConstraints.clear();
+    // Sprawdzenie, czy xy są po kolei
+    int testX = 1;
+
+    for (std::vector<readConstraints>::iterator it = _readConstraints.begin();
+         it != _readConstraints.end(); it++, testX++)
+    {
+        if ((unsigned int)testX > _N)
+            break;
+        if (testX != it->xIndex)
+        {
+            emit wrongConstraints();
+            this->clearReadConstraints();
+            return;
+        }
+    }
+
+    // Przepisanie na prawdziwe wartości
+    for (std::vector<readConstraints>::iterator it = _readConstraints.begin();
+         it != _readConstraints.begin() + _N; it++)
+    {
+        VariableConstraints newConstraint(it->min, it->max);
+        _constraints.push_back(newConstraint);
+    }
+
+    areConstraintsSet = true;
+    this->clearReadConstraints();
 }
 
 void UIHandler::printParmeters()
@@ -167,6 +213,15 @@ void UIHandler::printParmeters()
         qDebug() << "Iterations won't be shown";
 
     qDebug() << "Every" << _iterationsNb << "th iteration will be shown.";
+
+    qDebug() << "Ograniczenia na X:";
+
+    int i = 1;
+    for (std::vector<VariableConstraints>::iterator it = _constraints.begin();
+         it != _constraints.end(); it++, i++)
+    {
+        qDebug() << "X:" << i << "min:" << it->getMin() << "max:" << it->getMax();
+    }
 }
 
 void UIHandler::startCalculations()
@@ -174,4 +229,7 @@ void UIHandler::startCalculations()
     this->printParmeters();
 }
 
-
+bool UIHandler::compareReadConstraints(readConstraints first, readConstraints second)
+{
+    return first.xIndex < second.xIndex;
+}
