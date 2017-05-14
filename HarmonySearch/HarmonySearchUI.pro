@@ -8,11 +8,11 @@ SOURCES += main.cpp \
     EquationPart.cpp \
     HarmonyMemoryRow.cpp \
     HarmonySearch.cpp \
-    SimpleExpression.cpp \
     SpecialExpression.cpp \
     VariableConstraints.cpp \
     Equation.cpp \
-    uihandler.cpp
+    uihandler.cpp \
+    Argument.cpp
 
 RESOURCES += qml.qrc
 
@@ -43,11 +43,11 @@ HEADERS += \
     EquationSigns.h \
     HarmonyMemoryRow.h \
     HarmonySearch.h \
-    SimpleExpression.h \
-    SpecialExpression.h \
     SpecialExpressionType.h \
     VariableConstraints.h \
     Equation.h \
-    uihandler.h
+    uihandler.h \
+    SpecialExpression.h \
+    Argument.h
 
 DISTFILES +=

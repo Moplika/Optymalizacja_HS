@@ -1,10 +1,12 @@
 #pragma once
 
 #include "SpecialExpressionType.h"
-#include "SimpleExpression.h"
+#include "Argument.h"
 
 #include <string>
 #include <vector>
+
+class Argument;
 
 class SpecialExpression
 {
@@ -18,11 +20,7 @@ public:
 private:
 	SpecialExpressionType type;
 	
-	SimpleExpression simpleArgument;
-
-	//bool isArgumentSpecial;
-	
-	//SpecialExpression specialArgument;
+    Argument *simpleArgument;
 	
 	double constantArgument;
 

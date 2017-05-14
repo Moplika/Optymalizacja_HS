@@ -7,6 +7,7 @@
 SpecialExpression::SpecialExpression()
 {
 	expressionFormula = "";
+    simpleArgument = NULL;
 }
 
 SpecialExpression::SpecialExpression(std::string string)
@@ -16,6 +17,9 @@ SpecialExpression::SpecialExpression(std::string string)
 
 SpecialExpression::~SpecialExpression()
 {
+    if (simpleArgument != NULL)
+        delete simpleArgument;
+    simpleArgument = NULL;
 }
 
 bool SpecialExpression::setFormula(std::string formula)
@@ -103,7 +107,8 @@ bool SpecialExpression::setFormula(std::string formula)
 
 		type = this->defineExpressionType(functionName, constantArgument);
 	}
-	simpleArgument.setFormula(functionArgument);
+    simpleArgument = new Argument();
+    simpleArgument->setFormula(functionArgument);
 	
 	return true;
 }
@@ -147,7 +152,7 @@ double SpecialExpression::calculate(std::vector<double> x)
 	//return 2.0;
 
 	// TODO: Dodać ograniczenia dla logarytmu i tangensa/cotangensa
-	double variable = simpleArgument.calculate(x);
+    double variable = simpleArgument->calculate(x);
 
 	switch (type)
 	{

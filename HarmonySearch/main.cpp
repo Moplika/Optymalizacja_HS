@@ -11,7 +11,7 @@
 #include "HarmonyMemoryRow.h"
 #include "HarmonySearch.h"
 #include "VariableConstraints.h"
-#include "SimpleExpression.h"
+#include "Argument.h"
 #include "SpecialExpression.h"
 #include "EquationPart.h"
 #include "Equation.h"
@@ -53,7 +53,8 @@ int main(int argc, char *argv[])
 
     TestEquation();
 
-    return app.exec();
+    //return app.exec();
+    return 0;
 }
 
 double getRandomDouble(double min, double max)
