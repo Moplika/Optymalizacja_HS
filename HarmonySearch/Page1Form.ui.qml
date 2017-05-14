@@ -4,8 +4,6 @@ import QtQuick.Layouts 1.0
 import QtQuick.Dialogs.qml 1.0
 
 Item {
-    property alias textField1: textField1
-    property alias button1: button1
     width: 800
     height: 600
     property alias btn_constraints: btn_constraints
@@ -56,7 +54,7 @@ Item {
 
         TextField {
             id: textField_equation
-            text: qsTr("Text Field")
+            text: qsTr("")
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             Layout.columnSpan: 8
             horizontalAlignment: Text.AlignHCenter
@@ -336,26 +334,6 @@ Item {
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             Layout.preferredWidth: 288
             Layout.columnSpan: 4
-        }
-
-    }
-
-    RowLayout {
-        visible: false
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.topMargin: 20
-        anchors.top: parent.top
-
-        TextField {
-            id: textField1
-            visible: false
-            placeholderText: qsTr("Text Field")
-        }
-
-        Button {
-            id: button1
-            text: qsTr("Press Me")
-            visible: false
         }
     }
 }

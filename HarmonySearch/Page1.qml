@@ -120,4 +120,13 @@ Page1Form {
         uiHandler.startCalculations();
     }
 
+    // Przesyłanie równania
+    Connections {
+        target: textField_equation;
+        onEditingFinished: {
+            uiHandler.setEquation(textField_equation.text);
+            console.log("Equation set?")
+        }
+
+    }
 }

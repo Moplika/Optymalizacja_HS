@@ -16,11 +16,8 @@ ApplicationWindow {
         Page1 {
         }
 
-        Page {
-            Label {
-                text: qsTr("Second page")
-                anchors.centerIn: parent
-            }
+        Page2 {
+
         }
     }
 

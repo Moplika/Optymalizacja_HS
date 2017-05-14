@@ -4,6 +4,7 @@
 #include "VariableConstraints.h"
 
 #include <QObject>
+#include <QString>
 
 #include <string>
 #include <vector>
@@ -31,6 +32,12 @@ signals:
     void tooManyConstraints();
     void constraintsOk();
 
+    void equationOk();
+    void equationWrong();
+
+    void calculationStarted();
+    void calculationResult();
+
 public slots:
     void startCalculations();
 
@@ -57,6 +64,7 @@ public slots:
 
     std::string getEquation() const;
     void setEquation(std::string equation);
+    void setEquation(QString equation);
 
     std::vector<VariableConstraints> getConstraints() const;
     void setConstraints(std::vector<VariableConstraints> constraints);
