@@ -106,6 +106,11 @@ void UIHandler::setEquation(std::string equation)
     _equation = equation;
 }
 
+void UIHandler::setEquation(QString equation)
+{
+    _equation = equation.toStdString();
+}
+
 std::vector<VariableConstraints> UIHandler::getConstraints() const
 {
     return _constraints;
