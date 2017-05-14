@@ -121,8 +121,18 @@ bool EquationPart::splitParts(std::size_t firstNotNumberPosition, std::size_t fi
 bool EquationPart::splitFormula()
 {
 	std::size_t firstXPosition = partFormula.find("x");
-	std::size_t firstNotNumberPosition = partFormula.find_first_not_of("0123456789");
-	std::size_t firstSignPosition = partFormula.find_first_of("*/");
+    std::size_t firstSignPosition = partFormula.find_first_of("*/");
+
+    // Sprawdzenie, czy jest stała
+    std::size_t firstNotNumberPosition = partFormula.find_first_not_of("0123456789");
+    if (partFormula.at(firstNotNumberPosition) == ',')
+        return false;
+
+    if (partFormula.at(firstNotNumberPosition) == '.')
+    {
+        std::string tempFormula = partFormula.substr(firstNotNumberPosition + 1);
+        firstNotNumberPosition += tempFormula.find_first_not_of("0123456789") + 1;
+    }
 		
 	// Sprawdzenie, czy w rownaniu nie ma x - jest tylko stala
 	if (firstXPosition == std::string::npos)	
@@ -144,59 +154,8 @@ bool EquationPart::splitFormula()
 
 	this->separateConstant(firstNotNumberPosition, firstSignPosition, partStartPosition);
 
-	// Wylaczenie kolejnych kawalkow
-	//int unpairedBracketsNo = 0;
-	//MultiplicationSign sign = MultiplicationSign::nothingMulti;
-	//std::string::iterator fragmentStart = partFormula.begin();
-	//for (std::size_t i = 0; i < firstNotNumberPosition; i++)
-	//{
-	//	fragmentStart++;
-	//}
-	//if (firstNotNumberPosition == firstSignPosition)
-	//	fragmentStart++;
-	//std::string::iterator fragmentEnd = partFormula.end();
-
-	//for (std::string::iterator it = fragmentStart; it != partFormula.end(); it++)
-	//{
-	//	if (*it == '(')
-	//		unpairedBracketsNo++;
-	//	else if (*it == ')')
-	//		unpairedBracketsNo--;
-	//	if (unpairedBracketsNo < 0)
-	//	{
-	//		std::cerr << "Blad: niesparowane nawiasy!" << std::endl;
-	//		return false;
-	//	}
-
-	//	if (unpairedBracketsNo == 0 && ((*it == '*' || *it == '/')))
-	//	{
-	//		// Ustawienie iteratora do konca fragmentu na 1 znak przed * lub /
-	//		fragmentEnd = it;
-	//		//--fragmentEnd;
-
-	//		if (!this->createNewExpression(fragmentStart, fragmentEnd, sign))
-	//			return false;
-
-	//		// Rozpoczecie nowego fragmentu
-	//		sign = this->setSign(*it);
-
-	//		// Ustawienie iteratora do poczatku nowego fragmentu na 1 znak po * lub /
-	//		fragmentStart = it;
-	//		++fragmentStart;
-	//	}
-	//}
 	if (!this->splitParts(firstNotNumberPosition, firstSignPosition))
 		return false;
-
-	//// Wstawienie ostatniego fragmentu
-	//if (unpairedBracketsNo != 0)
-	//{
-	//	std::cerr << "Blad: niesparowane nawiasy!" << std::endl;
-	//	return false;
-	//}
-
-	//if (!this->createNewExpression(fragmentStart, partFormula.end(), sign))
-	//	return false;
 
 	return true;
 }

@@ -36,7 +36,7 @@ signals:
     void equationWrong();
 
     void calculationStarted();
-    void calculationResult();
+    void calculationResult(QString result);
 
 public slots:
     void startCalculations();

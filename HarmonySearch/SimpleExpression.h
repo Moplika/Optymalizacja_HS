@@ -1,7 +1,9 @@
 #pragma once
-#include "Expression.h"
-class SimpleExpression :
-	public Expression
+
+#include <string>
+#include <vector>
+
+class SimpleExpression
 {
 public:
 	SimpleExpression();

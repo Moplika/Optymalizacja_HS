@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QDebug>
 
 #include <iostream>
 #include <vector>
@@ -10,7 +11,6 @@
 #include "HarmonyMemoryRow.h"
 #include "HarmonySearch.h"
 #include "VariableConstraints.h"
-#include "Expression.h"
 #include "SimpleExpression.h"
 #include "SpecialExpression.h"
 #include "EquationPart.h"
@@ -21,18 +21,19 @@ void TestMultipleSolutions();
 void TestSpecialExpressionParsing();
 bool TestEquationPartsParsing();
 void TestEquationParsing();
+void TestEquation();
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
+//    QQmlApplicationEngine engine;
+//    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 
-    UIHandler uiHandler;
-    uiHandler.initialize();
-    engine.rootContext()->setContextProperty(QString("uiHandler"), &uiHandler);
+//    UIHandler uiHandler;
+//    uiHandler.initialize();
+//    engine.rootContext()->setContextProperty(QString("uiHandler"), &uiHandler);
 
     std::cout << "Hello world?" << std::endl;
 
@@ -42,13 +43,15 @@ int main(int argc, char *argv[])
 //    HarmonyMemoryRow testRow(vTestX);
 //    testRow.printRowWithNames();
 
-    TestMultipleSolutions();
+//    TestMultipleSolutions();
 
 //    TestSpecialExpressionParsing();
 
 //    TestEquationPartsParsing();
 
 //    TestEquationParsing();
+
+    TestEquation();
 
     return app.exec();
 }
@@ -216,4 +219,21 @@ void TestEquationParsing()
     std::cout << testEquation.calculate(x) << std::endl;
     testEquation.setEquation("+8(x1+x9) - 3sinx1");
     std::cout << testEquation.calculate(x) << std::endl;
+}
+
+void TestEquation()
+{
+    Equation testEquation;
+    std::vector<double> testX;
+    testX.push_back(1.0);
+    testX.push_back(1.0);
+
+    bool testBool;
+    double result;
+
+    testBool = testEquation.setEquation("- 0.62x1^2 - 0.62x2^2 + 4sin(x3^2)");
+    result = testEquation.calculate(testX);
+
+    qDebug() << testBool << result;
+
 }

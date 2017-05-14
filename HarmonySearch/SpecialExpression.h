@@ -1,9 +1,12 @@
 #pragma once
-#include "Expression.h"
+
 #include "SpecialExpressionType.h"
 #include "SimpleExpression.h"
-class SpecialExpression :
-	public Expression
+
+#include <string>
+#include <vector>
+
+class SpecialExpression
 {
 public:
 	SpecialExpression();
@@ -24,9 +27,6 @@ private:
 	double constantArgument;
 
 	SpecialExpressionType defineExpressionType(std::string expression, double &argument);
-	
-	
-
 
 	std::string expressionFormula;
 };

@@ -6,7 +6,6 @@ CONFIG += c++11
 
 SOURCES += main.cpp \
     EquationPart.cpp \
-    Expression.cpp \
     HarmonyMemoryRow.cpp \
     HarmonySearch.cpp \
     SimpleExpression.cpp \
@@ -42,7 +41,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 HEADERS += \
     EquationPart.h \
     EquationSigns.h \
-    Expression.h \
     HarmonyMemoryRow.h \
     HarmonySearch.h \
     SimpleExpression.h \
