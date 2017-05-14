@@ -61,6 +61,8 @@ Page1Form {
         textField_NI.text = 10000;
         checkBox_iterations.checked = false;
         textField_iterations.text = 100;
+        label_equationState.text = ""
+        label_equationState.color = "black";
     }
 
     // Wyświetlenie zasad wpisywania równania
@@ -92,8 +94,7 @@ Page1Form {
         onParametersOk: {
             label_equationState.text = ""
             label_equationState.color = "black";
-            btn_constraints.highlighted = false;
-            console.log("Signal: onConstraitnsOk")
+            console.log("Signal: onParametersOk")
         }
         onTooManyConstraints: {
             label_equationState.text = "Zbyt dużo ograniczeń!"
@@ -115,13 +116,13 @@ Page1Form {
         onParametersWrong: {
             label_equationState.text = "Błędne parametry!"
             label_equationState.color = "red";
-            btn_constraints.highlighted = true;
             console.log("Signal: onParametersWrong")
         }
     }
 
     // Przekazywanie wartości do C++
     btn_calculate.onClicked: {
+        uiHandler.clearParameters();
         uiHandler.setHMS(textField_HMSize.text);
         uiHandler.setHMCR(slider_HMCR.value.toFixed(2));
         uiHandler.setPAR(slider_PAR.value.toFixed(2));

@@ -44,6 +44,7 @@ signals:
 
 public slots:
     void startCalculations();
+    void clearParameters();
 
     int getHMS() const;
     void setHMS(int HMS);
@@ -96,6 +97,8 @@ private:
     static bool compareReadConstraints(readConstraints first, readConstraints second);
 
     bool areParametersOk();
+
+
 };
 
 

@@ -270,6 +270,16 @@ void UIHandler::startCalculations()
 
 }
 
+void UIHandler::clearParameters()
+{
+    _HMS = 0;
+    _HMCR = 0;
+    _PAR = 0;
+    _NI = 0;
+    _doShowIter = false;
+    _iterationsNb = 0;
+}
+
 bool UIHandler::compareReadConstraints(readConstraints first, readConstraints second)
 {
     return first.xIndex < second.xIndex;
