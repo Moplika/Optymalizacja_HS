@@ -1,9 +1,12 @@
 #include "uihandler.h"
+#include "HarmonySearch.h"
+#include "HarmonyMemoryRow.h"
 
 #include <QDebug>
 
 #include <math.h>
 #include <algorithm>
+#include <iostream>
 
 UIHandler::UIHandler(QObject *parent) : QObject(parent)
 {
@@ -22,8 +25,11 @@ void UIHandler::initialize()
     _equation = "";
 
     areAllConstraintsRead = true;
+    isEquationCorrect = false;
+
     // TEMP
-    _N = 4;
+    _N = 2;
+    isEquationCorrect = true;
 }
 
 int UIHandler::getHMS() const
@@ -33,6 +39,11 @@ int UIHandler::getHMS() const
 
 void UIHandler::setHMS(int HMS)
 {
+    if (HMS == 0)
+    {
+        emit parametersWrong();
+        return;
+    }
     _HMS = HMS;
 }
 
@@ -63,6 +74,11 @@ int UIHandler::getNI() const
 
 void UIHandler::setNI(int NI)
 {
+    if (NI == 0)
+    {
+        emit parametersWrong();
+        return;
+    }
     _NI = NI;
 }
 
@@ -83,6 +99,11 @@ int UIHandler::getIterationNb() const
 
 void UIHandler::setIterationNb(int iterationsNb)
 {
+    if (iterationsNb == 0)
+    {
+        emit parametersWrong();
+        return;
+    }
     _iterationsNb = iterationsNb;
 }
 
@@ -127,7 +148,7 @@ void UIHandler::readSingleConstraint(int index, double min, double max)
 
     if ( min >= max || std::isnan(min) || std::isnan(max) )
     {
-        emit wrongConstraints();
+        emit constraintsWrong();
         areAllConstraintsRead = false;
         return;
     }
@@ -186,7 +207,7 @@ void UIHandler::rewriteConstraints()
             break;
         if (testX != it->xIndex)
         {
-            emit wrongConstraints();
+            emit constraintsWrong();
             this->clearReadConstraints();
             return;
         }
@@ -232,9 +253,47 @@ void UIHandler::printParmeters()
 void UIHandler::startCalculations()
 {
     this->printParmeters();
+
+    if (!areParametersOk())
+        return;
+
+    emit parametersOk();
+
+    emit calculationStarted();
+
+    HarmonySearch harmonySearch;
+    harmonySearch.setParameters(_equation, _HMS, _HMCR, _PAR, 0.5, _NI);
+
+    HarmonyMemoryRow result = harmonySearch.Search(_constraints);
+    std::cout << "Result: ";
+    result.printRowWithNames();
+
 }
 
 bool UIHandler::compareReadConstraints(readConstraints first, readConstraints second)
 {
     return first.xIndex < second.xIndex;
+}
+
+bool UIHandler::areParametersOk()
+{
+    if (_HMS == 0)
+        return false;
+    if (_HMCR == 0)
+        return false;
+    if (_PAR == 0)
+        return false;
+    if (_NI == 0)
+        return false;
+    if (_iterationsNb == 0)
+        return false;
+    if (!isEquationCorrect)
+        return false;
+    if (!areConstraintsSet)
+    {
+        emit notEnoughConstraints();
+        return false;
+    }
+
+    return true;
 }

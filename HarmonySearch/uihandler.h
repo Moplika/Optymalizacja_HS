@@ -27,7 +27,7 @@ public:
     void printParmeters();
 
 signals:
-    void wrongConstraints();
+    void constraintsWrong();
     void notEnoughConstraints();
     void tooManyConstraints();
     void constraintsOk();
@@ -37,6 +37,10 @@ signals:
 
     void calculationStarted();
     void calculationResult(QString result);
+
+    void parametersWrong();
+    void parametersOk();
+
 
 public slots:
     void startCalculations();
@@ -81,6 +85,7 @@ private:
     unsigned int _N;
 
     std::string _equation;
+    bool isEquationCorrect;
 
     bool areAllConstraintsRead;
     bool areConstraintsSet;
@@ -88,9 +93,9 @@ private:
     std::vector<readConstraints> _readConstraints;
 
     void clearReadConstraints();
-
     static bool compareReadConstraints(readConstraints first, readConstraints second);
 
+    bool areParametersOk();
 };
 
 

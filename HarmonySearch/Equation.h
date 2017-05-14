@@ -9,10 +9,10 @@ class Equation
 {
 public:
 	Equation();
-	Equation(std::string formula);
+    //Equation(std::string formula);
 	~Equation();
 
-	bool setEquation(std::string equation);
+    bool setEquation(std::string equation, unsigned int &N);
 	std::string getEquation();
 
 	double calculate(std::vector<double> x);

@@ -89,6 +89,12 @@ Page1Form {
             btn_constraints.highlighted = false;
             console.log("Signal: onConstraitnsOk")
         }
+        onParametersOk: {
+            label_equationState.text = ""
+            label_equationState.color = "black";
+            btn_constraints.highlighted = false;
+            console.log("Signal: onConstraitnsOk")
+        }
         onTooManyConstraints: {
             label_equationState.text = "Zbyt dużo ograniczeń!"
             label_equationState.color = "blue";
@@ -100,11 +106,17 @@ Page1Form {
             btn_constraints.highlighted = true;
             console.log("Signal: onNotEnoughConstraints")
         }
-        onWrongConstraints: {
+        onConstraintsWrong: {
             label_equationState.text = "Błędne ograniczenia!"
             label_equationState.color = "red";
             btn_constraints.highlighted = true;
-            console.log("Signal: onWrongConstraints")
+            console.log("Signal: onConstraintsWrong")
+        }
+        onParametersWrong: {
+            label_equationState.text = "Błędne parametry!"
+            label_equationState.color = "red";
+            btn_constraints.highlighted = true;
+            console.log("Signal: onParametersWrong")
         }
     }
 

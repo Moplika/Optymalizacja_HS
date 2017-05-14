@@ -26,10 +26,6 @@ bool SpecialExpression::setFormula(std::string formula)
 {
 	expressionFormula = formula;
 
-	//TODO: Rewrite -.-
-
-	//return true;
-
 	std::string functionName;
 	std::string functionArgument;
 	

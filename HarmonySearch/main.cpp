@@ -6,6 +6,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <string>
 
 #include "uihandler.h"
 #include "HarmonyMemoryRow.h"
@@ -28,12 +29,12 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 
-//    QQmlApplicationEngine engine;
-//    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 
-//    UIHandler uiHandler;
-//    uiHandler.initialize();
-//    engine.rootContext()->setContextProperty(QString("uiHandler"), &uiHandler);
+    UIHandler uiHandler;
+    uiHandler.initialize();
+    engine.rootContext()->setContextProperty(QString("uiHandler"), &uiHandler);
 
     std::cout << "Hello world?" << std::endl;
 
@@ -43,7 +44,7 @@ int main(int argc, char *argv[])
 //    HarmonyMemoryRow testRow(vTestX);
 //    testRow.printRowWithNames();
 
-//    TestMultipleSolutions();
+    TestMultipleSolutions();
 
 //    TestSpecialExpressionParsing();
 
@@ -51,10 +52,10 @@ int main(int argc, char *argv[])
 
 //    TestEquationParsing();
 
-    TestEquation();
+//    TestEquation();
 
-    //return app.exec();
-    return 0;
+    return app.exec();
+//    return 0;
 }
 
 double getRandomDouble(double min, double max)
@@ -79,7 +80,8 @@ void TestRandomDouble()
 
 void TestMultipleSolutions()
 {
-    HarmonySearch testSearch(2, 100, 0.45, 0.10, 0.5, 20000);
+    HarmonySearch testSearch;
+    testSearch.setParameters("x1+x2", 100, 0.45, 0.10, 0.5, 20000);
 
     std::vector<VariableConstraints> testConstr;
     HarmonyMemoryRow solution;
@@ -209,16 +211,17 @@ void TestEquationParsing()
 {
     Equation testEquation;
     std::vector<double> x;
+    unsigned int N;
 
-    testEquation.setEquation("+8(X1+X9) - 3SinX1");
-    testEquation.setEquation("+ 8 (X1+X9) - 3 SinX1 ");
+    testEquation.setEquation("+8(X1+X9) - 3SinX1", N);
+    testEquation.setEquation("+ 8 (X1+X9) - 3 SinX1 ", N);
     std::cout << testEquation.calculate(x) << std::endl;
 
-    testEquation.setEquation("5(x2+x3) + 4sinx1");
+    testEquation.setEquation("5(x2+x3) + 4sinx1", N);
     std::cout << testEquation.calculate(x) << std::endl;
-    testEquation.setEquation("-4(x5+x4) - 5sinx1");
+    testEquation.setEquation("-4(x5+x4) - 5sinx1", N);
     std::cout << testEquation.calculate(x) << std::endl;
-    testEquation.setEquation("+8(x1+x9) - 3sinx1");
+    testEquation.setEquation("+8(x1+x9) - 3sinx1", N);
     std::cout << testEquation.calculate(x) << std::endl;
 }
 
@@ -226,13 +229,15 @@ void TestEquation()
 {
     Equation testEquation;
     std::vector<double> testX;
+    unsigned int N;
+
     testX.push_back(1.0);
     testX.push_back(1.0);
 
     bool testBool;
     double result;
 
-    testBool = testEquation.setEquation("- 0.62x1^2 - 0.62x2^2 + 4sin(x3^2)");
+    testBool = testEquation.setEquation("- 0.62x1^2 - 0.62x2^2 + 4sin(x3^2)", N);
     result = testEquation.calculate(testX);
 
     qDebug() << testBool << result;

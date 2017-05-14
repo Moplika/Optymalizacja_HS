@@ -10,17 +10,19 @@ Equation::Equation()
 }
 
 // UWAGA: Nie zwraca potwierdzenia, czy wprowadzone r�wnanie jest poprawne
-Equation::Equation(std::string formula)
-{
-	setEquation(formula);
-}
+//Equation::Equation(std::string formula)
+//{
+//	setEquation(formula);
+//}
 
 Equation::~Equation()
 {
 }
 
-bool Equation::setEquation(std::string equation)
+bool Equation::setEquation(std::string equation, unsigned int &N)
 {
+    // TODO: Dodać zapisywanie odczytanej liczby zmiennych do N
+
 	this->clearVariables();
 
 	equationFormula = equation;
