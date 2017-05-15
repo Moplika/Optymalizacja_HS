@@ -20,7 +20,7 @@ Item {
 
             RowLayout {
                 Layout.fillWidth: true
-                Layout.preferredWidth: parent.width / (variableCount + 2)
+                Layout.preferredWidth: parent.width / (viewVariableCount + 2)
                 ToolSeparator {
                 }
 

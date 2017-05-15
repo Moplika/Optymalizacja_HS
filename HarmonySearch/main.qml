@@ -6,12 +6,16 @@ ApplicationWindow {
     visible: true
     width: 800
     height: 600
-    title: qsTr("Hello World")
+    title: qsTr("Harmony Search")
 
     SwipeView {
         id: swipeView
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
+
+        Page3 {
+
+        }
 
         Page1 {
 
@@ -26,6 +30,9 @@ ApplicationWindow {
     footer: TabBar {
         id: tabBar
         currentIndex: swipeView.currentIndex
+        TabButton {
+            text: qsTr("Test page")
+        }
         TabButton {
             text: qsTr("Parametry")
         }
