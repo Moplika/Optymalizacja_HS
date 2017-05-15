@@ -9,5 +9,7 @@
         <file>ConstraintsRow.qml</file>
         <file>ConstraintsDialog.qml</file>
         <file>RulesDialog.qml</file>
+        <file>HMRowView.qml</file>
+        <file>OptimalSolutionView.qml</file>
     </qresource>
 </RCC>

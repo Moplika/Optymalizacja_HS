@@ -14,11 +14,13 @@ ApplicationWindow {
         currentIndex: tabBar.currentIndex
 
         Page1 {
+
         }
 
         Page2 {
-
         }
+
+
     }
 
     footer: TabBar {

@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QString>
+#include <QVector>
 
 #include <string>
 #include <vector>
@@ -41,10 +42,11 @@ signals:
     void parametersWrong();
     void parametersOk();
 
+    void showResult(int N, QVector<double> result);
 
 public slots:
-    void startCalculations();
     void clearParameters();
+    void startCalculations();
 
     int getHMS() const;
     void setHMS(int HMS);

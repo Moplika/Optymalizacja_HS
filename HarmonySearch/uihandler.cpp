@@ -250,6 +250,16 @@ void UIHandler::printParmeters()
     }
 }
 
+void UIHandler::clearParameters()
+{
+    _HMS = 0;
+    _HMCR = 0;
+    _PAR = 0;
+    _NI = 0;
+    _doShowIter = false;
+    _iterationsNb = 0;
+}
+
 void UIHandler::startCalculations()
 {
     this->printParmeters();
@@ -268,17 +278,17 @@ void UIHandler::startCalculations()
     std::cout << "Result: ";
     result.printRowWithNames();
 
+    QVector<double> tempArray;
+    tempArray.push_back(result.getObjectiveFunction());
+    for (unsigned int i = 1; i <= _N; i++)
+    {
+        tempArray.push_back(result.getX(i));
+    }
+
+    emit showResult(_N, tempArray);
 }
 
-void UIHandler::clearParameters()
-{
-    _HMS = 0;
-    _HMCR = 0;
-    _PAR = 0;
-    _NI = 0;
-    _doShowIter = false;
-    _iterationsNb = 0;
-}
+
 
 bool UIHandler::compareReadConstraints(readConstraints first, readConstraints second)
 {
