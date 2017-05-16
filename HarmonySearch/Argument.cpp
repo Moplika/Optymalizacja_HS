@@ -1,5 +1,6 @@
 #include "Argument.h"
 
+#include <algorithm>
 
 Argument::Argument()
 {
@@ -8,16 +9,47 @@ Argument::Argument()
 
 Argument::Argument(std::string string)
 {
-    formula = string;
+    argumentFormula = string;
     specialExpression = NULL;
 }
 
 
 Argument::~Argument()
 {
-//    if (specialExpression != NULL)
-//        delete specialExpression;
-//    specialExpression = NULL;
+    if (specialExpression != NULL)
+        delete specialExpression;
+    specialExpression = NULL;
+}
+
+bool Argument::setFormula(std::string formula)
+{
+	argumentFormula = formula;
+	
+	if (argumentFormula.at(0) == '-')
+	{
+		mainSign == MainSign::subtract;
+	}
+	else
+	{
+		mainSign == MainSign::add;
+	}
+
+	// Policz, ile jest x w równaniu
+	std::size_t xNb = std::count(argumentFormula.begin(), argumentFormula.end(), 'x');
+
+	// Wy³¹czenie sta³ej
+
+	if (xNb == 0) // W równaniu nie ma x
+	{
+
+	}
+	else if (xNb == 1)
+	{
+
+		return true;
+	}
+
+	return true;
 }
 
 double Argument::calculate(std::vector<double> x)
@@ -27,11 +59,7 @@ double Argument::calculate(std::vector<double> x)
 
 std::string Argument::getFormula() const
 {
-    return formula;
+    return argumentFormula;
 }
 
-bool Argument::setFormula(std::string formula)
-{
-    formula = formula;
-	return true;
-}
+

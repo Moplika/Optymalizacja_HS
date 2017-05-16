@@ -33,6 +33,8 @@ bool Equation::setEquation(std::string equation, unsigned int &N)
     std::string::iterator endAfterRemoval = std::remove_if(equationFormula.begin(), equationFormula.end(), ::isspace);
 	equationFormula.erase(endAfterRemoval, equationFormula.end());
 
+	N = this->countXs();
+
 	return this->splitEquation();
 }
 
@@ -143,4 +145,34 @@ void Equation::clearVariables()
 {
 	equationFormula = "";
 	equationParts.clear();
+}
+
+int Equation::countXs()
+{
+	std::string tempFormula = equationFormula;
+	int maxX = 0;
+
+	while (!tempFormula.empty())
+	{
+		std::size_t xPosition = tempFormula.find("x");
+		
+		if (xPosition == std::string::npos)
+		{
+			break;
+		}
+
+		tempFormula = tempFormula.substr(xPosition+1);
+
+		std::size_t firstNotNumberPosition = tempFormula.find_first_not_of("0123456789");
+		if (firstNotNumberPosition == std::string::npos)
+			break;
+
+		std::string indexStr = tempFormula.substr(0, firstNotNumberPosition);
+		int index = std::stoi(indexStr);
+
+		maxX = std::max(maxX, index);
+
+	}
+
+	return maxX;
 }

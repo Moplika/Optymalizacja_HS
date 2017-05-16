@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-class Argument;
+//class Argument;
 
 class SpecialExpression
 {
@@ -20,7 +20,7 @@ public:
 private:
 	SpecialExpressionType type;
 	
-    Argument *simpleArgument;
+    Argument simpleArgument;
 	
 	double constantArgument;
 

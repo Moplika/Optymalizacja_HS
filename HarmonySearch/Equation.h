@@ -27,5 +27,7 @@ private:
 	bool createNewFragment(std::string::iterator fragmentStart, std::string::iterator fragmentEnd, MainSign sign);
 
 	void clearVariables();
+
+	int countXs();
 };
 

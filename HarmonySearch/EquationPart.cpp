@@ -125,14 +125,19 @@ bool EquationPart::splitFormula()
 
     // Sprawdzenie, czy jest stała
     std::size_t firstNotNumberPosition = partFormula.find_first_not_of("0123456789");
-    if (partFormula.at(firstNotNumberPosition) == ',')
-        return false;
+	if (firstNotNumberPosition != std::string::npos)
+	{
+		if (partFormula.at(firstNotNumberPosition) == ',')
+			return false;
 
-    if (partFormula.at(firstNotNumberPosition) == '.')
-    {
-        std::string tempFormula = partFormula.substr(firstNotNumberPosition + 1);
-        firstNotNumberPosition += tempFormula.find_first_not_of("0123456789") + 1;
-    }
+		if (partFormula.at(firstNotNumberPosition) == '.')
+		{
+			std::string tempFormula = partFormula.substr(firstNotNumberPosition + 1);
+			firstNotNumberPosition += tempFormula.find_first_not_of("0123456789") + 1;
+		}
+	}
+	
+	
 		
 	// Sprawdzenie, czy w rownaniu nie ma x - jest tylko stala
 	if (firstXPosition == std::string::npos)	

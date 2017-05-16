@@ -1,6 +1,7 @@
 #pragma once
 
-#include "SpecialExpression.h"
+//#include "SpecialExpression.h"
+#include "EquationSigns.h"
 
 #include <string>
 #include <vector>
@@ -21,7 +22,11 @@ public:
 
 
 private:
-    std::string formula;
+    std::string argumentFormula;
+
+	double constantArgument;
+	MainSign mainSign;
+	bool isSingleX;
 
     SpecialExpression *specialExpression;
 };
