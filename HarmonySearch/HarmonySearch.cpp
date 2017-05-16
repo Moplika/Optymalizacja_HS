@@ -169,3 +169,8 @@ int HarmonySearch::getRandomInt(int min, int max)
 {
 	return rand() % (max - min) + min;
 }
+
+std::list<HarmonyMemoryRow> HarmonySearch::getHarmonyMemory()
+{
+    return HarmonyMemory;
+}

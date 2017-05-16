@@ -2,10 +2,12 @@
 #define UIHANDLER_H
 
 #include "VariableConstraints.h"
+#include "HarmonySearch.h"
 
 #include <QObject>
 #include <QString>
 #include <QVector>
+#include <QList>
 
 #include <string>
 #include <vector>
@@ -44,6 +46,8 @@ signals:
 
     void showResult(int N, QVector<double> result);
 
+    void showHarmonyMemoryRow(int id, QList<QString> values);
+
 public slots:
     void clearParameters();
     void startCalculations();
@@ -78,6 +82,8 @@ public slots:
     void readSingleConstraint(int index, double min, double max);
     void rewriteConstraints();
 
+    void printHarmonyMemory();
+
 private:
     int _HMS;
     double _HMCR;
@@ -89,6 +95,8 @@ private:
 
     std::string _equation;
     bool isEquationCorrect;
+
+    HarmonySearch harmonySearch;
 
     bool areAllConstraintsRead;
     bool areConstraintsSet;

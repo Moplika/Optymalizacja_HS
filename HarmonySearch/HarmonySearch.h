@@ -19,6 +19,7 @@ public:
     HarmonyMemoryRow Search(std::vector<VariableConstraints> &constraints);
 
     void printHM();
+    std::list<HarmonyMemoryRow> getHarmonyMemory();
 
 private:
 	unsigned int HMSize;						// HM Size - rozmiar pamięci harmonii
@@ -33,7 +34,6 @@ private:
     Equation equation;
 
 	std::list<HarmonyMemoryRow> HarmonyMemory;
-
 
     void InitializeHM(std::vector<VariableConstraints> &constraints);
 

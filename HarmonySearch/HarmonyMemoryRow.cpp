@@ -71,6 +71,12 @@ double HarmonyMemoryRow::calculateObjectiveFunction()
 	return fx;
 }
 
+std::vector<double> HarmonyMemoryRow::getAllX() const
+{
+    std::vector<double> x(row.begin(), row.begin() + N);
+    return x;
+}
+
 double HarmonyMemoryRow::getX(unsigned int index) const
 {
 	if (index <= N)

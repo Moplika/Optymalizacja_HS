@@ -271,7 +271,6 @@ void UIHandler::startCalculations()
 
     emit calculationStarted();
 
-    HarmonySearch harmonySearch;
     harmonySearch.setParameters(_equation, _HMS, _HMCR, _PAR, 0.5, _NI);
 
     HarmonyMemoryRow result = harmonySearch.Search(_constraints);
@@ -287,8 +286,6 @@ void UIHandler::startCalculations()
 
     emit showResult(_N, tempArray);
 }
-
-
 
 bool UIHandler::compareReadConstraints(readConstraints first, readConstraints second)
 {
@@ -316,4 +313,31 @@ bool UIHandler::areParametersOk()
     }
 
     return true;
+}
+
+void UIHandler::printHarmonyMemory()
+{
+    std::list<HarmonyMemoryRow> HarmonyMemory;
+    HarmonyMemory = harmonySearch.getHarmonyMemory();
+
+    QList<QString> rowValues;
+    int id = 1;
+
+    for (std::list<HarmonyMemoryRow>::iterator it = HarmonyMemory.begin();
+         it != HarmonyMemory.end(); it++, id++)
+    {
+        rowValues.clear();
+
+        double objectiveFunction = it->getObjectiveFunction();
+        rowValues.push_back(QString::number(objectiveFunction, 'f', 6));
+        std::vector<double> x = it->getAllX();
+
+        for (std::vector<double>::iterator it = x.begin(); it != x.end(); it++)
+        {
+            rowValues.push_back(QString::number(*it));
+        }
+
+        emit showHarmonyMemoryRow(id, rowValues);
+    }
+
 }

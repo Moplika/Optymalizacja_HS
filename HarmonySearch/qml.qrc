@@ -13,6 +13,7 @@
         <file>OptimalSolutionView.qml</file>
         <file>Page3.qml</file>
         <file>Page3Form.ui.qml</file>
+        <file>HarmonyMemoryListView.qml</file>
         <file>HarmonyMemoryView.qml</file>
     </qresource>
 </RCC>

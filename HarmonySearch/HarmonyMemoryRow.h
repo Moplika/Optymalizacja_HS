@@ -19,11 +19,13 @@ public:
 	bool Initialize(unsigned int _N, std::vector<double> _x);
 
 	double getX(unsigned int index) const;
-	double getObjectiveFunction() const;
-    unsigned int getVariableCount() const { return N; }
+    std::vector<double> getAllX() const;
+    bool setX(unsigned int index, double value);
 
-	bool setX(unsigned int index, double value);
-	void setObjectiveFunction(double value);
+    void setObjectiveFunction(double value);
+    double getObjectiveFunction() const;
+
+    unsigned int getVariableCount() const { return N; }
 
 	void printRowWithNames();
 	void printRowTable();

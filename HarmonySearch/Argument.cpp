@@ -1,4 +1,4 @@
-#include "Argument.h"
+ï»¿#include "Argument.h"
 
 #include <algorithm>
 
@@ -27,19 +27,19 @@ bool Argument::setFormula(std::string formula)
 	
 	if (argumentFormula.at(0) == '-')
 	{
-		mainSign == MainSign::subtract;
+        mainSign = MainSign::subtract;
 	}
 	else
 	{
-		mainSign == MainSign::add;
+        mainSign = MainSign::add;
 	}
 
-	// Policz, ile jest x w równaniu
+	// Policz, ile jest x w rÃ³wnaniu
 	std::size_t xNb = std::count(argumentFormula.begin(), argumentFormula.end(), 'x');
 
-	// Wy³¹czenie sta³ej
+	// WyÅ‚Ä…czenie staÅ‚ej
 
-	if (xNb == 0) // W równaniu nie ma x
+	if (xNb == 0) // W rÃ³wnaniu nie ma x
 	{
 
 	}

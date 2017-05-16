@@ -5,10 +5,15 @@ import QtQuick.Layouts 1.1
 
 Page3Form {
 
-   HarmonyMemoryView {
-       anchors.fill: parent
+    HarmonyMemoryView {
+        id: harmonyMemoryView;
+        anchors.fill: parent;
+    }
 
-       varCount: 10
-       listValues: ["1","1","1","1","1","1","1","1","1","1","1"]
-   }
+    Connections {
+        target: uiHandler;
+        onShowResult: {
+            harmonyMemoryView.drawHarmonyMemory();
+        }
+    }
 }
