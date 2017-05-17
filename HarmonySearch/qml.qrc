@@ -15,5 +15,6 @@
         <file>Page3Form.ui.qml</file>
         <file>HarmonyMemoryListView.qml</file>
         <file>HarmonyMemoryView.qml</file>
+        <file>HarmonyMemoryDialog.qml</file>
     </qresource>
 </RCC>

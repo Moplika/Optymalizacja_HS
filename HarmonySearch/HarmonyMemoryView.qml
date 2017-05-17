@@ -13,20 +13,6 @@ Item {
         listValues: []
     }
 
-    Button {
-        id: btn_test
-        x: 0
-        y: 500
-        width: parent.width
-        height: 50
-        text: "Click!"
-        onClicked:
-        {
-            console.log("Btn clicked")
-            drawHarmonyMemory();
-        }
-    }
-
     function drawHarmonyMemory()
     {
         harmonyMemoryListView.varCount = uiHandler.getN();

@@ -3,8 +3,6 @@ import QtQuick.Controls 2.1
 import QtQuick.Layouts 1.3
 
 Dialog {
-
-
     x: (parent.width - width) / 2;
     y: (parent.height - height) / 2;
     width: page1.width / 3 * 2;

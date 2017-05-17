@@ -7,6 +7,8 @@ Page2Form {
     property var myValues: ["0.5", "1", "2", "3", "4", "2", "3", "4", "2", "3", "4" ]
     //property var values: ["Lp","f(x)","x1","x2","x3", "x4" ]
 
+    id: page2;
+
     OptimalSolutionView {
         id: optimalSolutionView
         width: parent.width;
@@ -15,6 +17,16 @@ Page2Form {
 
         variableCount: myVariableCount;
         values: myValues;
+    }
+
+    HarmonyMemoryDialog {
+        id: harmonyMemoryDialog
+
+    }
+
+    btn_showHM.onClicked: {
+        harmonyMemoryDialog.open();
+        //harmonyMemoryDialog.harmonyMemoryView.drawHarmonyMemory();
     }
 
     Connections {

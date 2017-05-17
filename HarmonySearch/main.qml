@@ -13,9 +13,9 @@ ApplicationWindow {
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
 
-        Page3 {
+//        Page3 {
 
-        }
+//        }
 
         Page1 {
 
@@ -30,9 +30,9 @@ ApplicationWindow {
     footer: TabBar {
         id: tabBar
         currentIndex: swipeView.currentIndex
-        TabButton {
-            text: qsTr("Test page")
-        }
+//        TabButton {
+//            text: qsTr("Test page")
+//        }
         TabButton {
             text: qsTr("Parametry")
         }

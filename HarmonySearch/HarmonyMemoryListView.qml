@@ -61,7 +61,7 @@ Item {
     ListModel {
         id: listModel;
         ListElement{
-            lp: "Zawartość pamięci harmonii"
+            lp: ""
             values: []
         }
     }
