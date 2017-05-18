@@ -17,5 +17,6 @@
         <file>HarmonyMemoryView.qml</file>
         <file>HarmonyMemoryDialog.qml</file>
         <file>GraphView.qml</file>
+        <file>SolutionView.qml</file>
     </qresource>
 </RCC>
