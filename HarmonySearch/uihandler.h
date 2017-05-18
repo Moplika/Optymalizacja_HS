@@ -29,6 +29,8 @@ public:
     void initialize();
     void printParmeters();
 
+
+
 signals:
     void constraintsWrong();
     void notEnoughConstraints();
@@ -47,6 +49,10 @@ signals:
     void showResult(int N, QVector<double> result);
 
     void showHarmonyMemoryRow(int id, QList<QString> values);
+
+    void drawSurfaceGraphPoint(QList<QString> values);
+//    void drawingFinished(double yMin, double yMax);
+    void drawingFinished();
 
 public slots:
     void clearParameters();
@@ -83,6 +89,7 @@ public slots:
     void rewriteConstraints();
 
     void printHarmonyMemory();
+    void drawSurfaceGraph(double minX1, double maxX1, double minX2, double maxX2);
 
 private:
     int _HMS;

@@ -341,3 +341,34 @@ void UIHandler::printHarmonyMemory()
     }
 
 }
+
+void UIHandler::drawSurfaceGraph(double minX1, double maxX1, double minX2, double maxX2)
+{
+    QList<QString> graphPoint;
+//    double yMin = INT_MAX;
+//    double yMax = INT_MIN;
+
+    double stepX1 = (maxX1 - minX1) / 50;
+    double stepX2 = (maxX2 - minX2) / 50;
+
+    // TEMP
+    for (double x1 = minX1; x1 <= maxX1; x1 += stepX1)
+    {
+        for (double x2 = minX2; x2 <= maxX2; x2 += stepX2)
+        {
+            graphPoint.clear();
+
+            double y = pow(x1, 4) + pow(x2, 4) - 0.62 * pow(x1, 2) - 0.62 * pow(x2, 2);
+
+//            yMin = std::min(yMin, y);
+//            yMax = std::max(yMax, y);
+
+            graphPoint.push_back(QString::number(x1));
+            graphPoint.push_back(QString::number(x2));
+            graphPoint.push_back(QString::number(y));
+
+            emit drawSurfaceGraphPoint(graphPoint);
+        }
+    }
+    emit drawingFinished();//yMin, yMax);
+}
