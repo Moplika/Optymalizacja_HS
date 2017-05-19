@@ -277,14 +277,16 @@ void UIHandler::startCalculations()
     std::cout << "Result: ";
     result.printRowWithNames();
 
-    QVector<double> tempArray;
-    tempArray.push_back(result.getObjectiveFunction());
+    QList<QString> tempList;
+    QString fx = QString::number(result.getObjectiveFunction(), 'f', 6);
+    //tempArray.push_back(result.getObjectiveFunction());
     for (unsigned int i = 1; i <= _N; i++)
     {
-        tempArray.push_back(result.getX(i));
+        QString x = QString::number(result.getX(i), 'f', 6);
+        tempList.push_back(x);
     }
 
-    emit showResult(_N, tempArray);
+    emit showResult(_N, fx, tempList);
 }
 
 bool UIHandler::compareReadConstraints(readConstraints first, readConstraints second)

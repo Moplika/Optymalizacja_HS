@@ -9,36 +9,40 @@ Page2Form {
 
     id: page2;
 
-    OptimalSolutionView {
-        id: optimalSolutionView
-        width: parent.width;
-        anchors.horizontalCenter: parent.horizontalCenter;
-        visible: false;
-
-        variableCount: myVariableCount;
-        values: myValues;
+    SolutionNoIterations {
+        anchors.fill: parent;
     }
 
-    HarmonyMemoryDialog {
-        id: harmonyMemoryDialog
+//    OptimalSolutionView {
+//        id: optimalSolutionView
+//        width: parent.width;
+//        anchors.horizontalCenter: parent.horizontalCenter;
+//        visible: false;
 
-    }
+//        variableCount: myVariableCount;
+//        values: myValues;
+//    }
 
-    btn_showHM.onClicked: {
-        harmonyMemoryDialog.open();
-        //harmonyMemoryDialog.harmonyMemoryView.drawHarmonyMemory();
-    }
+//    HarmonyMemoryDialog {
+//        id: harmonyMemoryDialog
 
-    Connections {
-        target: uiHandler;
-        onShowResult: {
-            console.log("Signal: onShowResult");
-            console.log("N:", N);//, "values:", result);
-            optimalSolutionView.variableCount = N;
-            optimalSolutionView.values = result;
-            optimalSolutionView.visible = true;
+//    }
 
-        }
-    }
+//    btn_showHM.onClicked: {
+//        harmonyMemoryDialog.open();
+//        //harmonyMemoryDialog.harmonyMemoryView.drawHarmonyMemory();
+//    }
+
+//    Connections {
+//        target: uiHandler;
+//        onShowResult: {
+//            console.log("Signal: onShowResult");
+//            console.log("N:", N);//, "values:", result);
+//            optimalSolutionView.variableCount = N;
+//            optimalSolutionView.values = result;
+//            optimalSolutionView.visible = true;
+
+//        }
+//    }
 
 }

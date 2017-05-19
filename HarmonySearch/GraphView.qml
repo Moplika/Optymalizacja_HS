@@ -104,15 +104,15 @@ Item {
     }
 
     // Wyrzucić ten guzik, przepiąć w inne miejsce
-    Button {
-        x: 0;
-        y: 500;
-        height: 50;
-        text: "Click"
-        onClicked: {
-            uiHandler.drawSurfaceGraph(-1,1,-1,1);
-        }
-    }
+//    Button {
+//        x: 0;
+//        y: 500;
+//        height: 50;
+//        text: "Click"
+//        onClicked: {
+//            uiHandler.drawSurfaceGraph(-1,1,-1,1);
+//        }
+//    }
 
     Connections {
         target: uiHandler;

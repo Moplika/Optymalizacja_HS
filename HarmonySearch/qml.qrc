@@ -18,5 +18,7 @@
         <file>HarmonyMemoryDialog.qml</file>
         <file>GraphView.qml</file>
         <file>SolutionView.qml</file>
+        <file>SolutionNoIterations.qml</file>
+        <file>SolutionNoIterationsForm.ui.qml</file>
     </qresource>
 </RCC>

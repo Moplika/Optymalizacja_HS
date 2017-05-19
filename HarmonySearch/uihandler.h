@@ -46,12 +46,11 @@ signals:
     void parametersWrong();
     void parametersOk();
 
-    void showResult(int N, QVector<double> result);
+    void showResult(int N, QString fx, QList<QString> x);
 
     void showHarmonyMemoryRow(int id, QList<QString> values);
 
     void drawSurfaceGraphPoint(QList<QString> values);
-//    void drawingFinished(double yMin, double yMax);
     void drawingFinished();
 
 public slots:
