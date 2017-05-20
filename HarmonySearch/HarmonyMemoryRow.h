@@ -1,4 +1,7 @@
 #pragma once
+
+#include "Equation.h"
+
 #include <vector>
 #include <string>
 
@@ -12,11 +15,11 @@ private:
 
 public:
 	//HarmonyMemoryRow(unsigned int _N);
-	HarmonyMemoryRow(std::vector<double> x);
+    HarmonyMemoryRow(std::vector<double> x, Equation equation);
 	HarmonyMemoryRow();
 	~HarmonyMemoryRow();
 
-	bool Initialize(unsigned int _N, std::vector<double> _x);
+    bool Initialize(unsigned int _N, std::vector<double> _x, Equation equation);
 
 	double getX(unsigned int index) const;
     std::vector<double> getAllX() const;
@@ -33,7 +36,7 @@ public:
 	//bool compare(HarmonyMemoryRow &first, HarmonyMemoryRow &second);
 
 private:
-	double calculateObjectiveFunction();
+    double calculateObjectiveFunction(Equation equation);
 
 };
 

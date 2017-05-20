@@ -11,7 +11,6 @@ class HarmonySearch
 {
 public:
     HarmonySearch();
-//    HarmonySearch(unsigned int N, unsigned int HMS, double HMCR, double PAR, double b, unsigned int NI);
     ~HarmonySearch();
 
     bool setParameters(std::string equationFormula, unsigned int HMS, double HMCR, double PAR, double b, unsigned int NI);
@@ -21,7 +20,7 @@ public:
     void printHM();
     std::list<HarmonyMemoryRow> getHarmonyMemory();
 
-private:
+//private:
 	unsigned int HMSize;						// HM Size - rozmiar pamięci harmonii
 	double HMConsiderationRate;					// HM Consideration Rate - prawd. wyboru elementu z HM; [0,1]
 	double PitchAdjustmentRate;					// Pitch Adjustment Ratio - współczynnik dostosowania wybranej zmiennej; [0,1]

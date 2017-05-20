@@ -5,19 +5,6 @@
 
 // TODO: Zmienić na wektor czy zostawić jako listę? (Może zrobić jakiś test jak się działanie porównuje)
 
-//HarmonySearch::HarmonySearch(unsigned int N, unsigned int _HMS, double _HMCR, double _PAR, double _b, unsigned int _NI)
-//{
-//	// TODO: Dorobić sprawdzanie, czy wartości parametrów są poprawne
-
-//	// Przepisanie parametrów
-//	HMSize = _HMS;
-//	HMConsiderationRate = _HMCR;
-//	PitchAdjustmentRate = _PAR;
-//	b = _b;
-//	NumberOfImprovisations = _NI;
-//	variableCount = N;
-//}
-
 HarmonySearch::HarmonySearch()
 {
 
@@ -30,12 +17,12 @@ HarmonySearch::~HarmonySearch()
 bool HarmonySearch::setParameters(std::string equationFormula, unsigned int HMS, double HMCR, double PAR, double b, unsigned int NI)
 {
     // Odkomentować po napisaniu parsera
-//    bool isEquationOk = equation.setEquation(equationFormula, variableCount);
+    bool isEquationOk = equation.setEquation(equationFormula, variableCount);
 
-//    if (!isEquationOk)
-//    {
-//        return false;
-//    }
+    if (!isEquationOk)
+    {
+        return false;
+    }
 
     HMSize = HMS;
     HMConsiderationRate = HMCR;
@@ -44,7 +31,7 @@ bool HarmonySearch::setParameters(std::string equationFormula, unsigned int HMS,
     NumberOfImprovisations = NI;
 
     // TEMP
-    variableCount = 2;
+//    variableCount = 2;
 
     return true;
 }
@@ -61,7 +48,7 @@ void HarmonySearch::InitializeHM(std::vector<VariableConstraints> &constraints)
 			x.push_back(this->getRandomDouble(constrainIt->getMin(), constrainIt->getMax()));
 		}
 
-		HarmonyMemory.push_back(HarmonyMemoryRow(x));
+        HarmonyMemory.push_back(HarmonyMemoryRow(x, equation));
 	}
 
 	// Posortowanie pamięci
@@ -86,7 +73,7 @@ HarmonyMemoryRow HarmonySearch::Search(std::vector<VariableConstraints> &constra
 
 	for (unsigned int i = 0; i < NumberOfImprovisations; i++)
 	{
-		HarmonyMemoryRow newSolution(this->createNewSolution(constraints));
+        HarmonyMemoryRow newSolution(this->createNewSolution(constraints), equation);
 
 		if (isSolutionBetter(newSolution, HarmonyMemory.back()))
 		{

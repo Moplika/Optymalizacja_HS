@@ -6,14 +6,9 @@
 
 Equation::Equation()
 {
-	equationFormula = "";
+    equationFormula = "";
+    variableCount = 0;
 }
-
-// UWAGA: Nie zwraca potwierdzenia, czy wprowadzone r�wnanie jest poprawne
-//Equation::Equation(std::string formula)
-//{
-//	setEquation(formula);
-//}
 
 Equation::~Equation()
 {
@@ -21,158 +16,117 @@ Equation::~Equation()
 
 bool Equation::setEquation(std::string equation, unsigned int &N)
 {
-    // TODO: Dodać zapisywanie odczytanej liczby zmiennych do N
+    this->clearVariables();
 
-	this->clearVariables();
-
-	equationFormula = equation;
+    equationFormula = equation;
     // Zmiana na same małe litery
-	std::transform(equationFormula.begin(), equationFormula.end(), equationFormula.begin(), ::tolower);
-	
+    std::transform(equationFormula.begin(), equationFormula.end(), equationFormula.begin(), ::tolower);
+
     // Usunięcie spacji
     std::string::iterator endAfterRemoval = std::remove_if(equationFormula.begin(), equationFormula.end(), ::isspace);
-	equationFormula.erase(endAfterRemoval, equationFormula.end());
+    equationFormula.erase(endAfterRemoval, equationFormula.end());
 
-	N = this->countXs();
+    variableCount = this->countXs();
+    N = variableCount;
 
-	return this->splitEquation();
-}
-
-MainSign Equation::setSign(char sign)
-{
-	switch (sign)
-	{
-	case '+': return MainSign::add;
-	case '-': return MainSign::subtract;
-	default: return MainSign::nothingMain;
-	}
+    return this->parseEquation();
 }
 
 std::string Equation::getEquation()
 {
-	return equationFormula;
+    return equationFormula;
 }
 
-bool Equation::splitEquation()
+bool Equation::parseEquation()
 {
-	int unpairedBracketsNo = 0;
-	MainSign sign = MainSign::nothingMain;
+    fValues.assign(variableCount, 0.0);
+//    std::vector<double>::iterator it = fValues.begin();
 
-	std::string::iterator fragmentStart = equationFormula.begin();
-	std::string::iterator fragmentEnd = equationFormula.end();
+    for (int i = 1; i <= variableCount; i++)//, it++ )
+    {
+        std::string xName = "x" + std::to_string(i);
+//        std::cout << xName << std::endl;
+//        parser.DefineVar(xName, &(*it));
+        parser.DefineVar(xName, &(fValues.at(i-1)));
+    }
 
-    // Obsługa znaku na początku równania
-	sign = this->setSign(*fragmentStart);
-	if (sign != MainSign::nothingMain)
-		fragmentStart++;
-	else
-        sign = MainSign::add; // Jeżli na początku nie ma znaku, to przyjmujemy +
+    parser.SetExpr(equationFormula);
 
-	for (std::string::iterator it = fragmentStart; it != equationFormula.end(); it++)
-	{
-		if (*it == '(')
-			unpairedBracketsNo++;
-		else if (*it == ')')
-			unpairedBracketsNo--;
-		if (unpairedBracketsNo < 0)
-		{
-			std::cerr << "B��d: niesparowane nawiasy!" << std::endl;
-			return false;
-		}
+    // Sprawdzenie, czy formuła jest poprawna
+    try
+    {
+       parser.Eval();
+//        std::cout << temp << std::endl;
+    }
+    catch (mu::Parser::exception_type &e)
+    {
+        std::cerr << e.GetMsg() << std::endl;
+        return false;
+    }
 
-		if (unpairedBracketsNo == 0 && ((*it == '+' || *it == '-')))
-		{
-            // Ustawienie iteratora do końca fragmentu na 1 znak przed + lub -
-			fragmentEnd = it;
-			//--fragmentEnd;
-
-			// Utworzenie fragmentu
-			if (!this->createNewFragment(fragmentStart, fragmentEnd, sign))
-				return false;
-	
-            // Rozpoczęcie nowego fragmentu
-			sign = this->setSign(*it);
-
-            // Ustawienie iteratora do początku nowego fragmentu na 1 znak po + lub -
-			fragmentStart = it;
-			++fragmentStart;
-		}
-	}
-
-	// Wstawienie ostatniego fragmentu
-	if (unpairedBracketsNo != 0)
-	{
-        std::cerr << "Błąd: niesparowane nawiasy!" << std::endl;
-		return false;
-	}
-	
-	if (!this->createNewFragment(fragmentStart, equationFormula.end(), sign))
-		return false;
-
-	return true;
-}
-
-bool Equation::createNewFragment(std::string::iterator fragmentStart, std::string::iterator fragmentEnd, MainSign sign)
-{
-	std::string fragmentForumula;
-	fragmentForumula.assign(fragmentStart, fragmentEnd);
-
-	EquationPart newPart;
-	if (!newPart.setFormula(fragmentForumula, sign))
-	{
-        std::cerr << "Błąd przy wczytywaniu fragmentu" << std::endl;
-		return false;
-	}
-
-	equationParts.push_back(newPart);
-
-	return true;
+    return true;
 }
 
 double Equation::calculate(std::vector<double> x)
 {
-	double result = 0;
+    double result = 0;
 
-	for (std::vector<EquationPart>::iterator it = equationParts.begin(); it < equationParts.end(); it++)
-	{
-		result += it->calculate(x);
-	}
+    // Musi tu być, bo inaczej nie liczy poprawnie
+    this->parseEquation();
 
-	return result;
+    std::vector<double>::iterator xIt = x.begin();
+
+    for (std::vector<double>::iterator it = fValues.begin(); it != fValues.end();
+         it++, xIt++)
+    {
+        *it = *xIt;
+    }
+
+    try
+    {
+//        result = pow(x.at(0), 4) + pow(x.at(1), 4) - 0.62 * pow(x.at(0), 2) - 0.62 * pow(x.at(1), 2);
+        result = parser.Eval();
+    }
+    catch (mu::Parser::exception_type &e)
+    {
+        std::cout << e.GetMsg() << std::endl;
+    }
+
+    return result;
 }
 
 void Equation::clearVariables()
 {
-	equationFormula = "";
-	equationParts.clear();
+    equationFormula = "";
+    variableCount = 0;
+    parser.ClearConst();
+    parser.ClearVar();
 }
 
 int Equation::countXs()
 {
-	std::string tempFormula = equationFormula;
-	int maxX = 0;
+    std::string tempFormula = equationFormula;
+    int maxX = 0;
 
-	while (!tempFormula.empty())
-	{
-		std::size_t xPosition = tempFormula.find("x");
-		
-		if (xPosition == std::string::npos)
-		{
-			break;
-		}
+    while (!tempFormula.empty())
+    {
+        std::size_t xPosition = tempFormula.find("x");
 
-		tempFormula = tempFormula.substr(xPosition+1);
+        if (xPosition == std::string::npos)
+        {
+            break;
+        }
+        tempFormula = tempFormula.substr(xPosition+1);
 
-		std::size_t firstNotNumberPosition = tempFormula.find_first_not_of("0123456789");
-		if (firstNotNumberPosition == std::string::npos)
-			break;
+        std::size_t firstNotNumberPosition = tempFormula.find_first_not_of("0123456789");
+//        if (firstNotNumberPosition == std::string::npos)
+//            break;
 
-		std::string indexStr = tempFormula.substr(0, firstNotNumberPosition);
-		int index = std::stoi(indexStr);
+        std::string indexStr = tempFormula.substr(0, firstNotNumberPosition);
+        int index = std::stoi(indexStr);
 
-		maxX = std::max(maxX, index);
+        maxX = std::max(maxX, index);
+    }
 
-	}
-
-	return maxX;
+    return maxX;
 }

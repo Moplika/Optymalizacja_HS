@@ -2,20 +2,13 @@
 #include <iostream>
 #include <math.h>
 
-
-//HarmonyMemoryRow::HarmonyMemoryRow(unsigned int _N)
-//{
-//	N = _N;
-//	row.reserve(N);
-//}
-//
-HarmonyMemoryRow::HarmonyMemoryRow(std::vector<double> x)
+HarmonyMemoryRow::HarmonyMemoryRow(std::vector<double> x, Equation equation)
 {
 	N = x.size();
 	row.reserve(N + 1);
 
 	row = x;
-	row.push_back(this->calculateObjectiveFunction());
+    row.push_back(this->calculateObjectiveFunction(equation));
 }
 
 HarmonyMemoryRow::HarmonyMemoryRow()
@@ -26,7 +19,7 @@ HarmonyMemoryRow::~HarmonyMemoryRow()
 {
 }
 
-bool HarmonyMemoryRow::Initialize(unsigned int _N, std::vector<double> _x)
+bool HarmonyMemoryRow::Initialize(unsigned int _N, std::vector<double> _x, Equation equation)
 {
 	if (_x.size() != _N)
 		return false;
@@ -35,7 +28,7 @@ bool HarmonyMemoryRow::Initialize(unsigned int _N, std::vector<double> _x)
 	row.reserve(N + 1);
 
 	row = _x;
-	row.push_back(this->calculateObjectiveFunction());
+    row.push_back(this->calculateObjectiveFunction(equation));
 
 	return true;
 }
@@ -61,13 +54,16 @@ void HarmonyMemoryRow::printRowTable()
 	std::cout << "| " << row.back() << std::endl;
 }
 
-double HarmonyMemoryRow::calculateObjectiveFunction()
+double HarmonyMemoryRow::calculateObjectiveFunction(Equation equation)
 {
 	// TEMP: Tu wpisywać wzór funkcji; x1 = row[0] itp
 	//return ((double)rand() / RAND_MAX) * (10 + 10) - 10;
 	//double fx = -abs(row[0] + row[1] + row[2]);
-	double fx = pow(row[0], 4) + pow(row[1], 4) - 0.62 * pow(row[0], 2) - 0.62 * pow(row[1], 2);
+//    double fx = pow(row[0], 4) + pow(row[1], 4) - 0.62 * pow(row[0], 2) - 0.62 * pow(row[1], 2);
 	//double fx = row[0] * row[0] - 4*row[1];
+    std::vector<double> x(row.begin(), row.begin()+N);
+    double fx = equation.calculate(x);
+
 	return fx;
 }
 

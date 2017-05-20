@@ -5,14 +5,20 @@ QT += qml quick \
 CONFIG += c++11
 
 SOURCES += main.cpp \
-    EquationPart.cpp \
     HarmonyMemoryRow.cpp \
     HarmonySearch.cpp \
-    SpecialExpression.cpp \
     VariableConstraints.cpp \
     Equation.cpp \
     uihandler.cpp \
-    Argument.cpp
+    ../MuParser/muParser.cpp \
+    ../MuParser/muParserBase.cpp \
+    ../MuParser/muParserBytecode.cpp \
+    ../MuParser/muParserCallback.cpp \
+    ../MuParser/muParserDLL.cpp \
+    ../MuParser/muParserError.cpp \
+    ../MuParser/muParserInt.cpp \
+    ../MuParser/muParserTest.cpp \
+    ../MuParser/muParserTokenReader.cpp
 
 RESOURCES += qml.qrc
 
@@ -39,15 +45,26 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    EquationPart.h \
-    EquationSigns.h \
     HarmonyMemoryRow.h \
     HarmonySearch.h \
-    SpecialExpressionType.h \
     VariableConstraints.h \
     Equation.h \
     uihandler.h \
-    SpecialExpression.h \
-    Argument.h
+    ../MuParser/muParser.h \
+    ../MuParser/muParserBase.h \
+    ../MuParser/muParserBytecode.h \
+    ../MuParser/muParserCallback.h \
+    ../MuParser/muParserDef.h \
+    ../MuParser/muParserDLL.h \
+    ../MuParser/muParserError.h \
+    ../MuParser/muParserFixes.h \
+    ../MuParser/muParserInt.h \
+    ../MuParser/muParserStack.h \
+    ../MuParser/muParserTemplateMagic.h \
+    ../MuParser/muParserTest.h \
+    ../MuParser/muParserToken.h \
+    ../MuParser/muParserTokenReader.h
+
+INCLUDEPATH += ../MuParser/
 
 DISTFILES +=

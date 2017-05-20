@@ -7,14 +7,13 @@
 #include <vector>
 #include <algorithm>
 #include <string>
+#include <cmath>
 
+#include <muParser.h>
 #include "uihandler.h"
 #include "HarmonyMemoryRow.h"
 #include "HarmonySearch.h"
 #include "VariableConstraints.h"
-#include "Argument.h"
-#include "SpecialExpression.h"
-#include "EquationPart.h"
 #include "Equation.h"
 
 void TestRandomDouble();
@@ -23,42 +22,112 @@ void TestSpecialExpressionParsing();
 bool TestEquationPartsParsing();
 void TestEquationParsing();
 void TestEquation();
+void TestParsingLib();
+void TestEquationCalculations();
+void TestHSCalculations();
 
 int main(int argc, char *argv[])
 {
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
-    QGuiApplication::setApplicationDisplayName("Harmony Search");
+    //    QGuiApplication::setApplicationDisplayName("Harmony Search");
 
+    //    QQmlApplicationEngine engine;
+    //    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 
-    QQmlApplicationEngine engine;
-    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
-
-    UIHandler uiHandler;
-    uiHandler.initialize();
-    engine.rootContext()->setContextProperty(QString("uiHandler"), &uiHandler);
+    //    UIHandler uiHandler;
+    //    uiHandler.initialize();
+    //    engine.rootContext()->setContextProperty(QString("uiHandler"), &uiHandler);
 
     std::cout << "Hello world?" << std::endl;
 
-//    double testX[] = { 16, 2, 77, 29 };
-//    std::vector<double> vTestX(testX, testX + 4);
+    //    double testX[] = { 16, 2, 77, 29 };
+    //    std::vector<double> vTestX(testX, testX + 4);
 
-//    HarmonyMemoryRow testRow(vTestX);
-//    testRow.printRowWithNames();
+    //    HarmonyMemoryRow testRow(vTestX);
+    //    testRow.printRowWithNames();
 
-//    TestMultipleSolutions();
+//        TestParsingLib();
+        TestMultipleSolutions();
+    //    TestEquation();
+    //    TestEquationCalculations();
+//    TestHSCalculations();
 
-//    TestSpecialExpressionParsing();
+    //    return app.exec();
+    return 0;
+}
 
-//    TestEquationPartsParsing();
+double root(double stopien, double argument)
+{
+    return pow(argument, 1.0/stopien);
+}
 
-//    TestEquationParsing();
+void TestEquationCalculations()
+{
+    Equation equation;
+    unsigned int N;
+    equation.setEquation("x1+x2", N);
 
-//    TestEquation();
+    std::vector<double> x;
+    x.push_back(1);
+    x.push_back(1);
 
-    return app.exec();
-//    return 0;
+    std::cout << equation.calculate(x) << std::endl;
+}
+
+void TestHSCalculations()
+{
+    HarmonySearch testSearch;
+    if (!testSearch.setParameters("x1^4+x2^4-0.62*x1^2-0.62*x2^2", 10, 0.45, 0.10, 0.5, 20000))
+        return;
+
+    std::vector<double> x;
+    x.push_back(1.5);
+    x.push_back(1.3);
+
+    std::cout << testSearch.equation.calculate(x) << std::endl;
+
+    x.at(0) = 1;
+    x.at(1) = 1;
+
+    std::cout << testSearch.equation.calculate(x) << std::endl;
+
+    std::vector<VariableConstraints> testConstr;
+    HarmonyMemoryRow solution;
+    testConstr.push_back(VariableConstraints(0, 1));
+    testConstr.push_back(VariableConstraints(0, 1));
+
+    solution = testSearch.Search(testConstr);
+    testSearch.printHM();
+}
+
+void TestParsingLib() {
+    std::vector<double> fVal(2,1);
+
+    //double fVal[] = {1,1};
+
+    try
+    {
+        mu::Parser parser;
+//        std::cout << parser.Eval() << std::endl;
+
+        parser.DefineVar("x1", &(fVal[0]));
+        parser.DefineVar("x2", &(fVal[1]));
+        parser.DefineFun("root", root);
+        parser.SetExpr("root(3,x1)");
+
+        for (std::size_t x = 0; x < 100; x++)
+        {
+            fVal[0] = x;
+            fVal[1] = x+1;
+            std::cout << x << ": " << parser.Eval() << std::endl;
+        }
+    }
+    catch (mu::Parser::exception_type &e)
+    {
+        std::cout << e.GetMsg() << std::endl;
+    }
 }
 
 double getRandomDouble(double min, double max)
@@ -84,7 +153,8 @@ void TestRandomDouble()
 void TestMultipleSolutions()
 {
     HarmonySearch testSearch;
-    testSearch.setParameters("x1+x2", 100, 0.45, 0.10, 0.5, 20000);
+    if (!testSearch.setParameters("x1^4+x2^4-0.62*x1^2-0.62*x2^2", 100, 0.45, 0.10, 0.5, 20000))
+        return;
 
     std::vector<VariableConstraints> testConstr;
     HarmonyMemoryRow solution;
@@ -120,111 +190,22 @@ void TestMultipleSolutions()
     solution.printRowWithNames();
 }
 
-void TestSpecialExpressionParsing()
-{
-    SpecialExpression testExpression;
-    testExpression.setFormula("(x1+x2)");
-    testExpression.setFormula("(x1(x2+x3))^3");
-    testExpression.setFormula("e^(x1+x2)");
-    testExpression.setFormula("exp(x1+x2)");
-    testExpression.setFormula("log(2,x1+x2)");
-    testExpression.setFormula("ln(x1+x2)");
-    testExpression.setFormula("4^(x1+x2)");
-    testExpression.setFormula("sin(x1+x2)");
-    testExpression.setFormula("cos(x1+x2)");
-    testExpression.setFormula("tan(x1+x2)");
-    testExpression.setFormula("ctan(x1+x2)");
-    testExpression.setFormula("tg(x1+x2)");
-    testExpression.setFormula("ctg(x1+x2)");
-    testExpression.setFormula("sinx1");
-    testExpression.setFormula("e^x2");
-    testExpression.setFormula("3^x4");
-    testExpression.setFormula("x2^3");
-}
-
-bool TestEquationPartsParsing()
-{
-    EquationPart testPart;
-    bool testBool;
-    std::string testFormula;
-
-    std::vector<double> testX;
-    testX.push_back(5.0);
-
-    testFormula = "5";
-    testBool = testPart.setFormula(testFormula, add);
-    std::cout << testFormula << ": " << testPart.calculate(testX) << std::endl;
-
-    testFormula = "13";
-    testBool = testPart.setFormula(testFormula, add);
-    std::cout << testFormula << ": " << testPart.calculate(testX) << std::endl;
-
-    testFormula = "s";
-    testBool = testPart.setFormula(testFormula, add);
-    std::cout << testFormula << ": " << testPart.calculate(testX) << std::endl;
-
-    testFormula = "8x1";
-    testBool = testPart.setFormula(testFormula, add);
-    std::cout << testFormula << ": " << testPart.calculate(testX) << std::endl;
-
-    testFormula = "7sinx1";
-    testBool = testPart.setFormula(testFormula, add);
-    std::cout << testFormula << ": " << testPart.calculate(testX) << std::endl;
-
-    testFormula = "6*x1";
-    testBool = testPart.setFormula(testFormula, add);
-    std::cout << testFormula << ": " << testPart.calculate(testX) << std::endl;
-
-    testFormula = "x4";
-    testBool = testPart.setFormula(testFormula, add);
-    std::cout << testFormula << ": " << testPart.calculate(testX) << std::endl;
-
-    testFormula = "3*sinx1";
-    testBool = testPart.setFormula(testFormula, add);
-    std::cout << testFormula << ": " << testPart.calculate(testX) << std::endl;
-
-    testFormula = "x1^3";
-    testBool = testPart.setFormula(testFormula, add);
-    std::cout << testFormula << ": " << testPart.calculate(testX) << std::endl;
-
-    testFormula = "4x1^3";
-    testBool = testPart.setFormula(testFormula, add);
-    std::cout << testFormula << ": " << testPart.calculate(testX) << std::endl;
-
-    testFormula = "4x1*sinx2";
-    testBool = testPart.setFormula(testFormula, add);
-    std::cout << testFormula << ": " << testPart.calculate(testX) << std::endl;
-
-    testFormula = "7*x1*sinx2";
-    testBool = testPart.setFormula(testFormula, add);
-    std::cout << testFormula << ": " << testPart.calculate(testX) << std::endl;
-
-    testFormula = "7/x1";
-    testBool = testPart.setFormula(testFormula, add);
-    std::cout << testFormula << ": " << testPart.calculate(testX) << std::endl;
-
-    testFormula = "x2*sinx3";
-    testPart.setFormula(testFormula,subtract);
-    std::cout << testFormula << ": " << testPart.calculate(testX) << std::endl;
-
-    return testBool;
-}
-
 void TestEquationParsing()
 {
     Equation testEquation;
     std::vector<double> x;
+    x.assign(10,1.0);
     unsigned int N;
 
-    testEquation.setEquation("+8(X1+X9) - 3SinX1", N);
-    testEquation.setEquation("+ 8 (X1+X9) - 3 SinX1 ", N);
+    testEquation.setEquation("+8*(X1+X9) - 3*Sin(X1)", N);
+    testEquation.setEquation("+ 8 *(X1+X9) - 3 *Sin(X1) ", N);
     std::cout << testEquation.calculate(x) << std::endl;
 
-    testEquation.setEquation("5(x2+x3) + 4sinx1", N);
+    testEquation.setEquation("5*(x2+x3) + 4*sin(x1)", N);
     std::cout << testEquation.calculate(x) << std::endl;
-    testEquation.setEquation("-4(x5+x4) - 5sinx1", N);
+    testEquation.setEquation("-4*(x5+x4) - 5*sin(x1)", N);
     std::cout << testEquation.calculate(x) << std::endl;
-    testEquation.setEquation("+8(x1+x9) - 3sinx1", N);
+    testEquation.setEquation("+8*(x1+x9) - 3*sin(x1)", N);
     std::cout << testEquation.calculate(x) << std::endl;
 }
 
@@ -240,7 +221,7 @@ void TestEquation()
     bool testBool;
     double result;
 
-    testBool = testEquation.setEquation("- 0.62x1^2 - 0.62x2^2 + 4sin(x3^2)", N);
+    testBool = testEquation.setEquation("- 0.62*x1^2 - 0.62*x2^2 + 4*sin(x3^2)", N);
     result = testEquation.calculate(testX);
 
     qDebug() << testBool << result;
