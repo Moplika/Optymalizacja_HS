@@ -31,14 +31,14 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
     QGuiApplication app(argc, argv);
-    //    QGuiApplication::setApplicationDisplayName("Harmony Search");
+    QGuiApplication::setApplicationDisplayName("Harmony Search");
 
-    //    QQmlApplicationEngine engine;
-    //    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
+    QQmlApplicationEngine engine;
+    engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 
-    //    UIHandler uiHandler;
-    //    uiHandler.initialize();
-    //    engine.rootContext()->setContextProperty(QString("uiHandler"), &uiHandler);
+    UIHandler uiHandler;
+    uiHandler.initialize();
+    engine.rootContext()->setContextProperty(QString("uiHandler"), &uiHandler);
 
     std::cout << "Hello world?" << std::endl;
 
@@ -49,13 +49,13 @@ int main(int argc, char *argv[])
     //    testRow.printRowWithNames();
 
 //        TestParsingLib();
-        TestMultipleSolutions();
+//        TestMultipleSolutions();
     //    TestEquation();
     //    TestEquationCalculations();
 //    TestHSCalculations();
 
-    //    return app.exec();
-    return 0;
+        return app.exec();
+//    return 0;
 }
 
 double root(double stopien, double argument)

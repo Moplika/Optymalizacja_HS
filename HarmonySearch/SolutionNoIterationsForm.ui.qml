@@ -88,7 +88,7 @@ Item {
                 id: item_empty
                 width: 200
                 height: 200
-                Layout.preferredHeight: 80
+                Layout.preferredHeight: 70
                 Layout.fillHeight: true
                 Layout.fillWidth: true
             }
@@ -96,21 +96,28 @@ Item {
             Button {
                 id: btn_showHM
                 text: qsTr("Wyświetl końcową postać pamięci harmonii")
+                Layout.preferredHeight: 50
                 Layout.fillHeight: false
                 transformOrigin: Item.Center
                 Layout.fillWidth: true
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
             }
         }
 
-        GraphView {
-            id: graphView
-            Layout.fillHeight: true
-            visible: true
-            Layout.fillWidth: true
-            Layout.preferredHeight: 500
-            Layout.preferredWidth: 500
-            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+        ColumnLayout {
+            id: columnLayout
+            width: 100
+            height: 100
+
+            GraphView {
+                id: graphView
+                Layout.fillHeight: true
+                visible: true
+                Layout.fillWidth: true
+                Layout.preferredHeight: 4500
+                Layout.preferredWidth: 500
+                Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+            }
         }
     }
 }

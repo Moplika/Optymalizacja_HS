@@ -27,4 +27,14 @@ SolutionNoIterationsForm {
         hmDialog.open();
     }
 
+//    btn_graph3D.onClicked: {
+
+//    }
+
+//    btn_graphOrtho.onClicked: {
+//        graphView.surfaceGraph.orthoProjection = true;
+//        graphView.surfaceGraph.scene.activeCamera.cameraPreset = Camera3D.CameraPresetDirectlyAbove
+//        graphView.surfaceGraph.flipHorizontalGrid = true
+//    }
+
 }

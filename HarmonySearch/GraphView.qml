@@ -12,9 +12,76 @@ Item {
 
     property alias surfaceGraph: surfaceGraph
 
-//    anchors.fill: parent;
     width: parent.width;
     height: parent.height;
+
+    ColumnLayout {
+        width: parent.width;
+        height: parent.height;
+        Surface3D {
+            id: surfaceGraph
+//            anchors.fill: parent;
+            Layout.preferredWidth: parent.width;
+            Layout.fillHeight: true;
+
+            axisX: x1Axis;
+            axisZ: x2Axis;
+            axisY: yAxis;
+
+            theme: graphTheme;
+
+            Surface3DSeries {
+                id: firstSeries
+                itemLabelFormat: "x1 = @xLabel, x2 = @zLabel: y(x) = @yLabel";
+
+                ItemModelSurfaceDataProxy {
+                    id: dataProxy;
+                    itemModel:  dataModel;
+                    rowRole: "x1";
+                    columnRole: "x2";
+                    yPosRole: "y";
+
+                }
+            }
+        }
+
+        RowLayout {
+            Layout.preferredWidth: parent.width;
+            Layout.preferredHeight: 50;
+
+            Button {
+                id: btn_graph3DView;
+                Layout.fillWidth: true;
+                text: "Widok 3D";
+                onClicked:  {
+                    surfaceGraph.orthoProjection = false;
+                    surfaceGraph.scene.activeCamera.cameraPreset = Camera3D.CameraPresetFront;
+                    surfaceGraph.flipHorizontalGrid = false;
+
+                }
+            }
+
+            Button {
+                id: btn_graphOrto;
+                Layout.fillWidth: true;
+                text: "Widok warstwic";
+                onClicked: {
+                    surfaceGraph.orthoProjection = true;
+                    surfaceGraph.scene.activeCamera.cameraPreset = Camera3D.CameraPresetDirectlyAbove
+                    surfaceGraph.flipHorizontalGrid = true;
+//                    surfaceGraph.graphTheme.gridEnabled = false;
+                }
+            }
+        }
+    }
+
+    Theme3D {
+        id: graphTheme;
+        type: Theme3D.ThemeDigia;
+        colorStyle: Theme3D.ColorStyleObjectGradient;
+        baseGradients: [graphGradient];
+        gridEnabled: true;
+    }
 
     ListModel {
         id: dataModel
@@ -50,47 +117,24 @@ Item {
             color: "red";
         }
         ColorGradientStop {
-            position: 0.3;
+            position: 0.2;
             color: "yellow";
         }
         ColorGradientStop {
-            position: 1;
+            position: 0.4;
             color: "green";
         }
-    }
-
-    Surface3D {
-        id: surfaceGraph
-        anchors.fill: parent;
-        width: parent.width;
-        height: parent.height;
-
-        axisX: x1Axis;
-        axisZ: x2Axis;
-        axisY: yAxis;
-
-        orthoProjection: true
-        scene.activeCamera.cameraPreset: Camera3D.CameraPresetDirectlyAbove
-        flipHorizontalGrid: true
-
-        theme: Theme3D {
-            type: Theme3D.ThemeQt;
-            colorStyle: Theme3D.ColorStyleObjectGradient
-            baseGradients: [graphGradient]
+        ColorGradientStop {
+            position: 0.6;
+            color: "deepskyblue";
         }
-
-        Surface3DSeries {
-            id: firstSeries
-            itemLabelFormat: "x1 = @xLabel, x2 = @zLabel: y(x) = @yLabel";
-
-            ItemModelSurfaceDataProxy {
-                id: dataProxy;
-                itemModel:  dataModel;
-                rowRole: "x1";
-                columnRole: "x2";
-                yPosRole: "y";
-
-            }
+        ColorGradientStop {
+            position: 0.8;
+            color: "blue";
+        }
+        ColorGradientStop {
+            position: 1;
+            color: "purple";
         }
     }
 
@@ -103,17 +147,6 @@ Item {
         dataModel.append(params);
     }
 
-    // Wyrzucić ten guzik, przepiąć w inne miejsce
-//    Button {
-//        x: 0;
-//        y: 500;
-//        height: 50;
-//        text: "Click"
-//        onClicked: {
-//            uiHandler.drawSurfaceGraph(-1,1,-1,1);
-//        }
-//    }
-
     Connections {
         target: uiHandler;
         onDrawSurfaceGraphPoint: {
@@ -123,6 +156,7 @@ Item {
             dataProxy.itemModel = dataModel;
         }
     }
+
 }
 
 

@@ -9,9 +9,10 @@ ApplicationWindow {
     title: qsTr("Harmony Search")
 
     SwipeView {
-        id: swipeView
-        anchors.fill: parent
-        currentIndex: tabBar.currentIndex
+        id: swipeView;
+        anchors.fill: parent;
+        currentIndex: tabBar.currentIndex;
+        interactive: false;
 
         Page3 {
 

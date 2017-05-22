@@ -119,8 +119,8 @@ int Equation::countXs()
         tempFormula = tempFormula.substr(xPosition+1);
 
         std::size_t firstNotNumberPosition = tempFormula.find_first_not_of("0123456789");
-//        if (firstNotNumberPosition == std::string::npos)
-//            break;
+        if (firstNotNumberPosition == 0)
+            return 0;
 
         std::string indexStr = tempFormula.substr(0, firstNotNumberPosition);
         int index = std::stoi(indexStr);

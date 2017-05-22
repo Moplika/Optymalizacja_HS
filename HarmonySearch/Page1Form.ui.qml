@@ -20,7 +20,6 @@ Item {
     property alias label_equationState: label_equationState
     property alias slider_HMCR: slider_HMCR
     property alias textField_HMSize: textField_HMSize
-    property alias btn_check: btn_check
     property alias btn_rules: btn_rules
     property alias textField_equation: textField_equation
 
@@ -75,19 +74,10 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true
             Layout.preferredWidth: 144
-            Layout.columnSpan: 2
+            Layout.columnSpan: 4
             font.pixelSize: 12
         }
 
-        Button {
-            id: btn_rules
-            text: qsTr("Zasady wprowadzania")
-            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-            Layout.columnSpan: 2
-            Layout.rowSpan: 1
-            Layout.preferredWidth: 144
-            Layout.fillWidth: false
-        }
 
         Button {
             id: btn_constraints
@@ -103,11 +93,13 @@ Item {
         }
 
         Button {
-            id: btn_check
-            text: qsTr("Sprawdź poprawność")
+            id: btn_rules
+            text: qsTr("Zasady wprowadzania")
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             Layout.columnSpan: 2
+            Layout.rowSpan: 1
             Layout.preferredWidth: 144
+            Layout.fillWidth: false
         }
 
         Text {

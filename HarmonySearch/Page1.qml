@@ -96,6 +96,11 @@ Page1Form {
             label_equationState.color = "black";
             console.log("Signal: onParametersOk")
         }
+        onEquationOk: {
+            label_equationState.text = ""
+            label_equationState.color = "black";
+            console.log("Signal: onEquationOk")
+        }
         onTooManyConstraints: {
             label_equationState.text = "Zbyt dużo ograniczeń!"
             label_equationState.color = "blue";
@@ -117,6 +122,11 @@ Page1Form {
             label_equationState.text = "Błędne parametry!"
             label_equationState.color = "red";
             console.log("Signal: onParametersWrong")
+        }
+        onEquationWrong: {
+            label_equationState.text = "Błędnie wprowadzone równanie!"
+            label_equationState.color = "red";
+            console.log("Signal: onEquationWrong")
         }
     }
 

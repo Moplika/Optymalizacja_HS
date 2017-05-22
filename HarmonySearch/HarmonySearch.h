@@ -20,7 +20,9 @@ public:
     void printHM();
     std::list<HarmonyMemoryRow> getHarmonyMemory();
 
-//private:
+    Equation equation;
+
+private:
 	unsigned int HMSize;						// HM Size - rozmiar pamięci harmonii
 	double HMConsiderationRate;					// HM Consideration Rate - prawd. wyboru elementu z HM; [0,1]
 	double PitchAdjustmentRate;					// Pitch Adjustment Ratio - współczynnik dostosowania wybranej zmiennej; [0,1]
@@ -30,7 +32,7 @@ public:
 	// TEMP? Zmienne i ograniczenia do równania
 	unsigned int variableCount;		// Liczba zmiennych w równaniu
 
-    Equation equation;
+
 
 	std::list<HarmonyMemoryRow> HarmonyMemory;
 

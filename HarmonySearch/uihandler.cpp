@@ -28,8 +28,8 @@ void UIHandler::initialize()
     isEquationCorrect = false;
 
     // TEMP
-    _N = 2;
-    isEquationCorrect = true;
+//    _N = 2;
+//    isEquationCorrect = true;
 }
 
 int UIHandler::getHMS() const
@@ -130,6 +130,17 @@ void UIHandler::setEquation(std::string equation)
 void UIHandler::setEquation(QString equation)
 {
     _equation = equation.toStdString();
+
+    bool isEquiationOk = harmonySearch.equation.setEquation(_equation, _N);
+    if (!isEquiationOk)
+    {
+        isEquationCorrect = false;
+        emit equationWrong();
+        return;
+    }
+
+    isEquationCorrect = true;
+    emit equationOk();
 }
 
 std::vector<VariableConstraints> UIHandler::getConstraints() const
@@ -205,6 +216,7 @@ void UIHandler::rewriteConstraints()
     {
         if ((unsigned int)testX > _N)
             break;
+
         if (testX != it->xIndex)
         {
             emit constraintsWrong();
@@ -262,6 +274,7 @@ void UIHandler::clearParameters()
 
 void UIHandler::startCalculations()
 {
+    // DEBUG
     this->printParmeters();
 
     if (!areParametersOk())
@@ -271,7 +284,12 @@ void UIHandler::startCalculations()
 
     emit calculationStarted();
 
-    harmonySearch.setParameters(_equation, _HMS, _HMCR, _PAR, 0.5, _NI);
+    bool hsState = harmonySearch.setParameters(_equation, _HMS, _HMCR, _PAR, 0.5, _NI);
+
+    if (!hsState)
+    {
+        return;
+    }
 
     HarmonyMemoryRow result = harmonySearch.Search(_constraints);
     std::cout << "Result: ";
@@ -347,8 +365,6 @@ void UIHandler::printHarmonyMemory()
 void UIHandler::drawSurfaceGraph(double minX1, double maxX1, double minX2, double maxX2)
 {
     QList<QString> graphPoint;
-//    double yMin = INT_MAX;
-//    double yMax = INT_MIN;
 
     double stepX1 = (maxX1 - minX1) / 50;
     double stepX2 = (maxX2 - minX2) / 50;
@@ -360,10 +376,11 @@ void UIHandler::drawSurfaceGraph(double minX1, double maxX1, double minX2, doubl
         {
             graphPoint.clear();
 
-            double y = pow(x1, 4) + pow(x2, 4) - 0.62 * pow(x1, 2) - 0.62 * pow(x2, 2);
+            std::vector<double> x;
+            x.push_back(x1);
+            x.push_back(x2);
 
-//            yMin = std::min(yMin, y);
-//            yMax = std::max(yMax, y);
+            double y = harmonySearch.equation.calculate(x);
 
             graphPoint.push_back(QString::number(x1));
             graphPoint.push_back(QString::number(x2));
@@ -372,5 +389,5 @@ void UIHandler::drawSurfaceGraph(double minX1, double maxX1, double minX2, doubl
             emit drawSurfaceGraphPoint(graphPoint);
         }
     }
-    emit drawingFinished();//yMin, yMax);
+    emit drawingFinished();
 }

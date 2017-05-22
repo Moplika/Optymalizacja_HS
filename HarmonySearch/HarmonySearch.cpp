@@ -16,7 +16,6 @@ HarmonySearch::~HarmonySearch()
 
 bool HarmonySearch::setParameters(std::string equationFormula, unsigned int HMS, double HMCR, double PAR, double b, unsigned int NI)
 {
-    // Odkomentować po napisaniu parsera
     bool isEquationOk = equation.setEquation(equationFormula, variableCount);
 
     if (!isEquationOk)
