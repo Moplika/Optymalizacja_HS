@@ -5,6 +5,7 @@ import QtQuick.Controls 2.2
 Item {
     width: 800
     height: 600
+    property alias btn_3D: btn_3D
     property alias btn_showHM: btn_showHM
     property alias value_fx: value_fx
     property alias solutionView: solutionView
@@ -70,7 +71,7 @@ Item {
 
                 Text {
                     id: value_fx
-                    text: qsTr("-0.199220")
+                    text: qsTr("-0.000000")
                     Layout.preferredWidth: 100
                     Layout.fillWidth: true
                     font.pixelSize: 20
@@ -96,7 +97,7 @@ Item {
             Button {
                 id: btn_showHM
                 text: qsTr("Wyświetl końcową postać pamięci harmonii")
-                Layout.preferredHeight: 50
+                Layout.preferredHeight: -1
                 Layout.fillHeight: false
                 transformOrigin: Item.Center
                 Layout.fillWidth: true
@@ -117,6 +118,25 @@ Item {
                 Layout.preferredHeight: 4500
                 Layout.preferredWidth: 500
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+            }
+
+            RowLayout {
+                id: rowLayout1
+                width: 100
+                height: 100
+
+                Button {
+                    id: btn_3D
+                    text: qsTr("Widok 3D")
+                    Layout.fillWidth: true
+                }
+
+                Button {
+                    id: btn_orto
+                    text: qsTr("Widok warstwic")
+                    Layout.fillHeight: true
+                    Layout.fillWidth: true
+                }
             }
         }
     }

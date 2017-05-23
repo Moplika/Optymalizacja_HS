@@ -26,5 +26,6 @@
         <file>ParametersViewForm.ui.qml</file>
         <file>IterationView.qml</file>
         <file>IterationViewForm.ui.qml</file>
+        <file>Graph.qml</file>
     </qresource>
 </RCC>
