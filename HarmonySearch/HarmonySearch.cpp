@@ -35,8 +35,10 @@ bool HarmonySearch::setParameters(std::string equationFormula, unsigned int HMS,
     return true;
 }
 
-void HarmonySearch::InitializeHM(std::vector<VariableConstraints> &constraints)
+void HarmonySearch::initializeHM(std::vector<VariableConstraints> &constraints)
 {
+    harmonyMemory.clear();
+
 	for (unsigned int i = 0; i < HMSize; i++)
 	{
 		std::vector<double> x;
@@ -47,40 +49,43 @@ void HarmonySearch::InitializeHM(std::vector<VariableConstraints> &constraints)
 			x.push_back(this->getRandomDouble(constrainIt->getMin(), constrainIt->getMax()));
 		}
 
-        HarmonyMemory.push_back(HarmonyMemoryRow(x, equation));
+        harmonyMemory.push_back(HarmonyMemoryRow(x, equation));
 	}
 
 	// Posortowanie pamięci
-	HarmonyMemory.sort(compareRows);
+    harmonyMemory.sort(compareRows);
 }
 
 void HarmonySearch::printHM()
 {
 	int i = 1;
-	for (std::list<HarmonyMemoryRow>::iterator it = HarmonyMemory.begin(); it != HarmonyMemory.end(); it++, i++)
+    for (std::list<HarmonyMemoryRow>::iterator it = harmonyMemory.begin(); it != harmonyMemory.end(); it++, i++)
 	{
 		std::cout << i << ": ";
 		it->printRowTable();
 	}
 }
 
-HarmonyMemoryRow HarmonySearch::Search(std::vector<VariableConstraints> &constraints)
+HarmonyMemoryRow HarmonySearch::search(std::vector<VariableConstraints> &constraints)
 {
-	HarmonyMemory.clear();
 
-	this->InitializeHM(constraints);
+
+    this->initializeHM(constraints);
 
 	for (unsigned int i = 0; i < NumberOfImprovisations; i++)
 	{
-        HarmonyMemoryRow newSolution(this->createNewSolution(constraints), equation);
+//        HarmonyMemoryRow newSolution(this->createNewSolution(constraints), equation);
 
-		if (isSolutionBetter(newSolution, HarmonyMemory.back()))
-		{
-			HarmonyMemory.pop_back();
-			this->insertNewSolution(newSolution);
-		}
+//		if (isSolutionBetter(newSolution, harmonyMemory.back()))
+//		{
+//			harmonyMemory.pop_back();
+//			this->insertNewSolution(newSolution);
+//		}
+        HarmonyMemoryRow newSolution;
+        int index;
+        this->singleIteration(constraints, newSolution, index);
 	}
-	return HarmonyMemory.front();
+    return harmonyMemory.front();
 }
 
 bool HarmonySearch::isSolutionBetter(HarmonyMemoryRow &solution1, HarmonyMemoryRow &solution2)
@@ -88,24 +93,28 @@ bool HarmonySearch::isSolutionBetter(HarmonyMemoryRow &solution1, HarmonyMemoryR
 	return solution1.getObjectiveFunction() < solution2.getObjectiveFunction();
 }
 
-void HarmonySearch::insertNewSolution(HarmonyMemoryRow &newSolution)
+int HarmonySearch::insertNewSolution(HarmonyMemoryRow &newSolution)
 {
-	for (std::list<HarmonyMemoryRow>::iterator it = HarmonyMemory.begin(); it != HarmonyMemory.end(); it++)
+    int position = 0;
+
+    for (std::list<HarmonyMemoryRow>::iterator it = harmonyMemory.begin();
+         it != harmonyMemory.end(); it++, position++)
 	{
 		if (isSolutionBetter(newSolution, *it))
 		{
-			HarmonyMemory.insert(it, newSolution);
-			return;
+            harmonyMemory.insert(it, newSolution);
+            return position;
 		}
 	}
-	HarmonyMemory.push_back(newSolution);
+    harmonyMemory.push_back(newSolution);
+    return position;
 }
 
 double HarmonySearch::getXFromMemory(unsigned int variableIndex)
 {
 	int index = this->getRandomInt(0, HMSize - 1); //TODO: Przetestować?
 
-	std::list<HarmonyMemoryRow>::iterator it = HarmonyMemory.begin();
+    std::list<HarmonyMemoryRow>::iterator it = harmonyMemory.begin();
 	for (int k = 0; k < index; k++)
 		it++;
 
@@ -158,5 +167,29 @@ int HarmonySearch::getRandomInt(int min, int max)
 
 std::list<HarmonyMemoryRow> HarmonySearch::getHarmonyMemory()
 {
-    return HarmonyMemory;
+    return harmonyMemory;
+}
+
+HarmonyMemoryRow HarmonySearch::getOptimalSolution()
+{
+    return harmonyMemory.front();
+}
+
+// Wygenerowane rozwiązanie jest zapisywane w generatedSolution,
+// zaś w solutionPosition zapisywany jest index, gdzie zostało wpisane rozwiązanie
+// jeśli nie zostało wstawione, to solutionPosition = -1
+void HarmonySearch::singleIteration(std::vector<VariableConstraints> &constraints, HarmonyMemoryRow &generatedSolution, int solutionPosition)
+{
+    HarmonyMemoryRow newSolution(this->createNewSolution(constraints), equation);
+
+    int position = -1;
+
+    if (isSolutionBetter(newSolution, harmonyMemory.back()))
+    {
+        harmonyMemory.pop_back();
+        this->insertNewSolution(newSolution);
+    }
+
+    generatedSolution = newSolution;
+    solutionPosition = position;
 }

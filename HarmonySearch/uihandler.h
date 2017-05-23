@@ -16,7 +16,7 @@ class UIHandler : public QObject
 {
     Q_OBJECT
 
-    struct readConstraints
+    struct ReadConstraints
     {
         int xIndex;
         double min;
@@ -29,8 +29,6 @@ public:
     void initialize();
     void printParmeters();
 
-
-
 signals:
     void constraintsWrong();
     void notEnoughConstraints();
@@ -40,13 +38,18 @@ signals:
     void equationOk();
     void equationWrong();
 
-    void calculationStarted();
     void calculationResult(QString result);
 
     void parametersWrong();
     void parametersOk();
 
+    void calculationsStarted();
+    void calculationsFinished();
     void showResult(int N, QString fx, QList<QString> x);
+
+    void showIteration(unsigned int iterationNo, QString optimalFx, QList<QString> optimalX,
+                       QString currentFx, QList<QString> currentX, int currentSolutionPos);
+    void startShowingIterations();
 
     void showHarmonyMemoryRow(int id, QList<QString> values);
 
@@ -58,62 +61,72 @@ public slots:
     void startCalculations();
 
     int getHMS() const;
-    void setHMS(int HMS);
+    void setHMS(int _HMS);
 
     double getHMCR() const;
-    void setHMCR(double HMCR);
+    void setHMCR(double _HMCR);
 
     double getPAR() const;
-    void setPAR(double PAR);
+    void setPAR(double _PAR);
 
     int getNI() const;
-    void setNI(int NI);
+    void setNI(int _NI);
 
     bool doShowIterations() const;
-    void setShowIterations(bool doShow);
+    void setShowIterations(bool _doShow);
 
     int getIterationNb() const;
     void setIterationNb(int iterationsNb);
 
     int getN() const;
-    void setN(int N);
+    void setN(int _N);
 
     std::string getEquation() const;
-    void setEquation(std::string equation);
-    void setEquation(QString equation);
+    void setEquation(std::string _equation);
+    void setEquation(QString _equation);
 
     std::vector<VariableConstraints> getConstraints() const;
-    void setConstraints(std::vector<VariableConstraints> constraints);
+    void setConstraints(std::vector<VariableConstraints> _constraints);
     void readSingleConstraint(int index, double min, double max);
     void rewriteConstraints();
 
     void printHarmonyMemory();
     void drawSurfaceGraph(double minX1, double maxX1, double minX2, double maxX2);
 
-private:
-    int _HMS;
-    double _HMCR;
-    double _PAR;
-    int _NI;
-    bool _doShowIter;
-    int _iterationsNb;
-    unsigned int _N;
+    void nextIteration();
 
-    std::string _equation;
+private:
+    int HMS;
+    double HMCR;
+    double PAR;
+    int NI;
+    bool doShowIter;
+    int iterationsNb;
+    unsigned int N;
+
+    unsigned int globalIteration;
+
+    std::string equation;
     bool isEquationCorrect;
 
     HarmonySearch harmonySearch;
 
     bool areAllConstraintsRead;
     bool areConstraintsSet;
-    std::vector<VariableConstraints> _constraints;
-    std::vector<readConstraints> _readConstraints;
+    std::vector<VariableConstraints> constraints;
+    std::vector<ReadConstraints> readConstraints;
 
     void clearReadConstraints();
-    static bool compareReadConstraints(readConstraints first, readConstraints second);
+    static bool compareReadConstraints(ReadConstraints first, ReadConstraints second);
 
     bool areParametersOk();
 
+    void completeSearch();
+    void searchByIteration();
+
+
+    QString fxToString(HarmonyMemoryRow row);
+    QList<QString> xToStringList(HarmonyMemoryRow row);
 
 };
 

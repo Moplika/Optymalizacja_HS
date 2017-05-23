@@ -15,6 +15,12 @@ HarmonyMemoryRow::HarmonyMemoryRow()
 {
 }
 
+HarmonyMemoryRow::HarmonyMemoryRow(const HarmonyMemoryRow &harmonyMemoryRow)
+{
+    this->row.assign(harmonyMemoryRow.row.begin(), harmonyMemoryRow.row.end());
+    this->N = harmonyMemoryRow.N;
+}
+
 HarmonyMemoryRow::~HarmonyMemoryRow()
 {
 }

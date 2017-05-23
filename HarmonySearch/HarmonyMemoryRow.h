@@ -17,6 +17,7 @@ public:
 	//HarmonyMemoryRow(unsigned int _N);
     HarmonyMemoryRow(std::vector<double> x, Equation equation);
 	HarmonyMemoryRow();
+    HarmonyMemoryRow(const HarmonyMemoryRow &harmonyMemoryRow);
 	~HarmonyMemoryRow();
 
     bool Initialize(unsigned int _N, std::vector<double> _x, Equation equation);

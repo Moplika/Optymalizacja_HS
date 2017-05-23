@@ -6,8 +6,6 @@ Item {
     property int varCount: 4
     property var values: ["-0.192", "1", "2", "3", "4"]
 
-//    property alias solutionListView: solutionView
-
     id: solutionView
     width: parent.width;
     height: parent.height;
@@ -27,7 +25,7 @@ Item {
 
                 Text {
                     text: label
-                    Layout.preferredWidth: 110
+                    Layout.preferredWidth: 100
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignRight
                     Layout.fillWidth: true
@@ -36,12 +34,12 @@ Item {
 
                 Text {
                     text: value
-                    Layout.preferredWidth: 90
+                    Layout.preferredWidth: 100
                     verticalAlignment: Text.AlignVCenter
                     Layout.fillWidth: true
                     font.pixelSize: 14
                 }
-         }
+            }
         }
     }
 
@@ -59,29 +57,17 @@ Item {
         spacing: 0;
     }
 
-   function fillList() {
-//       var i = 0;
+    function fillList() {
+        solutionListModel.clear();
 
-       for (var i = 0; i < varCount; i++)
-       {
-           var params = {
-               label: qsTr("x" + (i+1) + " = "),
-               value: qsTr("" + values[i])
-           };
+        for (var i = 0; i < varCount; i++)
+        {
+            var params = {
+                label: qsTr("x" + (i+1) + " = "),
+                value: qsTr("" + values[i])
+            };
 
-           solutionListModel.append(params);
-       }
-   }
-
-//   Button {
-//       x: 0;
-//       y: 500;
-
-//       text: "Click";
-
-//       onClicked: {
-//           fillList();
-//       }
-
-//   }
+            solutionListModel.append(params);
+        }
+    }
 }

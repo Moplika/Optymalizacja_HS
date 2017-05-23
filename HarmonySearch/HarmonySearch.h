@@ -14,8 +14,12 @@ public:
     ~HarmonySearch();
 
     bool setParameters(std::string equationFormula, unsigned int HMS, double HMCR, double PAR, double b, unsigned int NI);
+    void initializeHM(std::vector<VariableConstraints> &constraints);
 
-    HarmonyMemoryRow Search(std::vector<VariableConstraints> &constraints);
+    HarmonyMemoryRow search(std::vector<VariableConstraints> &constraints);
+    HarmonyMemoryRow getOptimalSolution();
+
+    void singleIteration(std::vector<VariableConstraints> &constraints, HarmonyMemoryRow &generatedSolution, int solutionPosition);
 
     void printHM();
     std::list<HarmonyMemoryRow> getHarmonyMemory();
@@ -34,15 +38,15 @@ private:
 
 
 
-	std::list<HarmonyMemoryRow> HarmonyMemory;
+    std::list<HarmonyMemoryRow> harmonyMemory;
 
-    void InitializeHM(std::vector<VariableConstraints> &constraints);
+
 
 	double getRandomDouble(double min, double max);
 	int getRandomInt(int min, int max);
 	double getXFromMemory(unsigned int variableIndex);
 	std::vector<double> createNewSolution(std::vector<VariableConstraints> &constraints);
 	bool isSolutionBetter(HarmonyMemoryRow &solution1, HarmonyMemoryRow &solution2);
-	void insertNewSolution(HarmonyMemoryRow &solution);
+    int insertNewSolution(HarmonyMemoryRow &solution);
 };
 

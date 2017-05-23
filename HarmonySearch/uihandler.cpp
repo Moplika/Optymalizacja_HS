@@ -15,123 +15,123 @@ UIHandler::UIHandler(QObject *parent) : QObject(parent)
 
 void UIHandler::initialize()
 {
-    _HMS = 0;
-    _HMCR = 0;
-    _PAR = 0;
-    _NI = 0;
-    _doShowIter = false;
-    _iterationsNb = 0;
+    HMS = 0;
+    HMCR = 0;
+    PAR = 0;
+    NI = 0;
+    doShowIter = false;
+    iterationsNb = 0;
 
-    _equation = "";
+    equation = "";
 
     areAllConstraintsRead = true;
     isEquationCorrect = false;
 
     // TEMP
-//    _N = 2;
-//    isEquationCorrect = true;
+    //    _N = 2;
+    //    isEquationCorrect = true;
 }
 
 int UIHandler::getHMS() const
 {
-    return _HMS;
+    return HMS;
 }
 
-void UIHandler::setHMS(int HMS)
+void UIHandler::setHMS(int _HMS)
 {
-    if (HMS == 0)
+    if (_HMS == 0)
     {
         emit parametersWrong();
         return;
     }
-    _HMS = HMS;
+    HMS = _HMS;
 }
 
 double UIHandler::getHMCR() const
 {
-    return _HMCR;
+    return HMCR;
 }
 
-void UIHandler::setHMCR(double HMCR)
+void UIHandler::setHMCR(double _HMCR)
 {
-    _HMCR = HMCR;
+    HMCR = _HMCR;
 }
 
 double UIHandler::getPAR() const
 {
-    return _PAR;
+    return PAR;
 }
 
-void UIHandler::setPAR(double PAR)
+void UIHandler::setPAR(double _PAR)
 {
-    _PAR = PAR;
+    PAR = _PAR;
 }
 
 int UIHandler::getNI() const
 {
-    return _NI;
+    return NI;
 }
 
-void UIHandler::setNI(int NI)
+void UIHandler::setNI(int _NI)
 {
-    if (NI == 0)
+    if (_NI == 0)
     {
         emit parametersWrong();
         return;
     }
-    _NI = NI;
+    NI = _NI;
 }
 
 bool UIHandler::doShowIterations() const
 {
-    return _doShowIter;
+    return doShowIter;
 }
 
-void UIHandler::setShowIterations(bool doShow)
+void UIHandler::setShowIterations(bool _doShow)
 {
-    _doShowIter = doShow;
+    doShowIter = _doShow;
 }
 
 int UIHandler::getIterationNb() const
 {
-    return _iterationsNb;
+    return iterationsNb;
 }
 
-void UIHandler::setIterationNb(int iterationsNb)
+void UIHandler::setIterationNb(int _iterationsNb)
 {
-    if (iterationsNb == 0)
+    if (_iterationsNb == 0)
     {
         emit parametersWrong();
         return;
     }
-    _iterationsNb = iterationsNb;
+    iterationsNb = _iterationsNb;
 }
 
 int UIHandler::getN() const
 {
-    return _N;
+    return N;
 }
 
-void UIHandler::setN(int N)
+void UIHandler::setN(int _N)
 {
-    _N = N;
+    N = _N;
 }
 
 std::string UIHandler::getEquation() const
 {
-    return _equation;
+    return equation;
 }
 
-void UIHandler::setEquation(std::string equation)
+void UIHandler::setEquation(std::string _equation)
 {
-    _equation = equation;
+    equation = _equation;
 }
 
-void UIHandler::setEquation(QString equation)
+void UIHandler::setEquation(QString _equation)
 {
-    _equation = equation.toStdString();
+    equation = _equation.toStdString();
 
-    bool isEquiationOk = harmonySearch.equation.setEquation(_equation, _N);
+    bool isEquiationOk = harmonySearch.equation.setEquation(equation, N);
     if (!isEquiationOk)
     {
         isEquationCorrect = false;
@@ -145,17 +145,17 @@ void UIHandler::setEquation(QString equation)
 
 std::vector<VariableConstraints> UIHandler::getConstraints() const
 {
-    return _constraints;
+    return constraints;
 }
 
-void UIHandler::setConstraints(std::vector<VariableConstraints> constraints)
+void UIHandler::setConstraints(std::vector<VariableConstraints> _constraints)
 {
-    _constraints = constraints;
+    constraints = _constraints;
 }
 
 void UIHandler::readSingleConstraint(int index, double min, double max)
 {
-    readConstraints constraintsPair;
+    ReadConstraints constraintsPair;
 
     if ( min >= max || std::isnan(min) || std::isnan(max) )
     {
@@ -170,18 +170,18 @@ void UIHandler::readSingleConstraint(int index, double min, double max)
 
     qDebug() << "index: " << index << ", min: " << min << ", max: " << max;
 
-    _readConstraints.push_back(constraintsPair);
+    readConstraints.push_back(constraintsPair);
 }
 
 void UIHandler::clearReadConstraints()
 {
-    _readConstraints.clear();
+    readConstraints.clear();
     areAllConstraintsRead = true;
 }
 
 void UIHandler::rewriteConstraints()
 {
-    _constraints.clear();
+    constraints.clear();
     areConstraintsSet = false;
 
     if (!areAllConstraintsRead)
@@ -190,14 +190,14 @@ void UIHandler::rewriteConstraints()
         return;
     }
 
-    if (_readConstraints.size() < _N)
+    if (readConstraints.size() < N)
     {
         emit notEnoughConstraints();
         this->clearReadConstraints();
         return;
     }
 
-    if (_readConstraints.size() > _N)
+    if (readConstraints.size() > N)
     {
         emit tooManyConstraints();
     }
@@ -206,15 +206,15 @@ void UIHandler::rewriteConstraints()
         emit constraintsOk();
     }
 
-    std::sort(_readConstraints.begin(), _readConstraints.end(), compareReadConstraints);
+    std::sort(readConstraints.begin(), readConstraints.end(), compareReadConstraints);
 
     // Sprawdzenie, czy xy są po kolei
     int testX = 1;
 
-    for (std::vector<readConstraints>::iterator it = _readConstraints.begin();
-         it != _readConstraints.end(); it++, testX++)
+    for (std::vector<ReadConstraints>::iterator it = readConstraints.begin();
+         it != readConstraints.end(); it++, testX++)
     {
-        if ((unsigned int)testX > _N)
+        if ((unsigned int)testX > N)
             break;
 
         if (testX != it->xIndex)
@@ -226,11 +226,11 @@ void UIHandler::rewriteConstraints()
     }
 
     // Przepisanie na prawdziwe wartości
-    for (std::vector<readConstraints>::iterator it = _readConstraints.begin();
-         it != _readConstraints.begin() + _N; it++)
+    for (std::vector<ReadConstraints>::iterator it = readConstraints.begin();
+         it != readConstraints.begin() + N; it++)
     {
         VariableConstraints newConstraint(it->min, it->max);
-        _constraints.push_back(newConstraint);
+        constraints.push_back(newConstraint);
     }
 
     areConstraintsSet = true;
@@ -239,24 +239,24 @@ void UIHandler::rewriteConstraints()
 
 void UIHandler::printParmeters()
 {
-    qDebug() << "Equation: " << _equation.c_str();
-    qDebug() << "HM Size: " << _HMS;
-    qDebug() << "HMCR: " << _HMCR;
-    qDebug() << "PAR: " << _PAR;
-    qDebug() << "NI: " << _NI;
+    qDebug() << "Equation: " << equation.c_str();
+    qDebug() << "HM Size: " << HMS;
+    qDebug() << "HMCR: " << HMCR;
+    qDebug() << "PAR: " << PAR;
+    qDebug() << "NI: " << NI;
 
-    if (_doShowIter)
+    if (doShowIter)
         qDebug() << "Iterations will be shown";
     else
         qDebug() << "Iterations won't be shown";
 
-    qDebug() << "Every" << _iterationsNb << "th iteration will be shown.";
+    qDebug() << "Every" << iterationsNb << "th iteration will be shown.";
 
     qDebug() << "Ograniczenia na X:";
 
     int i = 1;
-    for (std::vector<VariableConstraints>::iterator it = _constraints.begin();
-         it != _constraints.end(); it++, i++)
+    for (std::vector<VariableConstraints>::iterator it = constraints.begin();
+         it != constraints.end(); it++, i++)
     {
         qDebug() << "X:" << i << "min:" << it->getMin() << "max:" << it->getMax();
     }
@@ -264,12 +264,12 @@ void UIHandler::printParmeters()
 
 void UIHandler::clearParameters()
 {
-    _HMS = 0;
-    _HMCR = 0;
-    _PAR = 0;
-    _NI = 0;
-    _doShowIter = false;
-    _iterationsNb = 0;
+    HMS = 0;
+    HMCR = 0;
+    PAR = 0;
+    NI = 0;
+    doShowIter = false;
+    iterationsNb = 0;
 }
 
 void UIHandler::startCalculations()
@@ -282,47 +282,94 @@ void UIHandler::startCalculations()
 
     emit parametersOk();
 
-    emit calculationStarted();
-
-    bool hsState = harmonySearch.setParameters(_equation, _HMS, _HMCR, _PAR, 0.5, _NI);
+    bool hsState = harmonySearch.setParameters(equation, HMS, HMCR, PAR, 0.5, NI);
 
     if (!hsState)
     {
         return;
     }
 
-    HarmonyMemoryRow result = harmonySearch.Search(_constraints);
+    if (!doShowIter)
+    {
+        this->completeSearch();
+    }
+    else
+    {
+        this->searchByIteration();
+    }
+}
+
+QString UIHandler::fxToString(HarmonyMemoryRow row)
+{
+    return QString::number(row.getObjectiveFunction(), 'f', 6);
+}
+
+QList<QString> UIHandler::xToStringList(HarmonyMemoryRow row)
+{
+    QList<QString> xList;
+    std::vector<double> x = row.getAllX();
+
+    for (std::vector<double>::iterator it = x.begin(); it != x.end(); it++)
+    {
+        xList.push_back(QString::number(*it, 'f', 6));
+    }
+
+    return xList;
+}
+
+void UIHandler::completeSearch()
+{
+    emit calculationsStarted();
+
+    HarmonyMemoryRow result = harmonySearch.search(constraints);
     std::cout << "Result: ";
     result.printRowWithNames();
 
-    QList<QString> tempList;
-    QString fx = QString::number(result.getObjectiveFunction(), 'f', 6);
-    //tempArray.push_back(result.getObjectiveFunction());
-    for (unsigned int i = 1; i <= _N; i++)
-    {
-        QString x = QString::number(result.getX(i), 'f', 6);
-        tempList.push_back(x);
-    }
+    QList<QString> xList = this->xToStringList(result);
+    QString fx = this->fxToString(result);
 
-    emit showResult(_N, fx, tempList);
+    emit calculationsFinished();
+    emit showResult(N, fx, xList);
 }
 
-bool UIHandler::compareReadConstraints(readConstraints first, readConstraints second)
+void UIHandler::searchByIteration()
+{
+    emit startShowingIterations();
+    globalIteration = 0;
+
+    harmonySearch.initializeHM(constraints);
+
+    HarmonyMemoryRow optimalSolution = harmonySearch.getOptimalSolution();
+
+    QString optimalFx = this->fxToString(optimalSolution);
+    QList<QString> optimalX = this->xToStringList(optimalSolution);
+
+    QString currentFx = QString("-");
+    QList<QString> currentX;
+    for (unsigned int i = 0; i < N; i++)
+    {
+        currentX.push_back(QString("-"));
+    }
+
+    emit showIteration(globalIteration, optimalFx, optimalX, currentFx, currentX, -1);
+}
+
+bool UIHandler::compareReadConstraints(ReadConstraints first, ReadConstraints second)
 {
     return first.xIndex < second.xIndex;
 }
 
 bool UIHandler::areParametersOk()
 {
-    if (_HMS == 0)
+    if (HMS == 0)
         return false;
-    if (_HMCR == 0)
+    if (HMCR == 0)
         return false;
-    if (_PAR == 0)
+    if (PAR == 0)
         return false;
-    if (_NI == 0)
+    if (NI == 0)
         return false;
-    if (_iterationsNb == 0)
+    if (iterationsNb == 0)
         return false;
     if (!isEquationCorrect)
         return false;
@@ -348,14 +395,9 @@ void UIHandler::printHarmonyMemory()
     {
         rowValues.clear();
 
-        double objectiveFunction = it->getObjectiveFunction();
-        rowValues.push_back(QString::number(objectiveFunction, 'f', 6));
-        std::vector<double> x = it->getAllX();
-
-        for (std::vector<double>::iterator it = x.begin(); it != x.end(); it++)
-        {
-            rowValues.push_back(QString::number(*it));
-        }
+        rowValues = this->xToStringList(*it);
+        QString fx = this->fxToString(*it);
+        rowValues.push_front(fx);
 
         emit showHarmonyMemoryRow(id, rowValues);
     }
@@ -390,4 +432,35 @@ void UIHandler::drawSurfaceGraph(double minX1, double maxX1, double minX2, doubl
         }
     }
     emit drawingFinished();
+}
+
+void UIHandler::nextIteration()
+{
+    HarmonyMemoryRow generatedSolution;
+    int solutionPosition = -1;
+
+    for (int i = 0; i < iterationsNb; i++)
+    {
+        globalIteration++;
+        if (globalIteration > NI)
+        {
+            HarmonyMemoryRow optimal;
+            QString fx = this->fxToString(optimal);
+            QList<QString> x = this->xToStringList(optimal);
+            emit showResult(N, fx, x);
+            break;
+        }
+
+        harmonySearch.singleIteration(constraints, generatedSolution, solutionPosition);
+    }
+
+    HarmonyMemoryRow optimalSolution = harmonySearch.getOptimalSolution();
+
+    QString optimalFx = this->fxToString(optimalSolution);
+    QList<QString> optimalX = this->xToStringList(optimalSolution);
+
+    QString currentFx = this->fxToString(generatedSolution);
+    QList<QString> currentX = this->xToStringList(generatedSolution);
+
+    emit showIteration(globalIteration, optimalFx, optimalX, currentFx, currentX, solutionPosition);
 }

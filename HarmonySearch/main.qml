@@ -14,15 +14,15 @@ ApplicationWindow {
         currentIndex: tabBar.currentIndex;
         interactive: false;
 
-        Page3 {
-
-        }
-
         Page1 {
 
         }
 
         Page2 {
+        }
+
+        Page3 {
+
         }
 
 
@@ -32,13 +32,13 @@ ApplicationWindow {
         id: tabBar
         currentIndex: swipeView.currentIndex
         TabButton {
-            text: qsTr("Test page")
-        }
-        TabButton {
             text: qsTr("Parametry")
         }
         TabButton {
             text: qsTr("Wynik obliczeń")
+        }
+        TabButton {
+            text: qsTr("Widok iteracji")
         }
     }
 }

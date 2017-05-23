@@ -20,5 +20,11 @@
         <file>SolutionView.qml</file>
         <file>SolutionNoIterations.qml</file>
         <file>SolutionNoIterationsForm.ui.qml</file>
+        <file>CalculationInProgressView.qml</file>
+        <file>CalculationInProgressViewForm.ui.qml</file>
+        <file>ParametersView.qml</file>
+        <file>ParametersViewForm.ui.qml</file>
+        <file>IterationView.qml</file>
+        <file>IterationViewForm.ui.qml</file>
     </qresource>
 </RCC>

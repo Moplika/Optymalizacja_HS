@@ -98,7 +98,7 @@ void TestHSCalculations()
     testConstr.push_back(VariableConstraints(0, 1));
     testConstr.push_back(VariableConstraints(0, 1));
 
-    solution = testSearch.Search(testConstr);
+    solution = testSearch.search(testConstr);
     testSearch.printHM();
 }
 
@@ -161,7 +161,7 @@ void TestMultipleSolutions()
 
     testConstr.push_back(VariableConstraints(0, 1));
     testConstr.push_back(VariableConstraints(0, 1));
-    solution = testSearch.Search(testConstr);
+    solution = testSearch.search(testConstr);
     std::cout << "Solution 1: ";
     solution.printRowWithNames();
 
@@ -169,7 +169,7 @@ void TestMultipleSolutions()
 
     testConstr.push_back(VariableConstraints(0, 1));
     testConstr.push_back(VariableConstraints(-1, 0));
-    solution = testSearch.Search(testConstr);
+    solution = testSearch.search(testConstr);
     std::cout << "Solution 2: ";
     solution.printRowWithNames();
 
@@ -177,7 +177,7 @@ void TestMultipleSolutions()
 
     testConstr.push_back(VariableConstraints(-1, 0));
     testConstr.push_back(VariableConstraints(0, 1));
-    solution = testSearch.Search(testConstr);
+    solution = testSearch.search(testConstr);
     std::cout << "Solution 3: ";
     solution.printRowWithNames();
 
@@ -185,7 +185,7 @@ void TestMultipleSolutions()
 
     testConstr.push_back(VariableConstraints(-1, 0));
     testConstr.push_back(VariableConstraints(-1, 0));
-    solution = testSearch.Search(testConstr);
+    solution = testSearch.search(testConstr);
     std::cout << "Solution 4: ";
     solution.printRowWithNames();
 }
