@@ -58,10 +58,10 @@ int main(int argc, char *argv[])
 //    return 0;
 }
 
-double root(double stopien, double argument)
-{
-    return pow(argument, 1.0/stopien);
-}
+//double root(double stopien, double argument)
+//{
+//    return pow(argument, 1.0/stopien);
+//}
 
 void TestEquationCalculations()
 {
@@ -114,8 +114,8 @@ void TestParsingLib() {
 
         parser.DefineVar("x1", &(fVal[0]));
         parser.DefineVar("x2", &(fVal[1]));
-        parser.DefineFun("root", root);
-        parser.SetExpr("root(3,x1)");
+//        parser.DefineFun("root", root);
+//        parser.SetExpr("root(3,x1)");
 
         for (std::size_t x = 0; x < 100; x++)
         {

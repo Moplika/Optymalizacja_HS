@@ -4,6 +4,12 @@
 #include <algorithm>
 #include <cctype>
 
+// Pierwiastek wyższego stopnia dla parsera
+double root(double stopien, double argument)
+{
+    return pow(argument, 1.0/stopien);
+}
+
 Equation::Equation()
 {
     equationFormula = "";
@@ -40,23 +46,23 @@ std::string Equation::getEquation()
 bool Equation::parseEquation()
 {
     fValues.assign(variableCount, 0.0);
-//    std::vector<double>::iterator it = fValues.begin();
+    //    std::vector<double>::iterator it = fValues.begin();
 
     for (int i = 1; i <= variableCount; i++)//, it++ )
     {
         std::string xName = "x" + std::to_string(i);
-//        std::cout << xName << std::endl;
-//        parser.DefineVar(xName, &(*it));
+        //        std::cout << xName << std::endl;
+        //        parser.DefineVar(xName, &(*it));
         parser.DefineVar(xName, &(fValues.at(i-1)));
     }
-
+    parser.DefineFun("root", root);
     parser.SetExpr(equationFormula);
 
     // Sprawdzenie, czy formuła jest poprawna
     try
     {
-       parser.Eval();
-//        std::cout << temp << std::endl;
+        parser.Eval();
+        //        std::cout << temp << std::endl;
     }
     catch (mu::Parser::exception_type &e)
     {
@@ -84,7 +90,7 @@ double Equation::calculate(std::vector<double> x)
 
     try
     {
-//        result = pow(x.at(0), 4) + pow(x.at(1), 4) - 0.62 * pow(x.at(0), 2) - 0.62 * pow(x.at(1), 2);
+        //        result = pow(x.at(0), 4) + pow(x.at(1), 4) - 0.62 * pow(x.at(0), 2) - 0.62 * pow(x.at(1), 2);
         result = parser.Eval();
     }
     catch (mu::Parser::exception_type &e)
@@ -119,14 +125,21 @@ int Equation::countXs()
         tempFormula = tempFormula.substr(xPosition+1);
 
         std::size_t firstNotNumberPosition = tempFormula.find_first_not_of("0123456789");
-        if (firstNotNumberPosition == 0)
+        while (firstNotNumberPosition == 0)
+        {
             return 0;
+//            if (tempFormula.at(firstNotNumberPosition) != 'p')
+//            {
+//                return 0;
+//            }
+        }
+
 
         std::string indexStr = tempFormula.substr(0, firstNotNumberPosition);
         int index = std::stoi(indexStr);
-
         maxX = std::max(maxX, index);
     }
+
 
     return maxX;
 }

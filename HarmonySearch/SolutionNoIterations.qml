@@ -15,7 +15,7 @@ SolutionNoIterationsForm {
             solutionView.values = x;
             solutionView.fillList();
 
-            uiHandler.drawSurfaceGraph(-1,1,-1,1);
+            uiHandler.drawSurfaceGraph(-10,10,-10,10);
         }
     }
 

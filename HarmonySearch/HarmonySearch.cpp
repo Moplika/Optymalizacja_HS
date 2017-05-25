@@ -14,7 +14,7 @@ HarmonySearch::~HarmonySearch()
 {
 }
 
-bool HarmonySearch::setParameters(std::string equationFormula, unsigned int HMS, double HMCR, double PAR, double b, unsigned int NI)
+bool HarmonySearch::setParameters(std::string equationFormula, unsigned int HMS, double HMCR, double PAR, double _b, unsigned int NI)
 {
     bool isEquationOk = equation.setEquation(equationFormula, variableCount);
 
@@ -26,7 +26,7 @@ bool HarmonySearch::setParameters(std::string equationFormula, unsigned int HMS,
     HMSize = HMS;
     HMConsiderationRate = HMCR;
     PitchAdjustmentRate = PAR;
-    b = b;
+    b = _b;
     NumberOfImprovisations = NI;
 
     // TEMP
@@ -68,8 +68,6 @@ void HarmonySearch::printHM()
 
 HarmonyMemoryRow HarmonySearch::search(std::vector<VariableConstraints> &constraints)
 {
-
-
     this->initializeHM(constraints);
 
 	for (unsigned int i = 0; i < NumberOfImprovisations; i++)
