@@ -11,6 +11,10 @@ IterationViewForm {
         uiHandler.nextIteration();
     }
 
+    btn_end.onClicked: {
+        uiHandler.finishIterating();
+    }
+
     btn_orto.onClicked:  {
         console.log("Widok warstwic");
         graphView.setViewToOrto();

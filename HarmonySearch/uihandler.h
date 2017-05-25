@@ -94,6 +94,7 @@ public slots:
     void drawSurfaceGraph(double minX1, double maxX1, double minX2, double maxX2);
 
     void nextIteration();
+    void finishIterating();
 
 private:
     int HMS;
@@ -123,7 +124,7 @@ private:
 
     void completeSearch();
     void searchByIteration();
-
+    void showIterationInUI(HarmonyMemoryRow optimal, int solutionPosition, bool isFinal);
 
     QString fxToString(HarmonyMemoryRow row);
     QList<QString> xToStringList(HarmonyMemoryRow row);

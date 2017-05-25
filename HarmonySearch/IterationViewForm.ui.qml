@@ -98,7 +98,7 @@ Item {
                 Layout.rowSpan: 5
                 Layout.columnSpan: 4
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
-                Layout.fillHeight: true
+                Layout.fillHeight: false
                 Layout.fillWidth: true
             }
 

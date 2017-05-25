@@ -444,16 +444,46 @@ void UIHandler::nextIteration()
         globalIteration++;
         if (globalIteration > NI)
         {
-            HarmonyMemoryRow optimal;
-            QString fx = this->fxToString(optimal);
-            QList<QString> x = this->xToStringList(optimal);
-            emit showResult(N, fx, x);
-            break;
+//            HarmonyMemoryRow optimal;
+//            QString fx = this->fxToString(optimal);
+//            QList<QString> x = this->xToStringList(optimal);
+//            emit showResult(N, fx, x);
+//            break;
+            this->showIterationInUI(generatedSolution, solutionPosition, true);
+            return;
         }
 
         harmonySearch.singleIteration(constraints, generatedSolution, solutionPosition);
     }
 
+      this->showIterationInUI(generatedSolution, solutionPosition, false);
+//    HarmonyMemoryRow optimalSolution = harmonySearch.getOptimalSolution();
+
+//    QString optimalFx = this->fxToString(optimalSolution);
+//    QList<QString> optimalX = this->xToStringList(optimalSolution);
+
+//    QString currentFx = this->fxToString(generatedSolution);
+//    QList<QString> currentX = this->xToStringList(generatedSolution);
+
+//    emit showIteration(globalIteration, optimalFx, optimalX, currentFx, currentX, solutionPosition);
+}
+
+void UIHandler::finishIterating()
+{
+    int solutionPosition = 0;
+    HarmonyMemoryRow generatedSolution;
+
+    for (; globalIteration < NI; globalIteration++)
+    {
+        harmonySearch.singleIteration(constraints, generatedSolution, solutionPosition);
+    }
+
+    this->showIterationInUI(generatedSolution, solutionPosition, true);
+
+}
+
+void UIHandler::showIterationInUI(HarmonyMemoryRow generatedSolution, int solutionPosition, bool isFinal)
+{
     HarmonyMemoryRow optimalSolution = harmonySearch.getOptimalSolution();
 
     QString optimalFx = this->fxToString(optimalSolution);
@@ -463,4 +493,9 @@ void UIHandler::nextIteration()
     QList<QString> currentX = this->xToStringList(generatedSolution);
 
     emit showIteration(globalIteration, optimalFx, optimalX, currentFx, currentX, solutionPosition);
+
+    if (isFinal)
+    {
+        emit showResult(N, optimalFx, optimalX);
+    }
 }
