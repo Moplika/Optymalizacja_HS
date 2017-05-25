@@ -5,6 +5,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <algorithm>
+#include <time.h>
 
 // TODO: Zmienić na wektor czy zostawić jako listę? (Może zrobić jakiś test jak się działanie porównuje)
 
@@ -41,6 +42,9 @@ bool HarmonySearch::setParameters(std::string equationFormula, unsigned int HMS,
 void HarmonySearch::initializeHM(std::vector<VariableConstraints> &constraints)
 {
     harmonyMemory.clear();
+
+    // Seedowanie generatora
+    srand(time(NULL));
 
 	for (unsigned int i = 0; i < HMSize; i++)
 	{
