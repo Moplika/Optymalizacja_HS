@@ -1,5 +1,7 @@
 #include "Equation.h"
 
+#include <QDebug>
+
 #include <iostream>
 #include <algorithm>
 #include <cctype>
@@ -125,21 +127,22 @@ int Equation::countXs()
         tempFormula = tempFormula.substr(xPosition+1);
 
         std::size_t firstNotNumberPosition = tempFormula.find_first_not_of("0123456789");
-        while (firstNotNumberPosition == 0)
-        {
-            return 0;
-//            if (tempFormula.at(firstNotNumberPosition) != 'p')
-//            {
-//                return 0;
-//            }
-        }
 
+        qDebug() << tempFormula.c_str() << ": " << firstNotNumberPosition;
+
+        if (firstNotNumberPosition == 0)
+        {
+            if (tempFormula.at(firstNotNumberPosition) == 'p')
+            {
+                continue;
+            }
+            return 0;
+        }
 
         std::string indexStr = tempFormula.substr(0, firstNotNumberPosition);
         int index = std::stoi(indexStr);
         maxX = std::max(maxX, index);
     }
-
 
     return maxX;
 }
