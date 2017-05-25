@@ -126,7 +126,7 @@ Item {
             x2: values[1],
             y: values[2]
         };
-        console.log(values[0], values[1], values[2]);
+//        console.log(values[0], values[1], values[2]);
 
         dataModel.append(params);
     }
@@ -158,7 +158,7 @@ Item {
     function drawGraph(values) {
         dataModel.clear();
         setAxis(values);
-        console.log(values[0], values[1], values[2], values[3]);
+//        console.log(values[0], values[1], values[2], values[3]);
         uiHandler.drawSurfaceGraph(values[0], values[1], values[2], values[3])
     }
 

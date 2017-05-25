@@ -19,16 +19,23 @@ Item {
         harmonyMemoryListView.listModel.clear();
         harmonyMemoryListView.createHeader();
         uiHandler.printHarmonyMemory();
+        // Domyślnie żaden rząd nie jest podświetlony
+        harmonyMemoryListView.highlightIndex(-1);
+    }
+
+    function highlightIndex(index) {
+        harmonyMemoryListView.highlightIndex(index);
     }
 
     Connections {
         target: uiHandler;
         onShowHarmonyMemoryRow: {
-            console.log(values);
+//            console.log(values);
 
             harmonyMemoryListView.listIndex = id;
             harmonyMemoryListView.listValues = values;
             harmonyMemoryListView.appendList();
+
         }
     }
 }

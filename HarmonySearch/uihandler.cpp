@@ -464,8 +464,7 @@ void UIHandler::nextIteration()
 
         harmonySearch.singleIteration(constraints, generatedSolution, solutionPosition);
     }
-
-      this->showIterationInUI(generatedSolution, solutionPosition, false);
+    this->showIterationInUI(generatedSolution, solutionPosition, false);
 }
 
 void UIHandler::finishIterating()

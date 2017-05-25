@@ -8,6 +8,7 @@ Item {
     property var listValues: ["1","2","3","4","5"]
     property int varCount: 4
     property int listIndex: 1
+    property int highlightedIndex: 0
 
     property alias listModel: listModel
 
@@ -58,6 +59,14 @@ Item {
         }
     }
 
+   Component {
+       id: highlightBar;
+       Rectangle {
+
+           color: "greenyellow"
+       }
+   }
+
     ListModel {
         id: listModel;
         ListElement{
@@ -74,10 +83,14 @@ Item {
         model: listModel;
         delegate: testDelegate;
         spacing: 0
+
+        highlight: highlightBar;
+        currentIndex: highlightedIndex;
+        onCurrentIndexChanged: highlightedIndex = currentIndex;
     }
 
     function appendList() {
-        console.log("Wywołanie nr " + listIndex);
+//        console.log("Wywołanie nr " + listIndex);
 
         var values = [];
 
@@ -108,5 +121,9 @@ Item {
         }
         listModel.append(params);
 
+    }
+
+    function highlightIndex(index) {
+        listView.currentIndex = index;
     }
 }

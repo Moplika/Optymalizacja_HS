@@ -19,7 +19,7 @@ public:
     HarmonyMemoryRow search(std::vector<VariableConstraints> &constraints);
     HarmonyMemoryRow getOptimalSolution();
 
-    void singleIteration(std::vector<VariableConstraints> &constraints, HarmonyMemoryRow &generatedSolution, int solutionPosition);
+    void singleIteration(std::vector<VariableConstraints> &constraints, HarmonyMemoryRow &generatedSolution, int &solutionPosition);
 
     void printHM();
     std::list<HarmonyMemoryRow> getHarmonyMemory();

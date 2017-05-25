@@ -18,7 +18,7 @@ Dialog {
         anchors.fill:parent;
     }
     onOpened: {
-        console.log("Signal: onOpened");
+//        console.log("Signal: onOpened");
         harmonyMemoryViewDialog.drawHarmonyMemory();
     }
 //    Button {

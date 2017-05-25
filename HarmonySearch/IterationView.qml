@@ -7,7 +7,7 @@ IterationViewForm {
     anchors.fill: parent;
 
     btn_nextIter.onClicked: {
-        console.log("Let's show next iteration")
+//        console.log("Let's show next iteration")
         uiHandler.nextIteration();
     }
 
@@ -16,19 +16,19 @@ IterationViewForm {
     }
 
     btn_orto.onClicked:  {
-        console.log("Widok warstwic");
+//        console.log("Widok warstwic");
         graphView.setViewToOrto();
     }
 
     btn_view3D.onClicked: {
-        console.log("Widok 3D");
+//        console.log("Widok 3D");
         graphView.setViewTo3D();
     }
 
     Connections {
         target: uiHandler;
         onShowIteration : {
-            console.log("Signal: onShowIteration");
+//            console.log("Signal: onShowIteration");
 
             text_iterationNb.text = "Iteracja " + iterationNo;
 
@@ -43,6 +43,12 @@ IterationViewForm {
             solutionView_new.fillList();
 
             harmonyMemoryView.drawHarmonyMemory();
+            if (currentSolutionPos !== -1) {
+                harmonyMemoryView.highlightIndex(currentSolutionPos+1);
+            }
+            else {
+                harmonyMemoryView.highlightIndex(-1);
+            }
 
             if(iterationNo === maxIterations) {
                 btn_nextIter.text = "Wyszukiwanie zakończone";
@@ -50,7 +56,7 @@ IterationViewForm {
             }
         }
         onStartShowingIterations: {
-            console.log("Signal: onStartShowingIterations")
+//            console.log("Signal: onStartShowingIterations")
 
             varCount = uiHandler.getN();
             maxIterations = uiHandler.getNI();

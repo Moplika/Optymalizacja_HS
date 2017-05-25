@@ -1,4 +1,7 @@
 #include "HarmonySearch.h"
+
+#include <QDebug>
+
 #include <cstdlib>
 #include <iostream>
 #include <algorithm>
@@ -176,7 +179,7 @@ HarmonyMemoryRow HarmonySearch::getOptimalSolution()
 // Wygenerowane rozwiązanie jest zapisywane w generatedSolution,
 // zaś w solutionPosition zapisywany jest index, gdzie zostało wpisane rozwiązanie
 // jeśli nie zostało wstawione, to solutionPosition = -1
-void HarmonySearch::singleIteration(std::vector<VariableConstraints> &constraints, HarmonyMemoryRow &generatedSolution, int solutionPosition)
+void HarmonySearch::singleIteration(std::vector<VariableConstraints> &constraints, HarmonyMemoryRow &generatedSolution, int &solutionPosition)
 {
     HarmonyMemoryRow newSolution(this->createNewSolution(constraints), equation);
 
@@ -185,7 +188,7 @@ void HarmonySearch::singleIteration(std::vector<VariableConstraints> &constraint
     if (isSolutionBetter(newSolution, harmonyMemory.back()))
     {
         harmonyMemory.pop_back();
-        this->insertNewSolution(newSolution);
+        position = this->insertNewSolution(newSolution);
     }
 
     generatedSolution = newSolution;
