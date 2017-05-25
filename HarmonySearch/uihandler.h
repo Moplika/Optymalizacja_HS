@@ -89,6 +89,8 @@ public slots:
     void setConstraints(std::vector<VariableConstraints> _constraints);
     void readSingleConstraint(int index, double min, double max);
     void rewriteConstraints();
+    double getMinimum(int index);
+    double getMaximum(int index);
 
     void printHarmonyMemory();
     void drawSurfaceGraph(double minX1, double maxX1, double minX2, double maxX2);

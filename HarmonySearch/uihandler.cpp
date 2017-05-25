@@ -173,6 +173,18 @@ void UIHandler::readSingleConstraint(int index, double min, double max)
     readConstraints.push_back(constraintsPair);
 }
 
+double UIHandler::getMinimum(int index)
+{
+    VariableConstraints costraint = constraints.at(index-1);
+    return costraint.getMin();
+}
+
+double UIHandler::getMaximum(int index)
+{
+    VariableConstraints costraint = constraints.at(index-1);
+    return costraint.getMax();
+}
+
 void UIHandler::clearReadConstraints()
 {
     readConstraints.clear();
@@ -412,11 +424,13 @@ void UIHandler::drawSurfaceGraph(double minX1, double maxX1, double minX2, doubl
     double stepX2 = (maxX2 - minX2) / 50;
 
     // TEMP
-    for (double x1 = minX1; x1 <= maxX1; x1 += stepX1)
+    for (double x1 = minX1; x1 <= maxX1+stepX1; x1 += stepX1)
     {
-        for (double x2 = minX2; x2 <= maxX2; x2 += stepX2)
+        for (double x2 = minX2; x2 <= maxX2+stepX2; x2 += stepX2)
         {
             graphPoint.clear();
+
+//            qDebug() << "(" << x1 << ", " << x2 << ")";
 
             std::vector<double> x;
             x.push_back(x1);
@@ -444,11 +458,6 @@ void UIHandler::nextIteration()
         globalIteration++;
         if (globalIteration > NI)
         {
-//            HarmonyMemoryRow optimal;
-//            QString fx = this->fxToString(optimal);
-//            QList<QString> x = this->xToStringList(optimal);
-//            emit showResult(N, fx, x);
-//            break;
             this->showIterationInUI(generatedSolution, solutionPosition, true);
             return;
         }
@@ -457,15 +466,6 @@ void UIHandler::nextIteration()
     }
 
       this->showIterationInUI(generatedSolution, solutionPosition, false);
-//    HarmonyMemoryRow optimalSolution = harmonySearch.getOptimalSolution();
-
-//    QString optimalFx = this->fxToString(optimalSolution);
-//    QList<QString> optimalX = this->xToStringList(optimalSolution);
-
-//    QString currentFx = this->fxToString(generatedSolution);
-//    QList<QString> currentX = this->xToStringList(generatedSolution);
-
-//    emit showIteration(globalIteration, optimalFx, optimalX, currentFx, currentX, solutionPosition);
 }
 
 void UIHandler::finishIterating()
@@ -479,7 +479,6 @@ void UIHandler::finishIterating()
     }
 
     this->showIterationInUI(generatedSolution, solutionPosition, true);
-
 }
 
 void UIHandler::showIterationInUI(HarmonyMemoryRow generatedSolution, int solutionPosition, bool isFinal)

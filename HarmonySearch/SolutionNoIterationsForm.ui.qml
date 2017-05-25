@@ -5,6 +5,12 @@ import QtQuick.Controls 2.2
 Item {
     width: 800
     height: 600
+    property alias text_X2Max: text_X2Max
+    property alias text_X2Min: text_X2Min
+    property alias text_X1Max: text_X1Max
+    property alias text_X1Min: text_X1min
+    property alias btn_drawGraph: btn_drawGraph
+    property alias btn_orto: btn_orto
     property alias btn_3D: btn_3D
     property alias btn_showHM: btn_showHM
     property alias value_fx: value_fx
@@ -13,6 +19,10 @@ Item {
 
     RowLayout {
         id: rowLayout
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
         anchors.fill: parent
 
         ColumnLayout {
@@ -115,27 +125,138 @@ Item {
                 Layout.fillHeight: true
                 visible: true
                 Layout.fillWidth: true
-                Layout.preferredHeight: 4500
+                Layout.preferredHeight: 450
                 Layout.preferredWidth: 500
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             }
 
+            Rectangle {
+                id: empty_space
+                width: 200
+                height: 200
+                color: "#ffffff"
+                Layout.preferredHeight: 50
+                Layout.fillHeight: false
+                Layout.fillWidth: true
+            }
             RowLayout {
                 id: rowLayout1
                 width: 100
                 height: 100
 
-                Button {
-                    id: btn_3D
-                    text: qsTr("Widok 3D")
+                ColumnLayout {
+                    id: columnLayout1
+                    width: 100
+                    height: 100
                     Layout.fillWidth: true
+                    Layout.fillHeight: true
+
+                    Rectangle {
+                        id: rectangle
+                        width: 200
+                        height: 200
+                        color: "#ffffff"
+                        Layout.preferredHeight: 40
+                        Layout.fillWidth: true
+                        Layout.fillHeight: false
+                    }
+                    Button {
+                        id: btn_orto
+                        text: qsTr("Widok warstwic")
+                        Layout.preferredWidth: 150
+                        Layout.columnSpan: 3
+                        Layout.rowSpan: 3
+                        Layout.fillHeight: false
+                        Layout.fillWidth: true
+                    }
+                    Button {
+                        id: btn_3D
+                        text: qsTr("Widok 3D")
+                        Layout.preferredWidth: 150
+                        Layout.columnSpan: 3
+                        Layout.rowSpan: 3
+                        Layout.fillWidth: true
+                    }
                 }
 
-                Button {
-                    id: btn_orto
-                    text: qsTr("Widok warstwic")
+                GridLayout {
+                    id: gridLayout1
+                    width: 100
+                    height: 100
                     Layout.fillHeight: true
-                    Layout.fillWidth: true
+                    Layout.preferredWidth: 350
+                    rows: 3
+                    columns: 3
+
+                    TextField {
+                        id: text_X1min
+                        text: qsTr("0.00")
+                        font.pointSize: 10
+                        horizontalAlignment: Text.AlignHCenter
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 150
+                        Layout.rowSpan: 1
+                    }
+
+                    Text {
+                        id: label_X1range
+                        text: qsTr("≤ X1 ≤")
+                        verticalAlignment: Text.AlignVCenter
+                        Layout.fillHeight: false
+                        fontSizeMode: Text.HorizontalFit
+                        horizontalAlignment: Text.AlignHCenter
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 50
+                        Layout.rowSpan: 1
+                        font.pixelSize: 16
+                    }
+
+                    TextField {
+                        id: text_X1Max
+                        text: qsTr("0.00")
+                        font.pointSize: 10
+                        horizontalAlignment: Text.AlignHCenter
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 150
+                        Layout.rowSpan: 1
+                    }
+
+                    TextField {
+                        id: text_X2Min
+                        text: qsTr("0.00")
+                        font.pointSize: 10
+                        horizontalAlignment: Text.AlignHCenter
+                        Layout.preferredWidth: 125
+                        Layout.fillWidth: true
+                        Layout.rowSpan: 1
+                    }
+
+                    Text {
+                        id: label_X2Range
+                        text: qsTr("≤ X2 ≤")
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        Layout.preferredWidth: 100
+                        Layout.fillWidth: true
+                        Layout.rowSpan: 1
+                        font.pixelSize: 16
+                    }
+                    TextField {
+                        id: text_X2Max
+                        text: qsTr("0.00")
+                        font.pointSize: 10
+                        horizontalAlignment: Text.AlignHCenter
+                        Layout.preferredWidth: 125
+                        Layout.fillWidth: true
+                        Layout.rowSpan: 1
+                    }
+                    Button {
+                        id: btn_drawGraph
+                        text: qsTr("Rysuj nowy wykres")
+                        Layout.fillWidth: true
+                        Layout.rowSpan: 1
+                        Layout.columnSpan: 3
+                    }
                 }
             }
         }

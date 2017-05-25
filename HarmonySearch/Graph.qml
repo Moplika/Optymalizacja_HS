@@ -110,12 +110,24 @@ Item {
         }
     }
 
+    Connections {
+        target: uiHandler;
+        onDrawSurfaceGraphPoint: {
+            addData(values);
+        }
+        onDrawingFinished: {
+            dataProxy.itemModel = dataModel;
+        }
+    }
+
     function addData(values) {
         var params = {
             x1: values[0],
             x2: values[1],
             y: values[2]
         };
+        console.log(values[0], values[1], values[2]);
+
         dataModel.append(params);
     }
 
@@ -136,16 +148,18 @@ Item {
         x1Max = values[1];
         x2Min = values[2];
         x2Max = values[3];
+
+        x1Axis.min = x1Min;
+        x1Axis.max = x1Max;
+        x2Axis.min = x2Min;
+        x2Axis.max = x2Max;
     }
 
-    Connections {
-        target: uiHandler;
-        onDrawSurfaceGraphPoint: {
-            addData(values);
-        }
-        onDrawingFinished: {
-            dataProxy.itemModel = dataModel;
-        }
+    function drawGraph(values) {
+        dataModel.clear();
+        setAxis(values);
+        console.log(values[0], values[1], values[2], values[3]);
+        uiHandler.drawSurfaceGraph(values[0], values[1], values[2], values[3])
     }
 
 }
