@@ -127,6 +127,8 @@ ParametersViewForm {
         }
     }
 
+
+
     // Przekazywanie wartości do C++
     btn_calculate.onClicked: {
         uiHandler.clearParameters();
@@ -137,7 +139,18 @@ ParametersViewForm {
         uiHandler.setShowIterations(checkBox_iterations.checkState);
         uiHandler.setIterationNb(textField_iterations.text);
 
-        uiHandler.startCalculations();
+        if (uiHandler.areParametersOk()) {
+            page1.state = "CountingState";
+            delay(100);
+
+        }
+    }
+
+    Timer {
+        id: delayTimer
+        onTriggered: {
+            uiHandler.startCalculations();
+        }
     }
 
     // Przesyłanie równania
@@ -149,4 +162,34 @@ ParametersViewForm {
         }
 
     }
+
+
+
+    function delay(delayTime) {
+//        timer = new Timer();
+        delayTimer.interval = delayTime;
+        delayTimer.repeat = false;
+//        timer.triggered.connect(cb);
+        delayTimer.start();
+    }
+
+//    Timer {
+//        id:timer;
+//        running: false;
+//        repeat: false;
+
+//        property var callback;
+
+//        onTriggered: callback();
+//    }
+//    function setTimeout(callback, delay) {
+//        if (timer.running) {
+//            return;
+//        }
+//        timer.callback = callback;
+//        timer.interval = delay + 1;
+//        timer.running = true;
+//    }
 }
+
+

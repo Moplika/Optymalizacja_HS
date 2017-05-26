@@ -81,6 +81,8 @@ public slots:
     int getN() const;
     void setN(int _N);
 
+    bool areParametersOk();
+
     std::string getEquation() const;
     void setEquation(std::string _equation);
     void setEquation(QString _equation);
@@ -107,6 +109,7 @@ private:
     int iterationsNb;
     unsigned int N;
 
+
     unsigned int globalIteration;
 
     std::string equation;
@@ -122,7 +125,7 @@ private:
     void clearReadConstraints();
     static bool compareReadConstraints(ReadConstraints first, ReadConstraints second);
 
-    bool areParametersOk();
+
 
     void completeSearch();
     void searchByIteration();

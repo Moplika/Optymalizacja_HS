@@ -293,6 +293,7 @@ void UIHandler::startCalculations()
         return;
 
     emit parametersOk();
+    emit calculationsStarted();
 
     bool hsState = harmonySearch.setParameters(equation, HMS, HMCR, PAR, 0.5, NI);
 
@@ -331,7 +332,7 @@ QList<QString> UIHandler::xToStringList(HarmonyMemoryRow row)
 
 void UIHandler::completeSearch()
 {
-    emit calculationsStarted();
+//    emit calculationsStarted();
 
     HarmonyMemoryRow result = harmonySearch.search(constraints);
     std::cout << "Result: ";
@@ -429,8 +430,6 @@ void UIHandler::drawSurfaceGraph(double minX1, double maxX1, double minX2, doubl
         for (double x2 = minX2; x2 <= maxX2+stepX2; x2 += stepX2)
         {
             graphPoint.clear();
-
-//            qDebug() << "(" << x1 << ", " << x2 << ")";
 
             std::vector<double> x;
             x.push_back(x1);

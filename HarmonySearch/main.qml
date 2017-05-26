@@ -7,6 +7,7 @@ ApplicationWindow {
     width: 800
     height: 600
     title: qsTr("Harmony Search")
+    id: mainWindow;
 
     SwipeView {
         id: swipeView;

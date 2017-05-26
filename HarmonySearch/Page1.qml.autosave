@@ -16,7 +16,6 @@ Page1Form {
             state = "base state";
             // Przełącz na widok rozwiązania
             swipeView.incrementCurrentIndex();
-//            tabBar.incrementCurrentIndex();
         }
     }
 

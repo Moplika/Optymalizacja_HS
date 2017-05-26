@@ -48,13 +48,10 @@ std::string Equation::getEquation()
 bool Equation::parseEquation()
 {
     fValues.assign(variableCount, 0.0);
-    //    std::vector<double>::iterator it = fValues.begin();
 
     for (int i = 1; i <= variableCount; i++)//, it++ )
     {
         std::string xName = "x" + std::to_string(i);
-        //        std::cout << xName << std::endl;
-        //        parser.DefineVar(xName, &(*it));
         parser.DefineVar(xName, &(fValues.at(i-1)));
     }
     parser.DefineFun("root", root);
@@ -64,7 +61,6 @@ bool Equation::parseEquation()
     try
     {
         parser.Eval();
-        //        std::cout << temp << std::endl;
     }
     catch (mu::Parser::exception_type &e)
     {
@@ -127,8 +123,6 @@ int Equation::countXs()
         tempFormula = tempFormula.substr(xPosition+1);
 
         std::size_t firstNotNumberPosition = tempFormula.find_first_not_of("0123456789");
-
-        qDebug() << tempFormula.c_str() << ": " << firstNotNumberPosition;
 
         if (firstNotNumberPosition == 0)
         {

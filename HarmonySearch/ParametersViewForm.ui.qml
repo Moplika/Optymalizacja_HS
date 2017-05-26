@@ -1,7 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.0
-import QtQuick.Dialogs.qml 1.0
+import QtQuick.Dialogs 1.0
 
 Item {
     width: 800
@@ -39,7 +39,7 @@ Item {
 
         Text {
             id: label_Equation
-            text: qsTr("Równanie")
+            text: qsTr("Funkcja celu")
             fontSizeMode: Text.FixedSize
             Layout.columnSpan: 2
             Layout.rowSpan: 1
@@ -71,7 +71,7 @@ Item {
 
         Text {
             id: label_equationState
-            text: qsTr("Stan równania")
+            text: qsTr("")
             fontSizeMode: Text.FixedSize
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: true

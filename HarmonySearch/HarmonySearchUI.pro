@@ -1,5 +1,5 @@
 QT += qml quick \
-    charts
+        datavisualization
 
 
 CONFIG += c++11
