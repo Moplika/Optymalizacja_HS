@@ -27,5 +27,7 @@
         <file>IterationView.qml</file>
         <file>IterationViewForm.ui.qml</file>
         <file>Graph.qml</file>
+        <file>IterationViewPage.qml</file>
+        <file>IterationViewPageForm.ui.qml</file>
     </qresource>
 </RCC>

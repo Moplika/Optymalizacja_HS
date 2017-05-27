@@ -4,32 +4,35 @@ IterationViewForm {
     property int varCount: 0
     property int maxIterations: 0
 
+    property bool isShowingWaitScreen: false;
+
     anchors.fill: parent;
 
     btn_nextIter.onClicked: {
-//        console.log("Let's show next iteration")
         uiHandler.nextIteration();
     }
 
+    btn_showResult.onClicked: {
+        page2.state = "base state";
+    }
+
     btn_end.onClicked: {
-        uiHandler.finishIterating();
+        isShowingWaitScreen = true;
+        iterationViewPage.state = "CalculationState";
+        delay(100);
     }
 
     btn_orto.onClicked:  {
-//        console.log("Widok warstwic");
         graphView.setViewToOrto();
     }
 
     btn_view3D.onClicked: {
-//        console.log("Widok 3D");
         graphView.setViewTo3D();
     }
 
     Connections {
         target: uiHandler;
         onShowIteration : {
-//            console.log("Signal: onShowIteration");
-
             text_iterationNb.text = "Iteracja " + iterationNo;
 
             text_optimalYValue.text = optimalFx;
@@ -51,18 +54,21 @@ IterationViewForm {
             }
 
             if(iterationNo === maxIterations) {
-                btn_nextIter.text = "Wyszukiwanie zakończone";
-                btn_nextIter.enabled = false;
+                isShowingWaitScreen = false;
+                iterationViewPage.state = "";
+                btn_nextIter.visible = false;
+                btn_showResult.visible = true;
+                btn_end.enabled = false;
             }
         }
         onStartShowingIterations: {
-//            console.log("Signal: onStartShowingIterations")
+            btn_nextIter.visible = true;
+            btn_showResult.visible = false;
 
             varCount = uiHandler.getN();
             maxIterations = uiHandler.getNI();
 
-            btn_nextIter.text = "Wyświetl następną iterację";
-            btn_nextIter.enabled = true;
+            btn_end.enabled = true;
 
             if (varCount === 2) {
 //                graphView.visible = true;
@@ -77,5 +83,18 @@ IterationViewForm {
                 btn_view3D.visible = false;
             }
         }
+    }
+
+    Timer {
+        id: delayTimer
+        onTriggered: {
+            uiHandler.finishIterating();
+        }
+    }
+
+    function delay(delayTime) {
+        delayTimer.interval = delayTime;
+        delayTimer.repeat = false;
+        delayTimer.start();
     }
 }

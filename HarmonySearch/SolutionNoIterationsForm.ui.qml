@@ -135,6 +135,7 @@ Item {
                 width: 200
                 height: 200
                 color: "#ffffff"
+                visible: false
                 Layout.preferredHeight: 50
                 Layout.fillHeight: false
                 Layout.fillWidth: true

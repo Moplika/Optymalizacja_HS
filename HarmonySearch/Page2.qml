@@ -7,42 +7,24 @@ Page2Form {
     property var myValues: ["0.5", "1", "2", "3", "4", "2", "3", "4", "2", "3", "4" ]
     //property var values: ["Lp","f(x)","x1","x2","x3", "x4" ]
 
+    property bool switchFromIterationView: true
+
     id: page2;
 
-    SolutionNoIterations {
-        anchors.fill: parent;
+    Connections {
+        target: uiHandler;
+        onStartShowingIterations: {
+            state = "iterationState"
+            switchFromIterationView = false;
+        }
+        onCalculationsStarted: {
+            switchFromIterationView = true;
+        }
+
+        onShowResult: {
+            if (switchFromIterationView) {
+                state = ""
+            }
+        }
     }
-
-//    OptimalSolutionView {
-//        id: optimalSolutionView
-//        width: parent.width;
-//        anchors.horizontalCenter: parent.horizontalCenter;
-//        visible: false;
-
-//        variableCount: myVariableCount;
-//        values: myValues;
-//    }
-
-//    HarmonyMemoryDialog {
-//        id: harmonyMemoryDialog
-
-//    }
-
-//    btn_showHM.onClicked: {
-//        harmonyMemoryDialog.open();
-//        //harmonyMemoryDialog.harmonyMemoryView.drawHarmonyMemory();
-//    }
-
-//    Connections {
-//        target: uiHandler;
-//        onShowResult: {
-//            console.log("Signal: onShowResult");
-//            console.log("N:", N);//, "values:", result);
-//            optimalSolutionView.variableCount = N;
-//            optimalSolutionView.values = result;
-//            optimalSolutionView.visible = true;
-
-//        }
-//    }
-
 }

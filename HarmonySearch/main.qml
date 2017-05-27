@@ -16,16 +16,10 @@ ApplicationWindow {
         interactive: false;
 
         Page1 {
-
         }
 
         Page2 {
         }
-
-        Page3 {
-
-        }
-
 
     }
 
@@ -37,9 +31,6 @@ ApplicationWindow {
         }
         TabButton {
             text: qsTr("Wynik obliczeń")
-        }
-        TabButton {
-            text: qsTr("Widok iteracji")
         }
     }
 }

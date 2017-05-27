@@ -5,6 +5,7 @@ import QtQuick.Controls 2.1
 Item {
     width: 800
     height: 600
+    property alias btn_showResult: btn_showResult
     property alias btn_orto: btn_orto
     property alias btn_view3D: btn_view3D
     property alias graphView: graphView
@@ -275,9 +276,20 @@ Item {
         Button {
             id: btn_nextIter
             text: qsTr("Pokaż kolejną iterację")
+            visible: true
             Layout.columnSpan: 2
             Layout.fillHeight: false
             Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+            Layout.fillWidth: true
+        }
+
+        Button {
+            id: btn_showResult
+            text: qsTr("Przejdź do widoku rozwiązania")
+            visible: false
+            Layout.fillHeight: false
+            Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
+            Layout.columnSpan: 2
             Layout.fillWidth: true
         }
     }

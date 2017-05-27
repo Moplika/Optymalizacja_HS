@@ -142,16 +142,10 @@ ParametersViewForm {
         if (uiHandler.areParametersOk()) {
             page1.state = "CountingState";
             delay(100);
-
         }
     }
 
-    Timer {
-        id: delayTimer
-        onTriggered: {
-            uiHandler.startCalculations();
-        }
-    }
+
 
     // Przesyłanie równania
     Connections {
@@ -163,7 +157,12 @@ ParametersViewForm {
 
     }
 
-
+    Timer {
+        id: delayTimer
+        onTriggered: {
+            uiHandler.startCalculations();
+        }
+    }
 
     function delay(delayTime) {
 //        timer = new Timer();
@@ -173,23 +172,7 @@ ParametersViewForm {
         delayTimer.start();
     }
 
-//    Timer {
-//        id:timer;
-//        running: false;
-//        repeat: false;
 
-//        property var callback;
-
-//        onTriggered: callback();
-//    }
-//    function setTimeout(callback, delay) {
-//        if (timer.running) {
-//            return;
-//        }
-//        timer.callback = callback;
-//        timer.interval = delay + 1;
-//        timer.running = true;
-//    }
 }
 
 
