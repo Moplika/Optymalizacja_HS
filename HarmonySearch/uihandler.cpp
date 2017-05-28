@@ -312,6 +312,16 @@ void UIHandler::startCalculations()
     }
 }
 
+QList<QString> UIHandler::getOptimalSolution() {
+    HarmonyMemoryRow optimalSolution = harmonySearch.getOptimalSolution();
+
+    QList<QString> optimalSolutionList = xToStringList(optimalSolution);
+    QString fValue = fxToString(optimalSolution);
+    optimalSolutionList.push_back(fValue);
+
+    return optimalSolutionList;
+}
+
 QString UIHandler::fxToString(HarmonyMemoryRow row)
 {
     return QString::number(row.getObjectiveFunction(), 'f', 6);
@@ -386,7 +396,7 @@ bool UIHandler::areParametersOk()
         return false;
     if (!isEquationCorrect)
         return false;
-    if (!areConstraintsSet)
+    if (!areConstraintsSet || constraints.size() != N)
     {
         emit notEnoughConstraints();
         return false;
@@ -419,32 +429,82 @@ void UIHandler::printHarmonyMemory()
 
 void UIHandler::drawSurfaceGraph(double minX1, double maxX1, double minX2, double maxX2)
 {
-    QList<QString> graphPoint;
-
     double stepX1 = (maxX1 - minX1) / 50;
     double stepX2 = (maxX2 - minX2) / 50;
 
-    // TEMP
-    for (double x1 = minX1; x1 <= maxX1+stepX1; x1 += stepX1)
+    HarmonyMemoryRow optimalSolution = harmonySearch.getOptimalSolution();
+    double optimalX1 = optimalSolution.getAllX().at(0);
+    double optimalX2 = optimalSolution.getAllX().at(1);
+
+    int optimalX1index = 0;
+    int optimalX2index = 0;
+
+    double x1, x2;
+
+    for (x1 = minX1; x1 < optimalX1 + stepX1; x1 += stepX1, optimalX1index++)
     {
-        for (double x2 = minX2; x2 <= maxX2+stepX2; x2 += stepX2)
+        for (x2 = minX2; x2 <= maxX2+stepX2; x2 += stepX2)
         {
-            graphPoint.clear();
-
-            std::vector<double> x;
-            x.push_back(x1);
-            x.push_back(x2);
-
-            double y = harmonySearch.equation.calculate(x);
-
-            graphPoint.push_back(QString::number(x1));
-            graphPoint.push_back(QString::number(x2));
-            graphPoint.push_back(QString::number(y));
-
-            emit drawSurfaceGraphPoint(graphPoint);
+            this->drawAPoint(x1,x2);
         }
     }
-    emit drawingFinished();
+
+    for (x2 = minX2; x2 < optimalX2+stepX1 ; x2 += stepX2, optimalX2index++)
+    {
+        this->drawAPoint(x1, x2);
+    }
+
+    for (; x2 <= maxX2+stepX2; x2 += stepX2)
+    {
+        this->drawAPoint(x1,x2);
+    }
+    x1 += stepX1;
+
+    for (; x1 < maxX1+stepX1; x1 += stepX1)
+    {
+        for (x2 = minX2; x2 < optimalX2+stepX1 ; x2 += stepX2)
+        {
+            this->drawAPoint(x1, x2);
+        }
+
+        for (; x2 <= maxX2+stepX2; x2 += stepX2)
+        {
+            this->drawAPoint(x1,x2);
+        }
+    }
+
+//    for (double x1 = optimalX1; x1 < maxX1+stepX1; x1 += stepX1)
+//    {
+//        for (double x2 = minX2; x2 < maxX2+stepX2 ; x2 += stepX2, optimalX2index++)
+//        {
+//            this->drawAPoint(x1, x2);
+//        }
+//    }
+//    for (double x1 = minX1; x1 <= maxX1+stepX1; x1 += stepX1)
+//    {
+//        for (double x2 = minX2; x2 <= maxX2+stepX2; x2 += stepX2)
+//        {
+//            this->drawAPoint(x1,x2);
+//        }
+//    }
+    emit drawingFinished(optimalX1index, optimalX2index);
+}
+
+void UIHandler::drawAPoint(double x1, double x2)
+{
+     QList<QString> graphPoint;
+
+     std::vector<double> x;
+     x.push_back(x1);
+     x.push_back(x2);
+
+     double y = harmonySearch.equation.calculate(x);
+
+     graphPoint.push_back(QString::number(x1));
+     graphPoint.push_back(QString::number(x2));
+     graphPoint.push_back(QString::number(y));
+
+     emit drawSurfaceGraphPoint(graphPoint);
 }
 
 void UIHandler::nextIteration()

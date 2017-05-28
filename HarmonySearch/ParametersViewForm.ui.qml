@@ -49,7 +49,7 @@ Item {
             Layout.fillWidth: false
             verticalAlignment: Text.AlignVCenter
             horizontalAlignment: Text.AlignHCenter
-            font.pixelSize: 12
+            font.pixelSize: 14
         }
 
         TextField {
@@ -111,7 +111,7 @@ Item {
             horizontalAlignment: Text.AlignLeft
             Layout.fillWidth: true
             Layout.columnSpan: 10
-            font.pixelSize: 12
+            font.pixelSize: 14
         }
 
         Text {
@@ -123,7 +123,7 @@ Item {
             Layout.fillHeight: false
             verticalAlignment: Text.AlignVCenter
             Layout.rowSpan: 1
-            font.pixelSize: 12
+            font.pixelSize: 14
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             Layout.fillWidth: false
             Layout.columnSpan: 2
@@ -143,7 +143,7 @@ Item {
             text: qsTr("Szansa wyboru elementu z pamięci harmonii")
             horizontalAlignment: Text.AlignLeft
             verticalAlignment: Text.AlignVCenter
-            font.pixelSize: 12
+            font.pixelSize: 14
             Layout.columnSpan: 10
             Layout.fillWidth: true
             font.bold: true
@@ -158,7 +158,7 @@ Item {
             Layout.fillHeight: false
             verticalAlignment: Text.AlignVCenter
             Layout.rowSpan: 1
-            font.pixelSize: 12
+            font.pixelSize: 14
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             Layout.columnSpan: 2
             Layout.fillWidth: false
@@ -183,11 +183,11 @@ Item {
 
         Text {
             id: text_PARDescr
-            text: qsTr("TODO: Tutaj wpisać jakiś opis PAR")
+            text: qsTr("Współczynnik dostosowania tonu")
             horizontalAlignment: Text.AlignLeft
             Layout.fillWidth: true
             verticalAlignment: Text.AlignVCenter
-            font.pixelSize: 12
+            font.pixelSize: 14
             Layout.columnSpan: 10
             font.bold: true
         }
@@ -198,7 +198,7 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: false
             verticalAlignment: Text.AlignVCenter
-            font.pixelSize: 12
+            font.pixelSize: 14
             Layout.columnSpan: 2
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             Layout.fillHeight: false
@@ -231,7 +231,7 @@ Item {
             Layout.fillWidth: true
             verticalAlignment: Text.AlignVCenter
             Layout.columnSpan: 10
-            font.pixelSize: 12
+            font.pixelSize: 14
             font.bold: true
         }
 
@@ -241,7 +241,7 @@ Item {
             horizontalAlignment: Text.AlignHCenter
             Layout.fillWidth: false
             verticalAlignment: Text.AlignVCenter
-            font.pixelSize: 12
+            font.pixelSize: 14
             Layout.columnSpan: 2
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
             Layout.fillHeight: false

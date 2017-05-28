@@ -9,21 +9,29 @@ SolutionNoIterationsForm {
     property double x2Min: -1
     property double x2Max: 1
 
+    state: ""
+
     Connections {
         target: uiHandler;
         onShowResult: {
             console.log("Signal: onShowResult");
+
             value_fx.text = fx;
             solutionView.varCount = N;
             solutionView.values = x;
             solutionView.fillList();
 
+            if (N === 2) {
+                state = "Nequals2";
+            }
+            else {
+                state = "Nnot2";
+            }
+
             x1Min = uiHandler.getMinimum(1);
             x1Max = uiHandler.getMaximum(1);
             x2Min = uiHandler.getMinimum(2);
             x2Max = uiHandler.getMaximum(2);
-
-            console.log(x1Min, x1Max, x2Min, x2Max);
 
             text_X1Min.text = x1Min;
             text_X1Max.text = x1Max;
@@ -31,7 +39,7 @@ SolutionNoIterationsForm {
             text_X2Max.text = x2Max;
 
             graphView.drawGraph([x1Min, x1Max, x2Min, x2Max]);
-//            graphView.drawGraph([-1,1,-2,2]);
+            graphView.setViewToOrto();
         }
     }
 
@@ -60,4 +68,11 @@ SolutionNoIterationsForm {
         graphView.drawGraph([x1Min, x1Max, x2Min, x2Max]);
     }
 
+    GraphControlDialog {
+        id: graphControlDialog;
+    }
+
+    btn_rules.onClicked: {
+        graphControlDialog.open();
+    }
 }

@@ -5,6 +5,7 @@ import QtQuick.Controls 2.1
 Item {
     width: 800
     height: 600
+    property alias btn_rules: btn_rules
     property alias text_X2Max: text_X2Max
     property alias text_X2Min: text_X2Min
     property alias text_X1Max: text_X1Max
@@ -19,6 +20,7 @@ Item {
 
     RowLayout {
         id: rowLayout
+        visible: false
         anchors.rightMargin: 0
         anchors.bottomMargin: 0
         anchors.leftMargin: 0
@@ -116,7 +118,7 @@ Item {
         }
 
         ColumnLayout {
-            id: columnLayout
+            id: columnLayout_right
             width: 100
             height: 100
 
@@ -157,6 +159,7 @@ Item {
                         width: 200
                         height: 200
                         color: "#ffffff"
+                        visible: false
                         Layout.preferredHeight: 40
                         Layout.fillWidth: true
                         Layout.fillHeight: false
@@ -176,6 +179,13 @@ Item {
                         Layout.preferredWidth: 150
                         Layout.columnSpan: 3
                         Layout.rowSpan: 3
+                        Layout.fillWidth: true
+                    }
+
+                    Button {
+                        id: btn_rules
+                        text: qsTr("Zasady sterowania")
+                        Layout.preferredWidth: 150
                         Layout.fillWidth: true
                     }
                 }
@@ -262,4 +272,77 @@ Item {
             }
         }
     }
+
+    Label {
+        id: label
+        text: qsTr("Jeszcze nic nie zostało policzone")
+        font.bold: true
+        font.pointSize: 20
+        anchors.fill: parent
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+    }
+    states: [
+        State {
+            name: "Nequals2"
+
+            PropertyChanges {
+                target: label
+                visible: false
+            }
+
+            PropertyChanges {
+                target: rowLayout
+                visible: true
+            }
+
+            PropertyChanges {
+                target: label_fx
+                font.pixelSize: 24
+            }
+
+            PropertyChanges {
+                target: value_fx
+                font.pixelSize: 24
+            }
+
+            PropertyChanges {
+                target: label_optimalSolution
+                font.pixelSize: 32
+            }
+
+            PropertyChanges {
+                target: columnLayout_right
+                visible: true
+            }
+        },
+        State {
+            name: "Nnot2"
+
+            PropertyChanges {
+                target: columnLayout_right
+                visible: false
+            }
+
+            PropertyChanges {
+                target: rowLayout
+                visible: true
+            }
+
+            PropertyChanges {
+                target: label
+                visible: false
+            }
+
+            PropertyChanges {
+                target: label_fx
+                Layout.fillWidth: true
+            }
+
+            PropertyChanges {
+                target: value_fx
+                Layout.fillWidth: true
+            }
+        }
+    ]
 }

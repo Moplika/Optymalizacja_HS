@@ -29,7 +29,7 @@ Item {
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignRight
                     Layout.fillWidth: true
-                    font.pixelSize: 14
+                    font.pixelSize: 16
                 }
 
                 Text {
@@ -37,7 +37,7 @@ Item {
                     Layout.preferredWidth: 100
                     verticalAlignment: Text.AlignVCenter
                     Layout.fillWidth: true
-                    font.pixelSize: 14
+                    font.pixelSize: 16
                 }
             }
         }

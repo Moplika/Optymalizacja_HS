@@ -11,7 +11,6 @@ Item {
     property double x2Max: 1
 
     property alias surfaceGraph: surfaceGraph
-//    property bool showButtons: true
 
     id: mainView;
 
@@ -22,9 +21,6 @@ Item {
 
     Surface3D {
         id: surfaceGraph
-//        anchors.fill: parent;
-//        Layout.preferredWidth: parent.width;
-//        Layout.fillHeight: true;
         width: mainView.width;
         height: mainView.height;
 
@@ -35,16 +31,21 @@ Item {
         theme: graphTheme;
 
         Surface3DSeries {
-            id: firstSeries
+            id: mainSeries
             itemLabelFormat: "x1 = @xLabel, x2 = @zLabel: y(x) = @yLabel";
+            selectedPoint: invalidSelectionPosition;
 
             ItemModelSurfaceDataProxy {
-                id: dataProxy;
-                itemModel:  dataModel;
+                id: mainDataProxy;
+                itemModel:  mainDataModel;
+
                 rowRole: "x1";
                 columnRole: "x2";
                 yPosRole: "y";
+            }
 
+            onSelectedPointChanged: {
+                console.log(selectedPoint.x, selectedPoint.y);
             }
         }
     }
@@ -58,7 +59,12 @@ Item {
     }
 
     ListModel {
-        id: dataModel
+        id: mainDataModel
+    }
+
+    ListModel {
+        id: optimalSolutionModel;
+        ListElement {x1: "0.75"; x2: "0.30"; y: "-0.08";}
     }
 
     ValueAxis3D {
@@ -116,7 +122,11 @@ Item {
             addData(values);
         }
         onDrawingFinished: {
-            dataProxy.itemModel = dataModel;
+            mainDataProxy.itemModel = mainDataModel;
+            mainSeries.selectedPoint.x = x1Pos;
+            mainSeries.selectedPoint.y = x2Pos;
+
+//            console.log(x1Pos, x2Pos);
         }
     }
 
@@ -126,9 +136,7 @@ Item {
             x2: values[1],
             y: values[2]
         };
-//        console.log(values[0], values[1], values[2]);
-
-        dataModel.append(params);
+        mainDataModel.append(params);
     }
 
     function setViewTo3D() {
@@ -156,10 +164,23 @@ Item {
     }
 
     function drawGraph(values) {
-        dataModel.clear();
+        mainDataModel.clear();
         setAxis(values);
-//        console.log(values[0], values[1], values[2], values[3]);
-        uiHandler.drawSurfaceGraph(values[0], values[1], values[2], values[3])
+
+        uiHandler.drawSurfaceGraph(values[0], values[1], values[2], values[3]);
     }
 
+    function drawOptimalSolution() {
+        var values = uiHandler.getOptimalSolution();
+
+        var params = {
+            x1: values[0],
+            x2: values[1],
+            y: values[2]
+        };
+
+        mainDataModel.append(params);
+
+        console.log("Optimal solution: ", values);
+    }
 }

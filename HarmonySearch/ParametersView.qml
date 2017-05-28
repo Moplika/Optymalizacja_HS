@@ -127,8 +127,6 @@ ParametersViewForm {
         }
     }
 
-
-
     // Przekazywanie wartości do C++
     btn_calculate.onClicked: {
         uiHandler.clearParameters();
@@ -145,8 +143,6 @@ ParametersViewForm {
         }
     }
 
-
-
     // Przesyłanie równania
     Connections {
         target: textField_equation;
@@ -154,7 +150,6 @@ ParametersViewForm {
             uiHandler.setEquation(textField_equation.text);
             console.log("Equation set?")
         }
-
     }
 
     Timer {

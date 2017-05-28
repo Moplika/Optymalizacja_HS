@@ -54,7 +54,7 @@ signals:
     void showHarmonyMemoryRow(int id, QList<QString> values);
 
     void drawSurfaceGraphPoint(QList<QString> values);
-    void drawingFinished();
+    void drawingFinished(int x1Pos, int x2Pos);
 
 public slots:
     void clearParameters();
@@ -94,6 +94,7 @@ public slots:
     double getMinimum(int index);
     double getMaximum(int index);
 
+    QList<QString> getOptimalSolution();
     void printHarmonyMemory();
     void drawSurfaceGraph(double minX1, double maxX1, double minX2, double maxX2);
 
@@ -108,7 +109,6 @@ private:
     bool doShowIter;
     int iterationsNb;
     unsigned int N;
-
 
     unsigned int globalIteration;
 
@@ -125,14 +125,14 @@ private:
     void clearReadConstraints();
     static bool compareReadConstraints(ReadConstraints first, ReadConstraints second);
 
-
-
     void completeSearch();
     void searchByIteration();
     void showIterationInUI(HarmonyMemoryRow optimal, int solutionPosition, bool isFinal);
 
     QString fxToString(HarmonyMemoryRow row);
     QList<QString> xToStringList(HarmonyMemoryRow row);
+
+    void drawAPoint(double x1, double x2);
 
 };
 

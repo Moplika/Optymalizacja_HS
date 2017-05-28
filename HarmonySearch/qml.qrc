@@ -29,5 +29,6 @@
         <file>Graph.qml</file>
         <file>IterationViewPage.qml</file>
         <file>IterationViewPageForm.ui.qml</file>
+        <file>GraphControlDialog.qml</file>
     </qresource>
 </RCC>
