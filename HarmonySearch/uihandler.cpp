@@ -446,37 +446,37 @@ void UIHandler::drawSurfaceGraph(double minX1, double maxX1, double minX2, doubl
 
     double x1, x2;
 
-    for (x1 = minX1; x1 < optimalX1 + stepX1; x1 += stepX1, optimalX1index++)
-    {
-        for (x2 = minX2; x2 <= maxX2+stepX2; x2 += stepX2)
-        {
-            this->drawAPoint(x1,x2);
-        }
-    }
+//    for (x1 = minX1; x1 < optimalX1 + stepX1; x1 += stepX1, optimalX1index++)
+//    {
+//        for (x2 = minX2; x2 <= maxX2+stepX2; x2 += stepX2)
+//        {
+//            this->drawAPoint(x1,x2);
+//        }
+//    }
 
-    for (x2 = minX2; x2 < optimalX2+stepX1 ; x2 += stepX2, optimalX2index++)
-    {
-        this->drawAPoint(x1, x2);
-    }
+//    for (x2 = minX2; x2 < optimalX2+stepX1 ; x2 += stepX2, optimalX2index++)
+//    {
+//        this->drawAPoint(x1, x2);
+//    }
 
-    for (; x2 <= maxX2+stepX2; x2 += stepX2)
-    {
-        this->drawAPoint(x1,x2);
-    }
-    x1 += stepX1;
+//    for (; x2 <= maxX2+stepX2; x2 += stepX2)
+//    {
+//        this->drawAPoint(x1,x2);
+//    }
+//    x1 += stepX1;
 
-    for (; x1 < maxX1+stepX1; x1 += stepX1)
-    {
-        for (x2 = minX2; x2 < optimalX2+stepX1 ; x2 += stepX2)
-        {
-            this->drawAPoint(x1, x2);
-        }
+//    for (; x1 < maxX1+stepX1; x1 += stepX1)
+//    {
+//        for (x2 = minX2; x2 < optimalX2+stepX1 ; x2 += stepX2)
+//        {
+//            this->drawAPoint(x1, x2);
+//        }
 
-        for (; x2 <= maxX2+stepX2; x2 += stepX2)
-        {
-            this->drawAPoint(x1,x2);
-        }
-    }
+//        for (; x2 <= maxX2+stepX2; x2 += stepX2)
+//        {
+//            this->drawAPoint(x1,x2);
+//        }
+//    }
 
 //    for (double x1 = optimalX1; x1 < maxX1+stepX1; x1 += stepX1)
 //    {
@@ -485,13 +485,13 @@ void UIHandler::drawSurfaceGraph(double minX1, double maxX1, double minX2, doubl
 //            this->drawAPoint(x1, x2);
 //        }
 //    }
-//    for (double x1 = minX1; x1 <= maxX1+stepX1; x1 += stepX1)
-//    {
-//        for (double x2 = minX2; x2 <= maxX2+stepX2; x2 += stepX2)
-//        {
-//            this->drawAPoint(x1,x2);
-//        }
-//    }
+    for (double x1 = minX1; x1 <= maxX1+stepX1; x1 += stepX1)
+    {
+        for (double x2 = minX2; x2 <= maxX2+stepX2; x2 += stepX2)
+        {
+            this->drawAPoint(x1,x2);
+        }
+    }
     emit drawingFinished(optimalX1index, optimalX2index);
 }
 

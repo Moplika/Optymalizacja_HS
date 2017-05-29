@@ -33,9 +33,8 @@ Item {
        customItemList: [
            Custom3DItem {
                id: customItem;
-               textureFile: ":/mesh/cupe_texture.png";
-               meshFile: ":/mesh/sphere.obj";
-//                       textureFile: "point.mtl";
+               textureFile: ":/mesh/texture.png";
+               meshFile: ":/mesh/cube.obj";
                position: Qt.vector3d(0.0,0.0,0.5);
 
            }
@@ -50,8 +49,8 @@ Item {
                 id: mainDataProxy;
                 itemModel:  mainDataModel;
 
-                rowRole: "x1";
-                columnRole: "x2";
+                columnRole: "x1";
+                rowRole: "x2";
                 yPosRole: "y";
             }
 
@@ -131,8 +130,6 @@ Item {
         }
         onDrawingFinished: {
             mainDataProxy.itemModel = mainDataModel;
-//            mainSeries.selectedPoint.x = x1Pos;
-//            mainSeries.selectedPoint.y = x2Pos;
             drawOptimalSolution();
        }
     }
@@ -172,16 +169,16 @@ Item {
 
     function drawGraph(values) {
         mainDataModel.clear();
-        position: Qt.vector3d(0.0,0.0,0.5);
+        customItem.position = Qt.vector3d(0.0,0.0,0.5);
 
         setAxis(values);
+
+        console.log(values);
 
         uiHandler.drawSurfaceGraph(values[0], values[1], values[2], values[3]);
     }
 
     function drawOptimalSolution() {
-//        position: Qt.vector3d(0.0,0.0,0.5);
-
         var values = uiHandler.getOptimalSolution();
 
         var yPos;
@@ -193,9 +190,7 @@ Item {
              yPos = values[2] - 0.05 * values[2];
         }
 
-
-
-        customItem.position = Qt.vector3d(values[1], yPos, values[0]);
+//        customItem.position = Qt.vector3d(values[0], yPos, values[1]);
 
         console.log("Optimal solution: ", values);
     }

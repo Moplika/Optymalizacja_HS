@@ -32,9 +32,8 @@
         <file>GraphControlDialog.qml</file>
     </qresource>
     <qresource prefix="/mesh">
-        <file>point.obj</file>
-        <file>sphere.obj</file>
+        <file>SmallSphere.obj</file>
+        <file>texture.png</file>
         <file>cube.obj</file>
-        <file>cube_texture.png</file>
     </qresource>
 </RCC>
