@@ -312,12 +312,17 @@ void UIHandler::startCalculations()
     }
 }
 
-QList<QString> UIHandler::getOptimalSolution() {
+QList<double> UIHandler::getOptimalSolution() {
     HarmonyMemoryRow optimalSolution = harmonySearch.getOptimalSolution();
 
-    QList<QString> optimalSolutionList = xToStringList(optimalSolution);
-    QString fValue = fxToString(optimalSolution);
-    optimalSolutionList.push_back(fValue);
+//    QList<QString> optimalSolutionList = xToStringList(optimalSolution);
+//    QString fValue = fxToString(optimalSolution);
+//    optimalSolutionList.push_back(fValue);
+
+    QList<double> optimalSolutionList;
+    optimalSolutionList.push_back(optimalSolution.getX(1));
+    optimalSolutionList.push_back(optimalSolution.getX(2));
+    optimalSolutionList.push_back(optimalSolution.getObjectiveFunction());
 
     return optimalSolutionList;
 }

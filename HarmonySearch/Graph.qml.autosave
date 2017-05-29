@@ -131,8 +131,6 @@ Item {
         }
         onDrawingFinished: {
             mainDataProxy.itemModel = mainDataModel;
-//            mainSeries.selectedPoint.x = x1Pos;
-//            mainSeries.selectedPoint.y = x2Pos;
             drawOptimalSolution();
        }
     }
@@ -180,8 +178,6 @@ Item {
     }
 
     function drawOptimalSolution() {
-//        position: Qt.vector3d(0.0,0.0,0.5);
-
         var values = uiHandler.getOptimalSolution();
 
         var yPos;
@@ -192,8 +188,6 @@ Item {
         else {
              yPos = values[2] - 0.05 * values[2];
         }
-
-
 
         customItem.position = Qt.vector3d(values[1], yPos, values[0]);
 

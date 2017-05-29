@@ -67,4 +67,6 @@ HEADERS += \
 
 INCLUDEPATH += ../MuParser/
 
-DISTFILES +=
+DISTFILES += \
+    ../../../../Desktop/point.obj \
+    ../../../../Desktop/point.mtl

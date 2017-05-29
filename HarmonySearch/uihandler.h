@@ -94,7 +94,7 @@ public slots:
     double getMinimum(int index);
     double getMaximum(int index);
 
-    QList<QString> getOptimalSolution();
+    QList<double> getOptimalSolution();
     void printHarmonyMemory();
     void drawSurfaceGraph(double minX1, double maxX1, double minX2, double maxX2);
 
