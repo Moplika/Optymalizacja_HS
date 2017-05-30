@@ -6,9 +6,6 @@ Item {
     width: 800
     height: 600
     property alias btn_showResult: btn_showResult
-    property alias btn_orto: btn_orto
-    property alias btn_view3D: btn_view3D
-    property alias graphView: graphView
     property alias btn_end: btn_end
     property alias harmonyMemoryView: harmonyMemoryView
     property alias btn_nextIter: btn_nextIter
@@ -103,43 +100,6 @@ Item {
                 Layout.fillWidth: true
             }
 
-
-
-
-
-            Rectangle {
-                id: rectangle
-                width: 200
-                height: 200
-                color: "#ffffff"
-                Layout.rowSpan: 3
-                opacity: 0
-                Layout.fillWidth: true
-            }
-            GraphView {
-                id: graphView
-                Layout.preferredWidth: 280
-                Layout.preferredHeight: 280
-                Layout.fillHeight: true
-                Layout.fillWidth: true
-                Layout.columnSpan: 3
-                Layout.rowSpan: 5
-            }
-            Button {
-                id: btn_orto
-                text: qsTr("Widok warstwic")
-                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                Layout.fillWidth: true
-                Layout.rowSpan: 1
-            }
-            Button {
-                id: btn_view3D
-                text: qsTr("Widok 3D")
-                Layout.fillHeight: false
-                Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
-                Layout.fillWidth: true
-                Layout.rowSpan: 1
-            }
         }
         ColumnLayout {
             id: rightColumn

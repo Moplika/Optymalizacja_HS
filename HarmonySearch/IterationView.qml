@@ -22,14 +22,6 @@ IterationViewForm {
         delay(100);
     }
 
-    btn_orto.onClicked:  {
-        graphView.setViewToOrto();
-    }
-
-    btn_view3D.onClicked: {
-        graphView.setViewTo3D();
-    }
-
     Connections {
         target: uiHandler;
         onShowIteration : {
@@ -69,19 +61,6 @@ IterationViewForm {
             maxIterations = uiHandler.getNI();
 
             btn_end.enabled = true;
-
-            if (varCount === 2) {
-//                graphView.visible = true;
-//                btn_orto.visible = true;
-//                btn_view3D.visible = true;
-//                uiHandler.drawSurfaceGraph(-1,1,-1,1);
-//                graphView.setAxis([-1,1,-1,1]);
-            }
-            else {
-                graphView.visible = false;
-                btn_orto.visible = false;
-                btn_view3D.visible = false;
-            }
         }
     }
 

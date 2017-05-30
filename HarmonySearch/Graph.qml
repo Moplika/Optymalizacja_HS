@@ -30,15 +30,15 @@ Item {
 
         theme: graphTheme;
 
-       customItemList: [
-           Custom3DItem {
-               id: customItem;
-               textureFile: ":/mesh/texture.png";
-               meshFile: ":/mesh/cube.obj";
-               position: Qt.vector3d(0.0,0.0,0.5);
+        customItemList: [
+        Custom3DItem {
+                id: customItem;
+                meshFile: ":/mesh/cube.obj";
+                textureFile: ":/mesh/texture.png";
+                position: Qt.vector3d(0.0, 0.0, 0.5);
 
-           }
-       ]
+            }
+        ]
 
         Surface3DSeries {
             id: mainSeries
@@ -53,14 +53,8 @@ Item {
                 rowRole: "x2";
                 yPosRole: "y";
             }
-
-            onSelectedPointChanged: {
-                console.log(selectedPoint.x, selectedPoint.y);
-            }
         }
     }
-
-
 
     Theme3D {
         id: graphTheme;
@@ -129,9 +123,8 @@ Item {
             addData(values);
         }
         onDrawingFinished: {
-            mainDataProxy.itemModel = mainDataModel;
             drawOptimalSolution();
-       }
+        }
     }
 
     function addData(values) {
@@ -161,19 +154,16 @@ Item {
         x2Min = values[2];
         x2Max = values[3];
 
-        x1Axis.min = x1Min;
         x1Axis.max = x1Max;
-        x2Axis.min = x2Min;
         x2Axis.max = x2Max;
+        x1Axis.min = x1Min;
+        x2Axis.min = x2Min;
+
     }
 
     function drawGraph(values) {
         mainDataModel.clear();
-        customItem.position = Qt.vector3d(0.0,0.0,0.5);
-
         setAxis(values);
-
-        console.log(values);
 
         uiHandler.drawSurfaceGraph(values[0], values[1], values[2], values[3]);
     }
@@ -184,13 +174,13 @@ Item {
         var yPos;
 
         if (values[2] > 0) {
-             yPos = values[2] + 0.05 * values[2];
+            yPos = values[2] + 0.05 * values[2];
         }
         else {
-             yPos = values[2] - 0.05 * values[2];
+            yPos = values[2] - 0.05 * values[2];
         }
 
-//        customItem.position = Qt.vector3d(values[0], yPos, values[1]);
+        customItem.position = Qt.vector3d(values[0], yPos, values[1]);
 
         console.log("Optimal solution: ", values);
     }

@@ -401,7 +401,7 @@ bool UIHandler::areParametersOk()
         return false;
     if (!isEquationCorrect)
         return false;
-    if (!areConstraintsSet || constraints.size() != N)
+    if (!areConstraintsSet || constraints.size() < N)
     {
         emit notEnoughConstraints();
         return false;
@@ -437,54 +437,9 @@ void UIHandler::drawSurfaceGraph(double minX1, double maxX1, double minX2, doubl
     double stepX1 = (maxX1 - minX1) / 50;
     double stepX2 = (maxX2 - minX2) / 50;
 
-    HarmonyMemoryRow optimalSolution = harmonySearch.getOptimalSolution();
-    double optimalX1 = optimalSolution.getAllX().at(0);
-    double optimalX2 = optimalSolution.getAllX().at(1);
-
     int optimalX1index = 0;
     int optimalX2index = 0;
 
-    double x1, x2;
-
-//    for (x1 = minX1; x1 < optimalX1 + stepX1; x1 += stepX1, optimalX1index++)
-//    {
-//        for (x2 = minX2; x2 <= maxX2+stepX2; x2 += stepX2)
-//        {
-//            this->drawAPoint(x1,x2);
-//        }
-//    }
-
-//    for (x2 = minX2; x2 < optimalX2+stepX1 ; x2 += stepX2, optimalX2index++)
-//    {
-//        this->drawAPoint(x1, x2);
-//    }
-
-//    for (; x2 <= maxX2+stepX2; x2 += stepX2)
-//    {
-//        this->drawAPoint(x1,x2);
-//    }
-//    x1 += stepX1;
-
-//    for (; x1 < maxX1+stepX1; x1 += stepX1)
-//    {
-//        for (x2 = minX2; x2 < optimalX2+stepX1 ; x2 += stepX2)
-//        {
-//            this->drawAPoint(x1, x2);
-//        }
-
-//        for (; x2 <= maxX2+stepX2; x2 += stepX2)
-//        {
-//            this->drawAPoint(x1,x2);
-//        }
-//    }
-
-//    for (double x1 = optimalX1; x1 < maxX1+stepX1; x1 += stepX1)
-//    {
-//        for (double x2 = minX2; x2 < maxX2+stepX2 ; x2 += stepX2, optimalX2index++)
-//        {
-//            this->drawAPoint(x1, x2);
-//        }
-//    }
     for (double x1 = minX1; x1 <= maxX1+stepX1; x1 += stepX1)
     {
         for (double x2 = minX2; x2 <= maxX2+stepX2; x2 += stepX2)

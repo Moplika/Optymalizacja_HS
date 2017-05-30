@@ -10,6 +10,7 @@ ParametersViewForm {
     text_coverIterations.visible: true;
 
     // Początkowe wartości pozostałych pól
+//    textField_equation.text: "x1+x2";
     textField_HMSize.text: "10";
     textField_HMCR.text: "0.75";
     slider_HMCR.value: 0.75;
@@ -147,8 +148,10 @@ ParametersViewForm {
     Connections {
         target: textField_equation;
         onEditingFinished: {
-            uiHandler.setEquation(textField_equation.text);
-            console.log("Equation set?")
+            if (textField_equation.text !== "") {
+                uiHandler.setEquation(textField_equation.text);
+                console.log("Equation set?")
+            }
         }
     }
 
