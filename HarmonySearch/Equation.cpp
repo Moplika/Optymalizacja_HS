@@ -6,12 +6,6 @@
 #include <algorithm>
 #include <cctype>
 
-
-
-void dupa() {
-
-}
-
 // Pierwiastek wyższego stopnia dla parsera
 double root(double stopien, double argument)
 {
